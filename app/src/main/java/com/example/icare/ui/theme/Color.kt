@@ -2,10 +2,11 @@ package com.example.icare.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val primaryGreen = Color(0xff29B969)
+val neutralWhite = Color(0xffF5F5F5)
+val neutralBlack = Color(0xff333333)
+val neutralGray = Color(0xffcccccc)
+val semanticGreen = Color(0xff4caf50)
+val semanticRed = Color(0xffF33060)
+val semanticBlue = Color(0xff2196F3)
+val accentColor = Color(0xff3498DB)
