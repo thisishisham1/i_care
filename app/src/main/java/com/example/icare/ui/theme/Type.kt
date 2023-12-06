@@ -39,7 +39,7 @@ val Typography = Typography(
     ),
     headlineSmall = TextStyle(
         fontFamily = gilroyFont,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Bold,
         fontSize = 24.sp
     ),
     titleLarge = TextStyle(

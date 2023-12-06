@@ -1,4 +1,4 @@
-package com.example.icare
+package com.example.icare.uiApp
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
@@ -17,6 +17,8 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.icare.R
+import com.example.icare.presentation.Destinations
 import com.example.icare.ui.theme.primaryGreen
 import kotlinx.coroutines.delay
 
