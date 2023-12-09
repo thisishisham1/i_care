@@ -8,13 +8,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.icare.presentation.Destinations
+import com.example.icare.presentation.home.HomeScreen
 import com.example.icare.presentation.onboarding.OnBoardingScreen
 import com.example.icare.ui.theme.ICareTheme
-import com.example.icare.uiApp.SplashScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +37,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Destinations.SplashScreen.route) {
-        composable(Destinations.SplashScreen.route) {
-            SplashScreen(navController)
-        }
+    NavHost(navController = navController, startDestination = Destinations.OnBoarding.route) {
         composable(Destinations.OnBoarding.route){
-            OnBoardingScreen()
+            OnBoardingScreen(navController)
+        }
+        composable(Destinations.HomeScreen.route){
+            HomeScreen()
         }
     }
 }

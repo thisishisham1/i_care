@@ -7,5 +7,4 @@ object Dimens {
     val mediumPadding = 10.dp
     val smallPadding = 5.dp
 
-    val IndicatorSize = 14.dp
 }

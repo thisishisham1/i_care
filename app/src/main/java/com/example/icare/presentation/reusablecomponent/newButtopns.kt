@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun NewButton(text: String, onClick: () -> Unit) {
-    Button(onClick = onClick, shape = RoundedCornerShape(15.dp)) {
+    Button(onClick = onClick, shape = RoundedCornerShape(20.dp)) {
         Text(text = text, style = MaterialTheme.typography.labelLarge)
     }
 }

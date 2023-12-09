@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -13,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.icare.presentation.Dimens.IndicatorSize
 import com.example.icare.ui.theme.neutralGray
 import com.example.icare.ui.theme.primaryGreen
 
@@ -29,7 +27,8 @@ fun PageIndicator(
         repeat(pageSize) { page ->
             Box(
                 modifier = modifier
-                    .width(15.dp).height(7.dp)
+                    .width(15.dp)
+                    .height(7.dp)
                     .clip(RoundedCornerShape(10.dp))
                     .background(color = if (page == selectedPage) selectedColor else unselectedColor)
             )
