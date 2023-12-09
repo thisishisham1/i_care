@@ -17,19 +17,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.icare.presentation.Destinations
 import com.example.icare.presentation.Dimens
 import com.example.icare.presentation.onboarding.Page
-import com.example.icare.presentation.onboarding.pages
-import com.example.icare.ui.theme.ICareTheme
 import com.example.icare.ui.theme.primaryGreen
 
 @Composable
 fun OnBoardingPage(
     modifier: Modifier = Modifier,
-    page: Page,navController:NavController
+    page: Page, navController: NavController
 ) {
     Column(
         modifier = modifier

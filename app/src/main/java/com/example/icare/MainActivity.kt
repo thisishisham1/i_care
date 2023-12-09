@@ -8,7 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -38,10 +37,10 @@ class MainActivity : ComponentActivity() {
 fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Destinations.OnBoarding.route) {
-        composable(Destinations.OnBoarding.route){
+        composable(Destinations.OnBoarding.route) {
             OnBoardingScreen(navController)
         }
-        composable(Destinations.HomeScreen.route){
+        composable(Destinations.HomeScreen.route) {
             HomeScreen()
         }
     }
