@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
-import com.example.icare.presentation.Destinations
-import com.example.icare.presentation.Dimens
+import com.example.icare.util.Destinations
+import com.example.icare.util.Dimens
 import com.example.icare.presentation.onboarding.Page
 import com.example.icare.ui.theme.primaryGreen
 

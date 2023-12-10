@@ -11,10 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.icare.presentation.Destinations
 import com.example.icare.presentation.home.HomeScreen
 import com.example.icare.presentation.onboarding.OnBoardingScreen
+import com.example.icare.presentation.splash.SplashScreen
 import com.example.icare.ui.theme.ICareTheme
+import com.example.icare.util.Destinations
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Destinations.OnBoarding.route) {
+    NavHost(navController = navController, startDestination = Destinations.SplashScreen.route) {
+        composable(Destinations.SplashScreen.route) {
+            SplashScreen(navController = navController)
+        }
         composable(Destinations.OnBoarding.route) {
             OnBoardingScreen(navController)
         }

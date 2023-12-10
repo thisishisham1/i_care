@@ -19,8 +19,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.icare.presentation.Destinations
-import com.example.icare.presentation.Dimens.mediumPadding
+import com.example.icare.util.Destinations
+import com.example.icare.util.Dimens.mediumPadding
 import com.example.icare.presentation.onboarding.component.OnBoardingPage
 import com.example.icare.presentation.reusablecomponent.PageIndicator
 import kotlinx.coroutines.launch
