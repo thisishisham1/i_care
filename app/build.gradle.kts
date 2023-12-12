@@ -71,12 +71,12 @@ dependencies {
     //Navigate
     implementation("androidx.navigation:navigation-compose:2.7.5")
     //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.1.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.1.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     //coil for image
     implementation("io.coil-kt:coil-compose:2.5.0")
     //dagger hilt
-    implementation("com.google.dagger:hilt-android:2.44")
+    implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 }
