@@ -1,4 +1,4 @@
-package com.example.icare.presentation.onboarding
+package com.example.icare.store.presentation.onboarding
 
 import androidx.annotation.DrawableRes
 import com.example.icare.R
@@ -10,7 +10,7 @@ data class Page(
 )
 
 
-val pages = listOf(
+val pages = arrayOf(
     Page(
         imgRes = R.drawable.doctor_p,
         title = "Find a lot of specialist\ndoctors in one place",
