@@ -10,7 +10,7 @@ data class Page(
 )
 
 
-val pages = listOf(
+val pages = arrayOf(
     Page(
         imgRes = R.drawable.doctor_p,
         title = "Find a lot of specialist\ndoctors in one place",

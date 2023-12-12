@@ -1,4 +1,4 @@
-package com.example.icare.store.presentation.reusablecomponent
+package com.example.icare.store.util.reusablecomponent
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

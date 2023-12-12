@@ -1,6 +1,5 @@
 package com.example.icare.store.presentation.onboarding.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,11 +15,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.icare.store.presentation.onboarding.Page
 import com.example.icare.store.util.Destinations
 import com.example.icare.store.util.Dimens
-import com.example.icare.store.presentation.onboarding.Page
 import com.example.icare.ui.theme.primaryGreen
 
 @Composable
@@ -37,13 +38,11 @@ fun OnBoardingPage(
                 .fillMaxWidth()
                 .fillMaxHeight(0.8f),
         ) {
-            Image(
-
-                painter = painterResource(
-                    id = page.imgRes
-                ),
-                contentDescription = null,
-                contentScale = ContentScale.Crop
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(page.imgRes).crossfade(true).build(),
+                contentDescription = "",
+                contentScale = ContentScale.Crop,
             )
             Row(
                 modifier = modifier

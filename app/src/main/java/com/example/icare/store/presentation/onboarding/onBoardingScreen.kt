@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -19,10 +18,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.icare.store.presentation.onboarding.component.OnBoardingPage
 import com.example.icare.store.util.Destinations
 import com.example.icare.store.util.Dimens.mediumPadding
-import com.example.icare.store.presentation.onboarding.component.OnBoardingPage
-import com.example.icare.store.presentation.reusablecomponent.PageIndicator
+import com.example.icare.store.util.reusablecomponent.PageIndicator
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -45,8 +44,7 @@ fun OnBoardingScreen(navController: NavController) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = mediumPadding)
-                .navigationBarsPadding(),
+                .padding(horizontal = mediumPadding),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
