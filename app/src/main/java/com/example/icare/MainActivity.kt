@@ -11,11 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.icare.presentation.home.HomeScreen
-import com.example.icare.presentation.onboarding.OnBoardingScreen
-import com.example.icare.presentation.splash.SplashScreen
+import com.example.icare.store.presentation.home.HomeScreen
+import com.example.icare.store.presentation.onboarding.OnBoardingScreen
+import com.example.icare.store.presentation.splash.SplashScreen
 import com.example.icare.ui.theme.ICareTheme
-import com.example.icare.util.Destinations
+import com.example.icare.store.util.Destinations
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

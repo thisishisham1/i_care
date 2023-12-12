@@ -1,4 +1,4 @@
-package com.example.icare.presentation.onboarding.component
+package com.example.icare.store.presentation.onboarding.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -18,9 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
-import com.example.icare.util.Destinations
-import com.example.icare.util.Dimens
-import com.example.icare.presentation.onboarding.Page
+import com.example.icare.store.util.Destinations
+import com.example.icare.store.util.Dimens
+import com.example.icare.store.presentation.onboarding.Page
 import com.example.icare.ui.theme.primaryGreen
 
 @Composable

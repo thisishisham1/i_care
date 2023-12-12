@@ -1,4 +1,4 @@
-package com.example.icare.presentation.onboarding
+package com.example.icare.store.presentation.onboarding
 
 import NewButton
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -19,10 +19,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.icare.util.Destinations
-import com.example.icare.util.Dimens.mediumPadding
-import com.example.icare.presentation.onboarding.component.OnBoardingPage
-import com.example.icare.presentation.reusablecomponent.PageIndicator
+import com.example.icare.store.util.Destinations
+import com.example.icare.store.util.Dimens.mediumPadding
+import com.example.icare.store.presentation.onboarding.component.OnBoardingPage
+import com.example.icare.store.presentation.reusablecomponent.PageIndicator
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

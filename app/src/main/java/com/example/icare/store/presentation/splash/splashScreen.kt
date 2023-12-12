@@ -1,4 +1,4 @@
-package com.example.icare.presentation.splash
+package com.example.icare.store.presentation.splash
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.tween
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.icare.ui.theme.primaryGreen
 import com.example.icare.ui.theme.sfFont
-import com.example.icare.util.Destinations
+import com.example.icare.store.util.Destinations
 import kotlinx.coroutines.delay
 
 @Composable
