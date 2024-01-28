@@ -29,57 +29,27 @@ val gilroyFont = FontFamily(
 val Typography = Typography(
     headlineLarge = TextStyle(
         fontFamily = gilroyFont,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 32.sp
+        fontWeight = FontWeight.Bold,
+        fontSize = 25.sp
     ),
     headlineMedium = TextStyle(
         fontFamily = gilroyFont,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 28.sp
-    ),
-    headlineSmall = TextStyle(
-        fontFamily = gilroyFont,
         fontWeight = FontWeight.Bold,
-        fontSize = 24.sp
+        fontSize = 22.sp
     ),
     titleLarge = TextStyle(
-        fontFamily = gilroyFont,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 17.sp
+        fontFamily = sfFont,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
     ),
     titleMedium = TextStyle(
-        fontFamily = gilroyFont,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 14.sp
-    ),
-    bodyLarge = TextStyle(
         fontFamily = sfFont,
-        fontWeight = FontWeight.Normal,
-        fontSize = 15.sp
-    ),
-    bodyMedium = TextStyle(
-        fontFamily = sfFont,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
-    ),
-    bodySmall = TextStyle(
-        fontFamily = sfFont,
-        fontWeight = FontWeight.Normal,
-        fontSize = 13.sp
-    ),
-    labelLarge = TextStyle(
-        fontFamily = sfFont,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Bold,
         fontSize = 17.sp
     ),
-    labelMedium = TextStyle(
+    titleSmall = TextStyle(
         fontFamily = sfFont,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 12.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = sfFont,
-        fontWeight = FontWeight.Medium,
-        fontSize = 32.sp
     )
 )
