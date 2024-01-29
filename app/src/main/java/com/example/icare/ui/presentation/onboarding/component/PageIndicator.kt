@@ -1,4 +1,4 @@
-package com.example.icare.ui.util.reusablecomponent
+package com.example.icare.ui.presentation.onboarding.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

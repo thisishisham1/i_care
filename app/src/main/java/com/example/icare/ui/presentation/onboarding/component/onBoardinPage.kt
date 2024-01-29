@@ -32,11 +32,12 @@ import com.example.icare.ui.util.Destinations
 import com.example.icare.ui.util.Dimens
 import com.example.icare.ui.theme.primaryGreen
 import com.example.icare.R
+import com.example.icare.data.PreferencesHelper
 
 @Composable
 fun OnBoardingPage(
     modifier: Modifier = Modifier,
-    page: Page, navController: NavController
+    page: Page, navController: NavController,preferencesHelper: PreferencesHelper
 ) {
     Column(
         modifier = modifier
@@ -54,8 +55,9 @@ fun OnBoardingPage(
                 text = "Skip",
                 style = MaterialTheme.typography.titleSmall.copy(fontSize = 15.sp),
                 color = primaryGreen, modifier = modifier.clickable {
+                    preferencesHelper.saveBooleanValue("onBoarding", true)
                     navController.popBackStack()
-                    navController.navigate(Destinations.HomeScreen.route)
+                    navController.navigate(Destinations.SignUp.route)
                 }
             )
             Icon(

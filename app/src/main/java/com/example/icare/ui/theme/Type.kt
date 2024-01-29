@@ -50,6 +50,6 @@ val Typography = Typography(
     titleSmall = TextStyle(
         fontFamily = sfFont,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 12.sp
+        fontSize = 15.sp
     )
 )

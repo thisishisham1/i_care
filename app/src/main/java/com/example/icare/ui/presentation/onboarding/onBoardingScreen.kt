@@ -1,6 +1,6 @@
 package com.example.icare.ui.presentation.onboarding
 
-import NewButton
+import PrimaryButton
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,16 +15,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.example.icare.data.PreferencesHelper
 import com.example.icare.ui.presentation.onboarding.component.OnBoardingPage
 import com.example.icare.ui.util.Destinations
 import com.example.icare.ui.util.Dimens
-import com.example.icare.ui.util.reusablecomponent.PageIndicator
+import com.example.icare.ui.presentation.onboarding.component.PageIndicator
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(navController: NavController) {
+    val context = LocalContext.current
+    val preferencesHelper = PreferencesHelper(context)
     val scopeCoroutine = rememberCoroutineScope()
     Column(
         modifier = Modifier
@@ -40,7 +44,11 @@ fun OnBoardingScreen(navController: NavController) {
             }
         }
         HorizontalPager(state = pagerState) { index ->
-            OnBoardingPage(page = pages[index], navController = navController)
+            OnBoardingPage(
+                page = pages[index],
+                navController = navController,
+                preferencesHelper = preferencesHelper
+            )
         }
         Spacer(modifier = Modifier.padding(Dimens.mediumPadding))
         Column(
@@ -49,17 +57,20 @@ fun OnBoardingScreen(navController: NavController) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             PageIndicator(pageSize = pages.size, selectedPage = pagerState.currentPage)
-            NewButton(text = buttonState.value) {
-                scopeCoroutine.launch {
-                    if (pagerState.currentPage == 3) {
-                        navController.popBackStack()
-                        navController.navigate(Destinations.HomeScreen.route)
-                    } else {
-                        pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
+            PrimaryButton(
+                text = buttonState.value,
+                onClick = {
+                    scopeCoroutine.launch {
+                        if (pagerState.currentPage == 3) {
+                            preferencesHelper.saveBooleanValue("onBoarding", true)
+                            navController.popBackStack()
+                            navController.navigate(Destinations.SignUp.route)
+                        } else {
+                            pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
+                        }
                     }
-                }
-            }
+                },
+            )
         }
     }
-
 }
