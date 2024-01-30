@@ -1,8 +1,6 @@
 package com.example.icare.ui.splash
 
-import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.animation.OvershootInterpolator
-import android.view.animation.ScaleAnimation
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.tween
@@ -28,7 +26,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavController, preferencesHelper: PreferencesHelper) {
     val scale = remember {
-        androidx.compose.animation.core.Animatable(0f)
+        Animatable(0f)
     }
     LaunchedEffect(key1 = true) {
         animateScale(scale)

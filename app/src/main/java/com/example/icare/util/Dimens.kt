@@ -1,6 +1,5 @@
 package com.example.icare.util
 
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 
 object Dimens {
