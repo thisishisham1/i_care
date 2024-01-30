@@ -1,4 +1,4 @@
-package com.example.icare.ui.util.reusablecomponent
+package com.example.icare.ui.onboarding.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,16 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.icare.ui.theme.neutralGray
-import com.example.icare.ui.theme.primaryGreen
+import com.example.icare.ui.theme.gray400
+import com.example.icare.ui.theme.green500
 
 @Composable
 fun PageIndicator(
     modifier: Modifier = Modifier,
     pageSize: Int,
     selectedPage: Int,
-    selectedColor: Color = primaryGreen,
-    unselectedColor: Color = neutralGray
+    selectedColor: Color = green500,
+    unselectedColor: Color = gray400
 ) {
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
         repeat(pageSize) { page ->

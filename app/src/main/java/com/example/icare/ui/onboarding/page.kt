@@ -1,4 +1,4 @@
-package com.example.icare.ui.presentation.onboarding
+package com.example.icare.ui.onboarding
 
 import androidx.annotation.DrawableRes
 import com.example.icare.R

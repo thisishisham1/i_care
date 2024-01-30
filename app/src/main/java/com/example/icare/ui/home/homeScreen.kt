@@ -1,4 +1,4 @@
-package com.example.icare.ui.presentation.home
+package com.example.icare.ui.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
