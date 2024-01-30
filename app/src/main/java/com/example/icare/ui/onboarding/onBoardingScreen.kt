@@ -1,4 +1,4 @@
-package com.example.icare.ui.presentation.onboarding
+package com.example.icare.ui.onboarding
 
 import PrimaryButton
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -18,10 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.example.icare.data.PreferencesHelper
-import com.example.icare.ui.presentation.onboarding.component.OnBoardingPage
-import com.example.icare.ui.util.Destinations
-import com.example.icare.ui.util.Dimens
-import com.example.icare.ui.presentation.onboarding.component.PageIndicator
+import com.example.icare.ui.onboarding.component.OnBoardingPage
+import com.example.icare.util.Destinations
+import com.example.icare.util.Dimens
+import com.example.icare.ui.onboarding.component.PageIndicator
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -64,7 +64,7 @@ fun OnBoardingScreen(navController: NavController) {
                         if (pagerState.currentPage == 3) {
                             preferencesHelper.saveBooleanValue("onBoarding", true)
                             navController.popBackStack()
-                            navController.navigate(Destinations.SignUp.route)
+                            navController.navigate(Destinations.SignIn.route)
                         } else {
                             pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
                         }

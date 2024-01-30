@@ -2,11 +2,13 @@ package com.example.icare.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val primaryGreen = Color(0xff29B969)
-val neutralWhite = Color(0xffF5F5F5)
-val neutralBlack = Color(0xff333333)
-val neutralGray = Color(0xffcccccc)
-val semanticGreen = Color(0xff4caf50)
-val semanticRed = Color(0xffF33060)
-val semanticBlue = Color(0xff2196F3)
-val accentColor = Color(0xff3498DB)
+val green700 = Color(0xFF007D51) // Primary Dark Green
+val green500 = Color(0xff29B969) // Primary Green
+val green200 = Color(0xFFA5D6A7) // Primary Light green
+val neutralWhite = Color(0xffF5F5F5) // Neutral White
+val black = Color(0xff333333) // Black
+val gray400 = Color(0xFFB0BEC5) // Light Gray
+val gray500 = Color(0xFF607D8B) // Primary Gray
+val gray600 = Color(0xFF546E7A) // Dark gray
+val red500 = Color(0xFFF44336) // Red
+val blue = Color(0xff2196F3) // Blue

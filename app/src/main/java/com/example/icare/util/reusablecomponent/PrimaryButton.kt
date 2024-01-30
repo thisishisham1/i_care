@@ -8,17 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 import com.example.icare.ui.theme.neutralWhite
-import com.example.icare.ui.theme.primaryGreen
+import com.example.icare.ui.theme.green500
 
 @Composable
 fun PrimaryButton(
     text: String,
     onClick: () -> Unit,
-    containerColor: Color = primaryGreen,
+    containerColor: Color = green500,
     contentColor: Color = neutralWhite,
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier,
-    textStyle: TextStyle = MaterialTheme.typography.titleMedium
+    textStyle: TextStyle = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp)
 ) {
     Button(
         onClick = onClick, shape = Shapes().medium, colors = ButtonDefaults.buttonColors(

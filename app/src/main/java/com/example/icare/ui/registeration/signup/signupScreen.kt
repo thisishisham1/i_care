@@ -1,39 +1,43 @@
-package com.example.icare.ui.presentation.registeration.signup
+package com.example.icare.ui.registeration.signup
 
 import PrimaryButton
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.example.icare.ui.util.Dimens
-import com.example.icare.R
-import com.example.icare.ui.presentation.registeration.signup.component.AgreementText
-import com.example.icare.ui.presentation.registeration.signup.component.SignInText
-import com.example.icare.ui.presentation.registeration.signup.component.SignUpHeader
-import com.example.icare.ui.presentation.registeration.signup.component.SignupImage
-import com.example.icare.ui.util.reusablecomponent.InputTextFiled
+import com.example.icare.util.Dimens
+import com.example.icare.ui.registeration.signup.component.AgreementText
+import com.example.icare.ui.registeration.signup.component.SignInText
+import com.example.icare.ui.registeration.signup.component.SignUpHeader
+import com.example.icare.ui.registeration.signup.component.SignupImage
+import com.example.icare.util.ButtonHeight
+import com.example.icare.util.reusablecomponent.InputTextFiled
+import com.example.icare.util.reusablecomponent.PasswordInputField
 
 @Composable
 fun SignUp() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = Dimens.largePadding, vertical = Dimens.mediumPadding)
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = Dimens.largePadding, vertical = Dimens.mediumPadding),
+        verticalArrangement = Arrangement.spacedBy(Dimens.smallPadding)
     ) {
         SignupImage()
+
         SignUpHeader()
+
         val inputFields = mutableMapOf(
             "Name" to remember {
                 mutableStateOf("")
@@ -52,21 +56,13 @@ fun SignUp() {
             Spacer(modifier = Modifier.height(Dimens.mediumPadding))
             when (label) {
                 "Password", "Confirm Password" -> {
-                    InputTextFiled(
-                        value = valueState.value,
-                        onValueChange = {
-                            valueState.value = it
-                        },
+                    PasswordInputField(
                         label = label,
-                        isPassword = true,
-                        trailingIcon = {
-                            Icon(
-                                painterResource(id = R.drawable.show),
-                                contentDescription = "", Modifier.requiredSize(25.dp)
-                            )
-                        }
+                        onValueChange = { valueState.value = it },
+                        value = valueState.value
                     )
                 }
+
 
                 else -> {
                     InputTextFiled(
@@ -79,16 +75,18 @@ fun SignUp() {
                 }
             }
         }
+
         AgreementText()
+
         PrimaryButton(
             text = "Continue",
             onClick = { handleContinueClick() },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(60.dp),
+                .height(ButtonHeight),
             textStyle = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold)
         )
-        Spacer(modifier = Modifier.height(Dimens.mediumPadding))
+
         SignInText()
     }
 }

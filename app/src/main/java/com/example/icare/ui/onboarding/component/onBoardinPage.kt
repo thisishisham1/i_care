@@ -1,4 +1,4 @@
-package com.example.icare.ui.presentation.onboarding.component
+package com.example.icare.ui.onboarding.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,17 +27,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.icare.ui.presentation.onboarding.Page
-import com.example.icare.ui.util.Destinations
-import com.example.icare.ui.util.Dimens
-import com.example.icare.ui.theme.primaryGreen
+import com.example.icare.ui.onboarding.Page
+import com.example.icare.util.Destinations
+import com.example.icare.util.Dimens
+import com.example.icare.ui.theme.green500
 import com.example.icare.R
 import com.example.icare.data.PreferencesHelper
 
 @Composable
 fun OnBoardingPage(
     modifier: Modifier = Modifier,
-    page: Page, navController: NavController,preferencesHelper: PreferencesHelper
+    page: Page, navController: NavController, preferencesHelper: PreferencesHelper
 ) {
     Column(
         modifier = modifier
@@ -54,16 +54,16 @@ fun OnBoardingPage(
             Text(
                 text = "Skip",
                 style = MaterialTheme.typography.titleSmall.copy(fontSize = 15.sp),
-                color = primaryGreen, modifier = modifier.clickable {
+                color = green500, modifier = modifier.clickable {
                     preferencesHelper.saveBooleanValue("onBoarding", true)
                     navController.popBackStack()
-                    navController.navigate(Destinations.SignUp.route)
+                    navController.navigate(Destinations.SignIn.route)
                 }
             )
             Icon(
                 painter = painterResource(id = R.drawable.arrow),
                 contentDescription = "",
-                tint = primaryGreen,
+                tint = green500,
                 modifier = Modifier.requiredSize(15.dp)
             )
         }
