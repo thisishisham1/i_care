@@ -16,8 +16,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.icare.data.PreferencesHelper
 import com.example.icare.ui.home.HomeScreen
 import com.example.icare.ui.onboarding.OnBoardingScreen
-import com.example.icare.ui.registeration.signin.SignIn
-import com.example.icare.ui.registeration.signup.SignUp
+import com.example.icare.ui.registeration.signin.SignInScreen
+import com.example.icare.ui.registeration.signup.SignUpScreen
+import com.example.icare.ui.selectuser.SelectUserScreen
 import com.example.icare.ui.splash.SplashScreen
 import com.example.icare.ui.theme.ICareTheme
 import com.example.icare.util.Destinations
@@ -51,22 +52,24 @@ fun SetupNavigation(context: Context) {
     val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.SplashScreen.route) {
-        composable(Destinations.SplashScreen.route) {
+    NavHost(navController = navController, startDestination = Destinations.SignUp.route) {
+        composable(Destinations.Splash.route) {
             SplashScreen(navController = navController, preferencesHelper = preferencesHelper)
         }
         composable(Destinations.OnBoarding.route) {
             OnBoardingScreen(navController)
         }
-        composable(Destinations.HomeScreen.route) {
-            HomeScreen()
+        composable(Destinations.SelectUser.route) {
+            SelectUserScreen()
         }
-
         composable(Destinations.SignUp.route) {
-            SignUp()
+            SignUpScreen()
         }
         composable(Destinations.SignIn.route) {
-            SignIn()
+            SignInScreen()
+        }
+        composable(Destinations.Home.route) {
+            HomeScreen()
         }
     }
 }

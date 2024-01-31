@@ -26,7 +26,7 @@ import com.example.icare.util.reusablecomponent.InputTextFiled
 import com.example.icare.util.reusablecomponent.PasswordInputField
 
 @Composable
-fun SignUp() {
+fun SignUpScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -77,7 +77,7 @@ fun SignUp() {
         }
 
         AgreementText()
-
+        Spacer(modifier = Modifier.weight(1f))
         PrimaryButton(
             text = "Continue",
             onClick = { handleContinueClick() },

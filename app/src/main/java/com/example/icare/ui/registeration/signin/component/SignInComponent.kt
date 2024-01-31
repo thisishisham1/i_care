@@ -20,7 +20,7 @@ import com.example.icare.R
 import com.example.icare.ui.theme.black
 import com.example.icare.ui.theme.blue
 import com.example.icare.ui.theme.green500
-import com.example.icare.util.SizeRegisterationImage
+import com.example.icare.util.SizeImage
 
 @Composable
 fun SignInImage() {
@@ -28,7 +28,7 @@ fun SignInImage() {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(SignInImage).crossfade(true).build(),
-            contentDescription = "SignIn Image", Modifier.requiredSize(SizeRegisterationImage)
+            contentDescription = "SignIn Image", Modifier.requiredSize(SizeImage)
         )
     }
 }

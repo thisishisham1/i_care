@@ -22,7 +22,7 @@ import com.example.icare.util.reusablecomponent.InputTextFiled
 import com.example.icare.util.reusablecomponent.PasswordInputField
 
 @Composable
-fun SignIn() {
+fun SignInScreen() {
     Column(
         verticalArrangement = Arrangement.spacedBy(Dimens.smallPadding),
         modifier = Modifier

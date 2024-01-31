@@ -21,7 +21,7 @@ import com.example.icare.R
 import com.example.icare.ui.theme.black
 import com.example.icare.ui.theme.blue
 import com.example.icare.ui.theme.green500
-import com.example.icare.util.SizeRegisterationImage
+import com.example.icare.util.SizeImage
 
 @Composable
 fun SignupImage() {
@@ -30,7 +30,7 @@ fun SignupImage() {
             model = ImageRequest.Builder(LocalContext.current)
                 .data(SignUpImage).crossfade(true).build(),
             contentDescription = "SignUp Image",
-            Modifier.requiredSize(SizeRegisterationImage)
+            Modifier.requiredSize(SizeImage)
         )
     }
 }
