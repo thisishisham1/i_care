@@ -14,14 +14,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.icare.data.PreferencesHelper
-import com.example.icare.ui.home.HomeScreen
-import com.example.icare.ui.onboarding.OnBoardingScreen
-import com.example.icare.ui.registeration.signin.SignInScreen
-import com.example.icare.ui.registeration.signup.SignUpScreen
-import com.example.icare.ui.selectuser.SelectUserScreen
-import com.example.icare.ui.splash.SplashScreen
-import com.example.icare.ui.theme.ICareTheme
-import com.example.icare.util.Destinations
+import com.example.icare.presentation.home.HomeScreen
+import com.example.icare.presentation.onboarding.OnBoardingScreen
+import com.example.icare.presentation.registeration.signin.SignInScreen
+import com.example.icare.presentation.registeration.signup.SignUpScreen
+import com.example.icare.presentation.selectuser.SelectUserScreen
+import com.example.icare.presentation.splash.SplashScreen
+import com.example.icare.core.theme.ICareTheme
+import com.example.icare.core.util.Destinations
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +52,7 @@ fun SetupNavigation(context: Context) {
     val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.SignUp.route) {
+    NavHost(navController = navController, startDestination = Destinations.OnBoarding.route) {
         composable(Destinations.Splash.route) {
             SplashScreen(navController = navController, preferencesHelper = preferencesHelper)
         }
