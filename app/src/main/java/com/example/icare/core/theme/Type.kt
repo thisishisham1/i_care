@@ -43,7 +43,7 @@ val Typography = Typography(
     ),
     titleMedium = TextStyle(
         fontFamily = sfFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 17.sp
     ),
     titleSmall = TextStyle(

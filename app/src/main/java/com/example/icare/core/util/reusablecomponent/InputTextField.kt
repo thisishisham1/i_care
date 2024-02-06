@@ -36,7 +36,7 @@ import com.example.icare.core.theme.green700
 import com.example.icare.core.theme.red500
 
 @Composable
-fun InputTextFiled(
+fun PrimaryInputTextFiled(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -97,7 +97,7 @@ fun PasswordInputField(
     var isPasswordVisible by remember {
         mutableStateOf(true)
     }
-    InputTextFiled(
+    PrimaryInputTextFiled(
         value = value,
         onValueChange = onValueChange,
         label = label,

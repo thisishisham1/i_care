@@ -18,14 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.icare.core.util.Dimens
-import com.example.icare.presentation.registeration.signup.component.AgreementText
-import com.example.icare.presentation.registeration.signup.component.SignInText
-import com.example.icare.presentation.registeration.signup.component.SignUpHeader
-import com.example.icare.presentation.registeration.signup.component.SignupImage
 import com.example.icare.core.util.ButtonHeight
-import com.example.icare.core.util.reusablecomponent.InputTextFiled
+import com.example.icare.core.util.reusablecomponent.PrimaryInputTextFiled
 import com.example.icare.core.util.reusablecomponent.PasswordInputField
 import com.example.icare.R
+import com.example.icare.presentation.registeration.component.ImageHeader
+import com.example.icare.presentation.registeration.component.TextHeader
+
+private val imageRes = R.drawable.signup
 
 @Composable
 fun SignUpScreen() {
@@ -36,9 +36,9 @@ fun SignUpScreen() {
             .padding(horizontal = Dimens.largePadding, vertical = Dimens.mediumPadding),
         verticalArrangement = Arrangement.spacedBy(Dimens.smallPadding)
     ) {
-        SignupImage()
+        ImageHeader(imageRes = imageRes)
 
-        SignUpHeader()
+        TextHeader(headerString = "Sign up")
 
         val inputFields = mutableMapOf(
             stringResource(id = R.string.name) to remember {
@@ -67,7 +67,7 @@ fun SignUpScreen() {
 
 
                 else -> {
-                    InputTextFiled(
+                    PrimaryInputTextFiled(
                         value = valueState.value,
                         onValueChange = {
                             valueState.value = it

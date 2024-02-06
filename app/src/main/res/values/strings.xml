@@ -12,6 +12,9 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="login">Login</string>
     <string name="dont_have_account">Don\'t have account?</string>
+    <string name="description_Forgot_password">Don’t worry! it happens.
+Please enter the address associated with your account.</string>
+    <string name="submit">Submit</string>
 
     // onBoarding
     <string name="on_boarding1">Digital Smart Diagnoses,\ninstant Relief!</string>

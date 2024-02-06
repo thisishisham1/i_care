@@ -22,6 +22,11 @@ import com.example.icare.presentation.selectuser.SelectUserScreen
 import com.example.icare.presentation.splash.SplashScreen
 import com.example.icare.core.theme.ICareTheme
 import com.example.icare.core.util.Destinations
+import com.example.icare.presentation.offline.OfflineScreen
+import com.example.icare.presentation.registeration.forgotpassword.ForgotPasswordScreen
+import com.example.icare.presentation.registeration.forgotpassword.ResetPasswordScreen
+import com.example.icare.presentation.registeration.verify.DoneVerifyScreen
+import com.example.icare.presentation.registeration.verify.VerifyScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +57,7 @@ fun SetupNavigation(context: Context) {
     val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.OnBoarding.route) {
+    NavHost(navController = navController, startDestination = Destinations.Offline.route) {
         composable(Destinations.Splash.route) {
             SplashScreen(navController = navController, preferencesHelper = preferencesHelper)
         }
@@ -71,6 +76,20 @@ fun SetupNavigation(context: Context) {
         composable(Destinations.Home.route) {
             HomeScreen()
         }
+        composable(Destinations.ForgotPassword.route) {
+            ForgotPasswordScreen()
+        }
+        composable(Destinations.Verify.route) {
+            VerifyScreen()
+        }
+        composable(Destinations.DoneVerify.route) {
+            DoneVerifyScreen()
+        }
+        composable(Destinations.ResetPassword.route) {
+            ResetPasswordScreen()
+        }
+        composable(Destinations.Offline.route) {
+            OfflineScreen()
+        }
     }
 }
-

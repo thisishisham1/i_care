@@ -13,15 +13,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.icare.presentation.registeration.signin.component.ForgotPassword
-import com.example.icare.presentation.registeration.signin.component.SignInHeader
-import com.example.icare.presentation.registeration.signin.component.SignInImage
-import com.example.icare.presentation.registeration.signin.component.SignUpText
 import com.example.icare.core.util.ButtonHeight
 import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.reusablecomponent.InputTextFiled
+import com.example.icare.core.util.reusablecomponent.PrimaryInputTextFiled
 import com.example.icare.core.util.reusablecomponent.PasswordInputField
 import com.example.icare.R
+import com.example.icare.presentation.registeration.component.ImageHeader
+import com.example.icare.presentation.registeration.component.TextHeader
+
+private val imageRes = R.drawable.signin
 
 @Composable
 fun SignInScreen() {
@@ -33,8 +33,8 @@ fun SignInScreen() {
                 vertical = Dimens.mediumPadding, horizontal = Dimens.largePadding
             )
     ) {
-        SignInImage()
-        SignInHeader()
+        ImageHeader(imageRes = imageRes)
+        TextHeader("Sign In")
         val inputFiled = mutableMapOf(
             stringResource(id = R.string.email) to remember {
                 mutableStateOf("")
@@ -45,7 +45,7 @@ fun SignInScreen() {
         )
         inputFiled.forEach { (label, valueState) ->
             when (label) {
-                stringResource(id = R.string.email) -> InputTextFiled(
+                stringResource(id = R.string.email) -> PrimaryInputTextFiled(
                     value = valueState.value,
                     label = label, onValueChange = { valueState.value = it }
                 )
