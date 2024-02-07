@@ -1,3 +1,27 @@
 <resources>
+    // registration
     <string name="app_name">I Care</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="continue_">Continue</string>
+    <string name="joined_before">Joined us before?</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">Login</string>
+    <string name="dont_have_account">Don\'t have account?</string>
+    <string name="description_Forgot_password">Don’t worry! it happens.
+Please enter the address associated with your account.</string>
+    <string name="submit">Submit</string>
+
+    // onBoarding
+    <string name="on_boarding1">Digital Smart Diagnoses,\ninstant Relief!</string>
+    <string name="on_boarding2">Find a lot of specialist\ndoctors in one place</string>
+    <string name="on_boarding3">Find Pharmacies\nNearby</string>
+    <string name="on_boarding4">Book, Visit, Chat Results.\nSwift Health in Three\nSteps!</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="get_started">Get Started</string>
 </resources>
