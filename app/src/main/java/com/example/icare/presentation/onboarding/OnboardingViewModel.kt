@@ -1,0 +1,27 @@
+package com.example.icare.presentation.onboarding
+
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.PagerState
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import com.example.icare.core.util.Destinations
+import com.example.icare.data.PreferencesHelper
+
+class OnboardingViewModel(
+    private val preferencesHelper: PreferencesHelper
+) : ViewModel() {
+    @OptIn(ExperimentalFoundationApi::class)
+    suspend fun clickButton(
+        navController: NavController,
+        pagerState: PagerState,
+    ) {
+        if (pagerState.currentPage == 3) {
+            preferencesHelper.saveBooleanValue("onBoarding", true)
+            navController.popBackStack()
+            navController.navigate(Destinations.SignIn.route)
+        } else {
+            pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
+        }
+
+    }
+}

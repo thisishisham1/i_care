@@ -17,18 +17,38 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavController
 import com.example.icare.core.util.Dimens
 import com.example.icare.core.util.ButtonHeight
 import com.example.icare.core.util.reusablecomponent.PrimaryInputTextFiled
 import com.example.icare.core.util.reusablecomponent.PasswordInputField
 import com.example.icare.R
+import com.example.icare.domain.model.User
+import com.example.icare.presentation.registeration.RegisterViewModel
 import com.example.icare.presentation.registeration.component.ImageHeader
 import com.example.icare.presentation.registeration.component.TextHeader
 
 private val imageRes = R.drawable.signup
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(navController: NavController) {
+    val vm = remember {
+        RegisterViewModel()
+    }
+    val inputFields = mutableMapOf(
+        stringResource(id = R.string.name) to remember {
+            mutableStateOf("")
+        },
+        stringResource(id = R.string.email) to remember {
+            mutableStateOf("")
+        },
+        stringResource(id = R.string.password) to remember {
+            mutableStateOf("")
+        },
+        stringResource(id = R.string.confirm_password) to remember {
+            mutableStateOf("")
+        }
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -39,21 +59,6 @@ fun SignUpScreen() {
         ImageHeader(imageRes = imageRes)
 
         TextHeader(headerString = "Sign up")
-
-        val inputFields = mutableMapOf(
-            stringResource(id = R.string.name) to remember {
-                mutableStateOf("")
-            },
-            stringResource(id = R.string.email) to remember {
-                mutableStateOf("")
-            },
-            stringResource(id = R.string.password) to remember {
-                mutableStateOf("")
-            },
-            stringResource(id = R.string.confirm_password) to remember {
-                mutableStateOf("")
-            }
-        )
         inputFields.forEach { (label, valueState) ->
             Spacer(modifier = Modifier.height(Dimens.mediumPadding))
             when (label) {
@@ -77,22 +82,19 @@ fun SignUpScreen() {
                 }
             }
         }
-
         AgreementText()
         Spacer(modifier = Modifier.weight(1f))
         PrimaryButton(
             text = stringResource(id = R.string.continue_),
-            onClick = { handleContinueClick() },
+            onClick = {
+                //todo:
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(ButtonHeight),
             textStyle = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold)
         )
 
-        SignInText()
+        SignInText(viewModel = vm)
     }
-}
-
-private fun handleContinueClick() {
-    // TODO: Implement the action when the "Continue" button is clicked
 }

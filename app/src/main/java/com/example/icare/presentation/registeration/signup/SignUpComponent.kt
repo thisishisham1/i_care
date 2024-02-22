@@ -17,6 +17,8 @@ import com.example.icare.R
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.blue
 import com.example.icare.core.theme.green500
+import com.example.icare.core.util.WidthSpacer
+import com.example.icare.presentation.registeration.RegisterViewModel
 
 @Composable
 fun AgreementText() {
@@ -40,29 +42,20 @@ fun AgreementText() {
 }
 
 @Composable
-fun SignInText() {
-    val text = buildAnnotatedString {
-        withStyle(style = SpanStyle(color = black)) {
-            append(stringResource(id = R.string.joined_before))
-        }
-        withStyle(style = SpanStyle(color = green500)) {
-            append(stringResource(id = R.string.sign_in))
-        }
-
-    }
+fun SignInText(viewModel: RegisterViewModel) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Text(
-            text = text,
-            style = MaterialTheme.typography.titleSmall, modifier = Modifier.clickable {
-                handleSignInClick()
+            text = stringResource(id = R.string.joined_before),
+            style = MaterialTheme.typography.titleSmall
+        )
+        WidthSpacer()
+        Text(
+            text = stringResource(id = R.string.sign_in),
+            style = MaterialTheme.typography.titleSmall,
+            color = green500,
+            modifier = Modifier.clickable {
+                //todo:
             }
         )
     }
-
 }
-
-private fun handleSignInClick() {
-    // TODO: Implement the action when the "Sign In" text is clicked
-}
-
-private val SignUpImage = R.drawable.signup

@@ -18,7 +18,6 @@ import com.example.icare.presentation.home.HomeScreen
 import com.example.icare.presentation.onboarding.OnBoardingScreen
 import com.example.icare.presentation.registeration.signin.SignInScreen
 import com.example.icare.presentation.registeration.signup.SignUpScreen
-import com.example.icare.presentation.selectuser.SelectUserScreen
 import com.example.icare.presentation.splash.SplashScreen
 import com.example.icare.core.theme.ICareTheme
 import com.example.icare.core.util.Destinations
@@ -57,21 +56,18 @@ fun SetupNavigation(context: Context) {
     val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.Offline.route) {
+    NavHost(navController = navController, startDestination = Destinations.Splash.route) {
         composable(Destinations.Splash.route) {
             SplashScreen(navController = navController, preferencesHelper = preferencesHelper)
         }
         composable(Destinations.OnBoarding.route) {
             OnBoardingScreen(navController)
         }
-        composable(Destinations.SelectUser.route) {
-            SelectUserScreen()
-        }
         composable(Destinations.SignUp.route) {
-            SignUpScreen()
+            SignUpScreen(navController = navController)
         }
         composable(Destinations.SignIn.route) {
-            SignInScreen()
+            SignInScreen(navController)
         }
         composable(Destinations.Home.route) {
             HomeScreen()

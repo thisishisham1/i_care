@@ -13,10 +13,16 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.navigation.NavController
 import com.example.icare.R
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.blue
 import com.example.icare.core.theme.green500
+import com.example.icare.core.util.Destinations
+import com.example.icare.core.util.WidthSpacer
+import com.example.icare.core.util.navigateAndClearStack
+import com.example.icare.presentation.registeration.RegisterViewModel
+
 @Composable
 fun ForgotPassword() {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
@@ -30,17 +36,20 @@ fun ForgotPassword() {
 }
 
 @Composable
-fun SignUpText() {
-    val text = buildAnnotatedString {
-        withStyle(SpanStyle(color = black)) {
-            append(stringResource(id = R.string.dont_have_account))
-        }
-
-        withStyle(SpanStyle(color = green500)) {
-            append(stringResource(id = R.string.sign_up))
-        }
-    }
+fun SignUpText(viewModel: RegisterViewModel) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-        Text(text = text, style = MaterialTheme.typography.titleSmall)
+        Text(
+            text = stringResource(id = R.string.dont_have_account),
+            style = MaterialTheme.typography.titleSmall
+        )
+        WidthSpacer()
+        Text(
+            text = stringResource(id = R.string.sign_up),
+            style = MaterialTheme.typography.titleSmall,
+            color = green500,
+            modifier = Modifier.clickable {
+                // TODO:
+            }
+        )
     }
 }

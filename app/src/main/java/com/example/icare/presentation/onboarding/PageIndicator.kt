@@ -1,4 +1,4 @@
-package com.example.icare.presentation.onboarding.component
+package com.example.icare.presentation.onboarding
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

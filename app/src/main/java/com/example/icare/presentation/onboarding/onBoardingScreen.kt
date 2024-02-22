@@ -19,19 +19,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.example.icare.data.PreferencesHelper
-import com.example.icare.presentation.onboarding.component.OnBoardingPage
-import com.example.icare.core.util.Destinations
 import com.example.icare.core.util.Dimens
-import com.example.icare.presentation.onboarding.component.PageIndicator
 import kotlinx.coroutines.launch
 import com.example.icare.R
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(navController: NavController) {
-    val context = LocalContext.current
-    val preferencesHelper = PreferencesHelper(context)
-    val scopeCoroutine = rememberCoroutineScope()
+    val preferencesHelper = PreferencesHelper(LocalContext.current)
+    val vm = remember {
+        OnboardingViewModel(preferencesHelper = preferencesHelper)
+    }
+    val coroutineScope = rememberCoroutineScope()
     val next = stringResource(id = R.string.next)
     val getStart = stringResource(id = R.string.get_started)
     Column(
@@ -64,14 +63,8 @@ fun OnBoardingScreen(navController: NavController) {
             PrimaryButton(
                 text = buttonState.value,
                 onClick = {
-                    scopeCoroutine.launch {
-                        if (pagerState.currentPage == 3) {
-                            preferencesHelper.saveBooleanValue("onBoarding", true)
-                            navController.popBackStack()
-                            navController.navigate(Destinations.SignIn.route)
-                        } else {
-                            pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
-                        }
+                    coroutineScope.launch {
+                        vm.clickButton(navController, pagerState)
                     }
                 },
             )
