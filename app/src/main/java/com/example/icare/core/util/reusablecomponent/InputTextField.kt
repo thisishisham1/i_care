@@ -2,8 +2,10 @@ package com.example.icare.core.util.reusablecomponent
 
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -19,11 +21,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.icare.R
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.shapes
@@ -48,51 +53,72 @@ fun PrimaryInputTextFiled(
     keyboardType: KeyboardType = KeyboardType.Text,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
+    errorMessage: String? = null,
+    isError: Boolean = false,
 ) {
-    OutlinedTextField(
-        modifier = modifier
-            .height(TextFieldHeight)
-            .fillMaxWidth(),
-        value = value,
-        onValueChange = onValueChange,
-        textStyle = textStyle,
-        label = {
-            Text(text = label, style = MaterialTheme.typography.titleMedium)
-        },
-        shape = shapes.medium,
-        singleLine = true,
-        enabled = isEnabled,
-        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-        leadingIcon = leadingIcon,
-        trailingIcon = trailingIcon,
-        keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = keyboardAction,
-            keyboardType = keyboardType
-        ),
-        colors = OutlinedTextFieldDefaults.colors(
-            disabledLabelColor = green500,
-            errorLabelColor = red500,
-            focusedLabelColor = green700,
-            unfocusedLabelColor = gray600,
-            disabledBorderColor = green200,
-            focusedBorderColor = green500,
-            unfocusedBorderColor = gray400,
-            errorBorderColor = red500,
-            disabledTextColor = gray500,
-            focusedTextColor = black,
-            unfocusedTextColor = black.copy(alpha = 0.8f),
-            cursorColor = green700,
-            focusedTrailingIconColor = green500,
-            unfocusedTrailingIconColor = gray400
-        ),
-    )
+    Column {
+        OutlinedTextField(
+            modifier = modifier
+                .height(TextFieldHeight)
+                .fillMaxWidth(),
+            value = value,
+            onValueChange = onValueChange,
+            textStyle = textStyle,
+            label = {
+                Text(text = label, style = MaterialTheme.typography.titleMedium)
+            },
+            shape = shapes.medium,
+            singleLine = true,
+            enabled = isEnabled,
+            visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = keyboardAction,
+                keyboardType = keyboardType
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                disabledLabelColor = green500,
+                errorLabelColor = red500,
+                focusedLabelColor = green700,
+                unfocusedLabelColor = gray600,
+                disabledBorderColor = green200,
+                focusedBorderColor = green500,
+                unfocusedBorderColor = gray400,
+                errorBorderColor = red500,
+                disabledTextColor = gray500,
+                focusedTextColor = black,
+                unfocusedTextColor = black.copy(alpha = 0.8f),
+                cursorColor = green700,
+                focusedTrailingIconColor = green500,
+                unfocusedTrailingIconColor = gray400
+            ),
+            isError = isError
+        )
+        if (!errorMessage.isNullOrBlank() && isError) {
+            Text(
+                text = errorMessage,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp
+                ),
+                modifier = Modifier
+                    .padding(start = 8.dp, top = 0.dp)
+            )
+        }
+    }
+
 }
 
 @Composable
 fun PasswordInputField(
     label: String,
     modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit, value: String
+    onValueChange: (String) -> Unit,
+    value: String,
+    isError: Boolean = false,
+    errorMessage: String? = null
 ) {
     var isPasswordVisible by remember {
         mutableStateOf(true)
@@ -115,7 +141,7 @@ fun PasswordInputField(
             )
 
 
-        }, modifier = modifier
+        }, modifier = modifier, isError = isError, errorMessage = errorMessage
     )
 }
 

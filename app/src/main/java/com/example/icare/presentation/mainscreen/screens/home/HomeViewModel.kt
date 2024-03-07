@@ -1,4 +1,4 @@
-package com.example.icare.presentation.home
+package com.example.icare.presentation.mainscreen.screens.home
 
 import androidx.lifecycle.ViewModel
 

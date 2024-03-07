@@ -15,7 +15,13 @@
     <string name="description_Forgot_password">Don’t worry! it happens.
 Please enter the address associated with your account.</string>
     <string name="submit">Submit</string>
-
+    <string name="em_empty_filed">Empty Filed</string>
+    <string name="em_Invalid_Email">Invalid Email</string>
+    <string name="em_Invalid_phone">Invalid Phone number</string>
+    <string name="em_short_pass">Password must be at least 8 characters long</string>
+    <string name="em_mismatch">Password and Confirm Password do not match</string>
+    <string name="em_incorrect_pass">Incorrect Password</string>
+    <string name="em_email_not_found">Email not founded please Signup</string>
     // onBoarding
     <string name="on_boarding1">Digital Smart Diagnoses,\ninstant Relief!</string>
     <string name="on_boarding2">Find a lot of specialist\ndoctors in one place</string>

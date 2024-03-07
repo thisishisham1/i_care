@@ -18,7 +18,6 @@ import com.example.icare.core.theme.black
 import com.example.icare.core.theme.blue
 import com.example.icare.core.theme.green500
 import com.example.icare.core.util.WidthSpacer
-import com.example.icare.presentation.registeration.RegisterViewModel
 
 @Composable
 fun AgreementText() {
@@ -42,7 +41,7 @@ fun AgreementText() {
 }
 
 @Composable
-fun SignInText(viewModel: RegisterViewModel) {
+fun SignInText() {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Text(
             text = stringResource(id = R.string.joined_before),
