@@ -20,15 +20,12 @@ import com.example.icare.core.theme.green500
 
 @Composable
 fun SplashScreen(navController: NavController, preferencesHelper: PreferencesHelper) {
-    val vm = remember {
+    val splashViewModel = remember {
         SplashViewModel(preferencesHelper = preferencesHelper)
     }
-    val scale = remember {
-        Animatable(0f)
-    }
     LaunchedEffect(key1 = true) {
-        vm.animateScale(scale)
-        vm.delayAndNavigate(navController)
+        splashViewModel.animateScale(splashViewModel.scale)
+        splashViewModel.delayAndNavigate(navController)
     }
     Box(
         contentAlignment = Alignment.Center,
@@ -41,7 +38,7 @@ fun SplashScreen(navController: NavController, preferencesHelper: PreferencesHel
             contentDescription = "",
             Modifier
                 .requiredSize(250.dp)
-                .scale(scale.value)
+                .scale(splashViewModel.scale.value)
         )
     }
 }

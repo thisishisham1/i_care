@@ -4,6 +4,7 @@ import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.tween
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.icare.core.util.Destinations
@@ -13,6 +14,8 @@ import kotlinx.coroutines.delay
 class SplashViewModel(private val preferencesHelper: PreferencesHelper) : ViewModel() {
     private val _animationDuration = 1000
     private val _delayDuration = 2000L
+    val scale = Animatable(0f)
+
     suspend fun animateScale(scale: Animatable<Float, AnimationVector1D>) {
         scale.animateTo(
             targetValue = 1f,

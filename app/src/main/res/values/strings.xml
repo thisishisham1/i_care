@@ -21,7 +21,8 @@ Please enter the address associated with your account.</string>
     <string name="em_short_pass">Password must be at least 8 characters long</string>
     <string name="em_mismatch">Password and Confirm Password do not match</string>
     <string name="em_incorrect_pass">Incorrect Password</string>
-    <string name="em_email_not_found">Email not founded please Signup</string>
+    <string name="em_email_not_found">Email not founded</string>
+    <string name="em_invalid_email_format">Invalid email format please, try again</string>
     // onBoarding
     <string name="on_boarding1">Digital Smart Diagnoses,\ninstant Relief!</string>
     <string name="on_boarding2">Find a lot of specialist\ndoctors in one place</string>
@@ -30,4 +31,13 @@ Please enter the address associated with your account.</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="get_started">Get Started</string>
+    //verify
+    <string name="verification_code">Verification Code</string>
+    <string name="verify">Verify</string>
+    <string name="confirm_with_code">Confirm With Code</string>
+    <string name="email_verified">Email Verified</string>
+    <string name="congratulation">Congratulations, your email number has been
+verified. You can start using the app</string>
+    <string name="reset_password">Reset Password?</string>
+    <string name="change_password">Change Password</string>
 </resources>

@@ -25,7 +25,7 @@ fun MainNavigation(context: Context) {
     val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.SignIn.route) {
+    NavHost(navController = navController, startDestination = Destinations.DoneVerify.route) {
         composable(Destinations.Splash.route) {
             SplashScreen(navController = navController, preferencesHelper = preferencesHelper)
         }
@@ -39,16 +39,16 @@ fun MainNavigation(context: Context) {
             SignInScreen(navController)
         }
         composable(Destinations.ForgotPassword.route) {
-            ForgotPasswordScreen()
+            ForgotPasswordScreen(navController)
         }
         composable(Destinations.Verify.route) {
-            VerifyScreen()
+            VerifyScreen(navController)
         }
         composable(Destinations.DoneVerify.route) {
-            DoneVerifyScreen()
+            DoneVerifyScreen(navController)
         }
         composable(Destinations.ResetPassword.route) {
-            ResetPasswordScreen()
+            ResetPasswordScreen(navController)
         }
         composable(Destinations.Offline.route) {
             OfflineScreen()

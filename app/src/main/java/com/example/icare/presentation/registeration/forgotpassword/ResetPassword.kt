@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.icare.R
 import com.example.icare.core.util.Dimens
 import com.example.icare.core.util.HeightSpacer
@@ -20,14 +22,12 @@ import com.example.icare.presentation.registeration.component.ImageHeader
 import com.example.icare.presentation.registeration.component.TextHeader
 
 @Composable
-fun ResetPasswordScreen() {
-    val password = remember {
-        mutableStateOf("")
+fun ResetPasswordScreen(navController: NavHostController) {
+    val resetPasswordViewModel = remember {
+        ResetPasswordViewModel(navController)
     }
-    val confirmPassword = remember {
-        mutableStateOf("")
-    }
-    val passwordFiled = listOf("Password" to password, "Confirm Password" to confirmPassword)
+    val resetPassword = stringResource(id = R.string.reset_password)
+    val changePassword = stringResource(id = R.string.change_password)
     Column(
         Modifier
             .fillMaxSize()
@@ -37,17 +37,27 @@ fun ResetPasswordScreen() {
         verticalArrangement = Arrangement.spacedBy(Dimens.mediumPadding)
     ) {
         ImageHeader(imageRes = R.drawable.reset_password, sizeImage = 320.dp)
-        TextHeader(headerString = "Reset Password?")
+        TextHeader(headerString = resetPassword)
         HeightSpacer()
-        passwordFiled.forEach { (label, value) ->
-            HeightSpacer()
-            PasswordInputField(
-                label = label,
-                onValueChange = { value.value = it },
-                value = value.value
-            )
-        }
+        InputFields(resetPasswordViewModel = resetPasswordViewModel)
         Spacer(modifier = Modifier.weight(1f))
-        PrimaryButton(text = "Change Password", onClick = { /*TODO*/ })
+        PrimaryButton(
+            text = changePassword,
+            onClick = { resetPasswordViewModel.handleChangePasswordButton() })
+    }
+}
+
+@Composable
+private fun InputFields(resetPasswordViewModel: ResetPasswordViewModel) {
+    val context = LocalContext.current
+    resetPasswordViewModel.passwordFields.forEach { (label, value) ->
+        HeightSpacer()
+        PasswordInputField(
+            isError = resetPasswordViewModel.isError(label),
+            errorMessage = resetPasswordViewModel.getErrorMessage(context, label),
+            label = label,
+            onValueChange = { value.value = it },
+            value = value.value
+        )
     }
 }
