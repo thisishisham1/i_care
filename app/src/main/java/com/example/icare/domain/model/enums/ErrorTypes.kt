@@ -1,6 +1,5 @@
 package com.example.icare.domain.model.enums
 
-import androidx.compose.runtime.Composable
 import com.example.icare.R
 
 enum class ErrorTypes(val errorMessage: Int) {

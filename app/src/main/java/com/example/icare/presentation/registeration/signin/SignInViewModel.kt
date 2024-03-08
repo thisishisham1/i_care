@@ -1,7 +1,6 @@
 package com.example.icare.presentation.registeration.signin
 
 import android.content.Context
-import android.util.Patterns
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
