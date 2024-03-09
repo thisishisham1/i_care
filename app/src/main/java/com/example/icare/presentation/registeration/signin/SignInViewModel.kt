@@ -5,6 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.example.icare.core.util.Destinations
 import com.example.icare.domain.model.enums.ErrorTypes
 
 
@@ -38,6 +39,7 @@ class SignInViewModel(val navController: NavController) : ViewModel() {
                         setError(ErrorTypes.EMAIL_NOT_FOUNDED, label)
                     }
                 }
+
                 "Password" -> {
                     if (stateValue.isEmpty()) {
                         setError(ErrorTypes.EMPTY, label)
@@ -47,6 +49,14 @@ class SignInViewModel(val navController: NavController) : ViewModel() {
                 }
             }
         }
+    }
+
+    fun handleForgotPasswordButton() {
+        navController.navigate(Destinations.ForgotPassword.route)
+    }
+
+    fun handleSignUpButton() {
+        navController.navigate(Destinations.SignUp.route)
     }
 
     // Function to reset error states for all input fields

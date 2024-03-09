@@ -55,7 +55,6 @@ private val imageRes = R.drawable.signin
 fun SignInScreen(navController: NavController) {
     val signInViewModel = remember { SignInViewModel(navController) }
     val context = LocalContext.current
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,11 +67,11 @@ fun SignInScreen(navController: NavController) {
         ImageHeader(imageRes = imageRes)
         TextHeader(headerString = "Sign In")
         InputFields(signInViewModel = signInViewModel, context = context)
-        ForgotPassword()
+        ForgotPassword(signInViewModel)
         Spacer(modifier = Modifier.height(Dimens.mediumPadding))
         SignInButton(signInViewModel = signInViewModel)
         GoogleButton()
-        SignUpText()
+        SignUpText(signInViewModel)
     }
 }
 
@@ -177,19 +176,19 @@ private fun ProgressIndicator() {
 }
 
 @Composable
-private fun ForgotPassword() {
+private fun ForgotPassword(signInViewModel: SignInViewModel) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
         Text(
             text = stringResource(id = R.string.forgot_password),
             style = MaterialTheme.typography.titleSmall, color = blue,
-            modifier = Modifier.clickable { },
+            modifier = Modifier.clickable { signInViewModel.handleForgotPasswordButton() },
         )
     }
 
 }
 
 @Composable
-private fun SignUpText() {
+private fun SignUpText(signInViewModel: SignInViewModel) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Text(
             text = stringResource(id = R.string.dont_have_account),
@@ -201,7 +200,7 @@ private fun SignUpText() {
             style = MaterialTheme.typography.titleSmall,
             color = green500,
             modifier = Modifier.clickable {
-                // TODO:
+                signInViewModel.handleSignUpButton()
             }
         )
     }

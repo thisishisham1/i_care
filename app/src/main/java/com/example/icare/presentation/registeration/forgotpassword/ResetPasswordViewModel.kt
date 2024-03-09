@@ -47,7 +47,7 @@ class ResetPasswordViewModel(val navController: NavController) : ViewModel() {
         when {
             emailValue.value.isEmpty() -> setError(ErrorTypes.EMPTY)
             !validateEmailFormat() -> setError(ErrorTypes.INVALID_EMAIL_FORMAT)
-            emailValue.value == "Hishamohmad19@gmail.com" -> navController.navigate(Destinations.Verify.route)
+            emailValue.value == "Hishamohmad19@gmail.com" -> navController.navigate(Destinations.ResetPassword.route)
             else -> setError(ErrorTypes.EMAIL_NOT_FOUNDED)
         }
     }
@@ -60,8 +60,7 @@ class ResetPasswordViewModel(val navController: NavController) : ViewModel() {
                 "Password" -> {
                     if (value.value.isEmpty()) {
                         setPasswordError(ErrorTypes.EMPTY, label)
-                    }
-                    else if (!validatePasswordLength(value.value)) {
+                    } else if (!validatePasswordLength(value.value)) {
                         setPasswordError(ErrorTypes.SHORT_PASSWORD, label)
                     }
                 }
