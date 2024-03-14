@@ -25,7 +25,7 @@ fun MainNavigation(context: Context) {
     val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.Splash.route) {
+    NavHost(navController = navController, startDestination = Destinations.MainScreen.route) {
         composable(Destinations.Splash.route) {
             SplashScreen(navController = navController, preferencesHelper = preferencesHelper)
         }

@@ -13,7 +13,7 @@ import com.example.icare.presentation.mainscreen.screens.search.SearchScreen
 fun NavGraph(navController: NavHostController){
     NavHost(navController = navController, startDestination = "Home"){
         composable("Home"){
-            HomeScreen(navController = navController)
+            HomeScreen()
         }
         composable("Search"){
             SearchScreen(navController = navController)
