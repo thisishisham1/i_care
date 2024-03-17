@@ -33,18 +33,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.icare.R
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.shapes
+import com.example.icare.core.util.Destinations
 import com.example.icare.core.util.Dimens
 import com.example.icare.core.util.WidthSpacer
 import com.example.icare.domain.model.Doctor
+import com.example.icare.domain.model.listOfDoctor
 
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     Column(
         Modifier
             .fillMaxSize()
@@ -53,7 +56,7 @@ fun HomeScreen() {
     ) {
         TopBar({}, {})
         Categories({})
-        NearbyDoctors({})
+        NearbyDoctors(navController = navController)
     }
 }
 
@@ -160,16 +163,7 @@ private fun CardCategory(category: Pair<String, Int>, onClicked: () -> Unit) {
 }
 
 @Composable
-private fun NearbyDoctors(onClickDoctor: () -> Unit) {
-    val listOfDoctor = (1..10).map {
-        Doctor(
-            "Hisham Mohamed",
-            "Orthopedic Surgery",
-            "Women's Clinic,Settle,USA",
-            5.0,
-            1567.0
-        )
-    }
+private fun NearbyDoctors(navController: NavController) {
     Column(Modifier.fillMaxSize()) {
         Row(
             Modifier.fillMaxWidth(),
@@ -186,24 +180,24 @@ private fun NearbyDoctors(onClickDoctor: () -> Unit) {
             )
         }
         LazyColumn(verticalArrangement = Arrangement.spacedBy(5.dp)) {
-            items(listOfDoctor) { Doctor ->
-                CardDoctor(doctor = Doctor) {
-                    onClickDoctor()
-                }
+            items(listOfDoctor) { doctor ->
+                CardDoctor(doctor = doctor, navController)
             }
         }
     }
 }
 
 @Composable
-private fun CardDoctor(doctor: Doctor, onClickDoctor: () -> Unit) {
+private fun CardDoctor(doctor: Doctor, navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .height(140.dp)
             .clip(shape = shapes.small)
             .padding(5.dp)
-            .clickable { onClickDoctor() },
+            .clickable {
+                navController.navigate("${Destinations.DoctorDetails.route}/${doctor.id}")
+            },
         shadowElevation = 2.dp
     ) {
         Box(

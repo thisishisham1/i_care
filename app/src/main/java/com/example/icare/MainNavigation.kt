@@ -18,6 +18,7 @@ import com.example.icare.presentation.registeration.verify.DoneVerifyScreen
 import com.example.icare.presentation.registeration.verify.VerifyScreen
 import com.example.icare.presentation.splash.SplashScreen
 import com.example.icare.presentation.mainscreen.MainScreen
+import com.example.icare.presentation.mainscreen.screenDetails.DoctorDetails
 
 @Composable
 fun MainNavigation(context: Context) {

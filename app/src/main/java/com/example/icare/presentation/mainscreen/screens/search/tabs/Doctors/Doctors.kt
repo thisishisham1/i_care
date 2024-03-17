@@ -32,19 +32,11 @@ import com.example.icare.core.theme.shapes
 import com.example.icare.core.util.HeightSpacer
 import com.example.icare.core.util.WidthSpacer
 import com.example.icare.domain.model.Doctor
+import com.example.icare.domain.model.listOfDoctor
 
 @Composable
 fun Doctors(onClickDoctor: () -> Unit) {
 
-    val listOfDoctor = (1..10).map {
-        Doctor(
-            "Hisham Mohamed",
-            "Orthopedic Surgery",
-            "Women's Clinic,Settle,USA",
-            5.0,
-            1567.0
-        )
-    }
     Column(Modifier.fillMaxSize()) {
         Row(
             Modifier.fillMaxWidth(),
