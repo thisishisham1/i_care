@@ -28,7 +28,7 @@ fun NavGraph(navController: NavHostController) {
         }
         composable("${Destinations.DoctorDetails.route}/{doctorId}") { NavBackStackEntry ->
             val doctorId = NavBackStackEntry.arguments?.getString("doctorId")?.toIntOrNull() ?: 0
-            DoctorDetails(doctorId = doctorId)
+            DoctorDetails(doctorId = doctorId, navController)
         }
     }
 }

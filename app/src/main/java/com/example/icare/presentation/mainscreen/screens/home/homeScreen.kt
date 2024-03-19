@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -36,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.icare.R
-import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.shapes
 import com.example.icare.core.util.Destinations
@@ -181,14 +179,17 @@ private fun NearbyDoctors(navController: NavController) {
         }
         LazyColumn(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             items(listOfDoctor) { doctor ->
-                CardDoctor(doctor = doctor, navController)
+                DoctorCard(doctor = doctor){
+                    navController.navigate("${Destinations.DoctorDetails.route}/${doctor.id}")
+
+                }
             }
         }
     }
 }
 
 @Composable
-private fun CardDoctor(doctor: Doctor, navController: NavController) {
+private fun DoctorCard(doctor: Doctor, onDoctorClick: () -> Unit) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -196,7 +197,7 @@ private fun CardDoctor(doctor: Doctor, navController: NavController) {
             .clip(shape = shapes.small)
             .padding(5.dp)
             .clickable {
-                navController.navigate("${Destinations.DoctorDetails.route}/${doctor.id}")
+                onDoctorClick()
             },
         shadowElevation = 2.dp
     ) {

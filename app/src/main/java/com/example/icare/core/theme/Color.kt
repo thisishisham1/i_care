@@ -12,3 +12,4 @@ val gray500 = Color(0xFF607D8B) // Primary Gray
 val gray600 = Color(0xFF546E7A) // Dark gray
 val red500 = Color(0xFFF44336) // Red
 val blue = Color(0xff2196F3) // Blue
+val gray200 = Color(0xffF3F4F6)

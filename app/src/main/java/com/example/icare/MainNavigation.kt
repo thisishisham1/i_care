@@ -19,6 +19,10 @@ import com.example.icare.presentation.registeration.verify.VerifyScreen
 import com.example.icare.presentation.splash.SplashScreen
 import com.example.icare.presentation.mainscreen.MainScreen
 import com.example.icare.presentation.mainscreen.screenDetails.DoctorDetails
+import com.example.icare.presentation.mainscreen.screens.appointment.AppointmentScreen
+import com.example.icare.presentation.mainscreen.screens.home.HomeScreen
+import com.example.icare.presentation.mainscreen.screens.profile.ProfileScreen
+import com.example.icare.presentation.mainscreen.screens.search.SearchScreen
 
 @Composable
 fun MainNavigation(context: Context) {
@@ -55,7 +59,11 @@ fun MainNavigation(context: Context) {
             OfflineScreen()
         }
         composable(Destinations.MainScreen.route) {
-            MainScreen()
+            MainScreen(navController)
+        }
+        composable("${Destinations.DoctorDetails.route}/{doctorId}") { NavBackStackEntry ->
+            val doctorId = NavBackStackEntry.arguments?.getString("doctorId")?.toIntOrNull() ?: 0
+            DoctorDetails(doctorId = doctorId,navController)
         }
     }
 }
