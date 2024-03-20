@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,7 +38,6 @@ import coil.compose.AsyncImage
 import com.example.icare.R
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.shapes
-import com.example.icare.core.util.Destinations
 import com.example.icare.core.util.Dimens
 import com.example.icare.core.util.WidthSpacer
 import com.example.icare.domain.model.Doctor
@@ -46,6 +46,9 @@ import com.example.icare.domain.model.listOfDoctor
 
 @Composable
 fun HomeScreen(navController: NavController) {
+    val homeViewModel = remember {
+        HomeViewModel(navController)
+    }
     Column(
         Modifier
             .fillMaxSize()
@@ -54,7 +57,7 @@ fun HomeScreen(navController: NavController) {
     ) {
         TopBar({}, {})
         Categories({})
-        NearbyDoctors(navController = navController)
+        NearbyDoctors(homeViewModel)
     }
 }
 
@@ -161,7 +164,7 @@ private fun CardCategory(category: Pair<String, Int>, onClicked: () -> Unit) {
 }
 
 @Composable
-private fun NearbyDoctors(navController: NavController) {
+private fun NearbyDoctors(homeViewModel: HomeViewModel) {
     Column(Modifier.fillMaxSize()) {
         Row(
             Modifier.fillMaxWidth(),
@@ -179,9 +182,8 @@ private fun NearbyDoctors(navController: NavController) {
         }
         LazyColumn(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             items(listOfDoctor) { doctor ->
-                DoctorCard(doctor = doctor){
-                    navController.navigate("${Destinations.DoctorDetails.route}/${doctor.id}")
-
+                DoctorCard(doctor = doctor) {
+                    homeViewModel.handleNavigateDetails(doctor)
                 }
             }
         }

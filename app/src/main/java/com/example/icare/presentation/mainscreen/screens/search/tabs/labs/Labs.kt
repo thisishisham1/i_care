@@ -33,20 +33,13 @@ import com.example.icare.core.theme.shapes
 import com.example.icare.core.util.HeightSpacer
 import com.example.icare.core.util.WidthSpacer
 import com.example.icare.domain.model.Lab
+import com.example.icare.domain.model.listOfLabs
+import com.example.icare.presentation.mainscreen.screens.search.SearchViewModel
 
 
 @Composable
-fun Labs(onClickLab: () -> Unit) {
+fun Labs(searchViewModel: SearchViewModel) {
 
-    val listOfLabs = (1..10).map {
-        Lab(
-            "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            "Sunrise Health lab",
-            "123 Oak Street, CA 98765",
-            4.6,
-            123.0
-        )
-    }
     Column(Modifier.fillMaxSize()) {
         Row(
             Modifier.fillMaxWidth(),
@@ -62,7 +55,7 @@ fun Labs(onClickLab: () -> Unit) {
         LazyColumn(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             items(listOfLabs) { lab ->
                 CardDoctor(lab = lab) {
-                    onClickLab()
+                    searchViewModel.handleClickLab(lab = lab)
                 }
             }
         }
@@ -91,7 +84,7 @@ private fun CardDoctor(lab: Lab, onClickDoctor: () -> Unit) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.d),
-                    contentDescription = "Doctor image"
+                    contentDescription = "Lab image"
                 )
                 Column(
                     Modifier

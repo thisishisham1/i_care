@@ -27,15 +27,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.icare.R
 import com.example.icare.core.theme.shapes
+import com.example.icare.core.util.Destinations
 import com.example.icare.core.util.HeightSpacer
 import com.example.icare.core.util.WidthSpacer
 import com.example.icare.domain.model.Doctor
 import com.example.icare.domain.model.listOfDoctor
+import com.example.icare.presentation.mainscreen.screens.search.SearchViewModel
 
 @Composable
-fun Doctors(onClickDoctor: () -> Unit) {
+fun Doctors(searchViewModel: SearchViewModel) {
 
     Column(Modifier.fillMaxSize()) {
         Row(
@@ -52,7 +55,7 @@ fun Doctors(onClickDoctor: () -> Unit) {
         LazyColumn(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             items(listOfDoctor) { doctor ->
                 CardDoctor(doctor = doctor) {
-                    onClickDoctor()
+                    searchViewModel.handleClickDoctor(doctor)
                 }
             }
         }

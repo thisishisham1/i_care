@@ -19,10 +19,8 @@ import com.example.icare.presentation.registeration.verify.VerifyScreen
 import com.example.icare.presentation.splash.SplashScreen
 import com.example.icare.presentation.mainscreen.MainScreen
 import com.example.icare.presentation.mainscreen.screenDetails.DoctorDetails
-import com.example.icare.presentation.mainscreen.screens.appointment.AppointmentScreen
-import com.example.icare.presentation.mainscreen.screens.home.HomeScreen
-import com.example.icare.presentation.mainscreen.screens.profile.ProfileScreen
-import com.example.icare.presentation.mainscreen.screens.search.SearchScreen
+import com.example.icare.presentation.mainscreen.screenDetails.LabDetails
+import com.example.icare.presentation.mainscreen.screenDetails.PharmacyDetails
 
 @Composable
 fun MainNavigation(context: Context) {
@@ -63,7 +61,16 @@ fun MainNavigation(context: Context) {
         }
         composable("${Destinations.DoctorDetails.route}/{doctorId}") { NavBackStackEntry ->
             val doctorId = NavBackStackEntry.arguments?.getString("doctorId")?.toIntOrNull() ?: 0
-            DoctorDetails(doctorId = doctorId,navController)
+            DoctorDetails(doctorId = doctorId, navController)
+        }
+        composable("${Destinations.PharmacyDetails.route}/{pharmacyId}") { NavBackStackEntry ->
+            val pharmacyId =
+                NavBackStackEntry.arguments?.getString("pharmacyId")?.toIntOrNull() ?: 0
+            PharmacyDetails(pharmacyId = pharmacyId, navController)
+        }
+        composable("${Destinations.LabDetails.route}/{labId}") { NavBackStackEntry ->
+            val labId = NavBackStackEntry.arguments?.getString("labId")?.toIntOrNull() ?: 0
+            LabDetails(labId = labId, navController)
         }
     }
 }

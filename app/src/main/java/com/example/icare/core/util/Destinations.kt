@@ -15,8 +15,7 @@ sealed class Destinations(val route: String) {
     data object Offline : Destinations("Offline")
     data object MainScreen : Destinations("Main Screen")
     data object DoctorDetails : Destinations("Doctor Details")
-    data object Home : Destinations("Home")
-    data object Search : Destinations("Search")
-    data object Appointment : Destinations("Appointment")
-    data object Profile : Destinations("Profile")
+    data object PharmacyDetails : Destinations("Pharmacy Details")
+    data object LabDetails : Destinations("Lab Details")
+
 }

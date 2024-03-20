@@ -49,7 +49,7 @@ import com.example.icare.presentation.mainscreen.screens.search.tabs.pharmacy.Ph
 @Composable
 fun SearchScreen(navController: NavController) {
     val searchViewModel = remember {
-        SearchViewModel()
+        SearchViewModel(navController)
     }
     var selectedTab by remember {
         mutableIntStateOf(0)
@@ -64,7 +64,7 @@ fun SearchScreen(navController: NavController) {
         RowTabs(selectedTab) {
             selectedTab = it
         }
-        Content(selectedTab = selectedTab)
+        Content(selectedTab = selectedTab, searchViewModel)
     }
 }
 
@@ -142,11 +142,11 @@ private fun RowTabs(selectedTab: Int, onClickTab: (Int) -> Unit) {
 }
 
 @Composable
-private fun Content(selectedTab: Int) {
+private fun Content(selectedTab: Int, searchViewModel: SearchViewModel) {
     when (selectedTab) {
-        0 -> Doctors(onClickDoctor = {})
-        1 -> Pharmacies(onClickPharmacy = {})
-        else -> Labs(onClickLab = {})
+        0 -> Doctors(searchViewModel = searchViewModel)
+        1 -> Pharmacies(searchViewModel=searchViewModel)
+        else -> Labs(searchViewModel=searchViewModel)
     }
 }
 

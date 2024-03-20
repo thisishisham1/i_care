@@ -55,7 +55,7 @@ fun DoctorDetails(doctorId: Int, navController: NavController) {
         TopAppBar(detailsViewModel = detailsViewModel)
     }) {
         Box(modifier = Modifier.padding(it)) {
-            Content(doctor = doctor, onClickBookButton = { detailsViewModel.handelBookButton() })
+            Content(doctor = doctor, onClickBookButton = { detailsViewModel.handelDoctorButton() })
         }
     }
 }
@@ -68,7 +68,7 @@ private fun Content(doctor: Doctor, onClickBookButton: () -> Unit) {
             .padding(horizontal = Dimens.mediumPadding, vertical = Dimens.smallPadding),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        DoctorCard(doctor = doctor)
+        LabCard(doctor = doctor)
         Experience()
         AboutMe()
         WorkingHours()
@@ -95,7 +95,7 @@ private fun TopAppBar(detailsViewModel: DetailsViewModel) {
 }
 
 @Composable
-private fun DoctorCard(doctor: Doctor) {
+private fun LabCard(doctor: Doctor) {
     Row(
         modifier = Modifier
             .height(170.dp)
@@ -141,10 +141,10 @@ private fun DoctorCard(doctor: Doctor) {
 
 @Composable
 private fun Experience() {
-    val listOfExperience = listOf(
+    val listOfExperience = arrayOf(
         "experience" to R.drawable.medal, "Rating" to R.drawable.star
     )
-    val valuesOfExperience = listOf(10, 4.5)
+    val valuesOfExperience = arrayOf(10, 4.5)
     Row {
         listOfExperience.forEachIndexed { index, pair ->
             Column(

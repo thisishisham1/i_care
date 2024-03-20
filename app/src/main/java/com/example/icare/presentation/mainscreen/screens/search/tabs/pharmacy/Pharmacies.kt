@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,24 +29,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.icare.R
 import com.example.icare.core.theme.shapes
 import com.example.icare.core.util.HeightSpacer
 import com.example.icare.core.util.WidthSpacer
 import com.example.icare.domain.model.Pharmacy
+import com.example.icare.domain.model.listOfPharmacy
+import com.example.icare.presentation.mainscreen.screens.search.SearchViewModel
 
 @Composable
-fun Pharmacies(onClickPharmacy: () -> Unit) {
-
-    val listOfPharmacy = (1..10).map {
-        Pharmacy(
-            "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            "Sunrise Health pharmacy",
-            "123 Oak Street, CA 98765",
-            4.6,
-            123.0
-        )
-    }
+fun Pharmacies(searchViewModel: SearchViewModel) {
     Column(Modifier.fillMaxSize()) {
         Row(
             Modifier.fillMaxWidth(),
@@ -61,7 +55,7 @@ fun Pharmacies(onClickPharmacy: () -> Unit) {
         LazyColumn(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             items(listOfPharmacy) { pharmacy ->
                 CardPharmacy(pharmacy = pharmacy) {
-                    onClickPharmacy()
+                    searchViewModel.handleClickPharmacy(pharmacy)
                 }
             }
         }
