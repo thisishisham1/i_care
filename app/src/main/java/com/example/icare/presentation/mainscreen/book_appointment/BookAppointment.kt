@@ -45,13 +45,10 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.DatePickerFormatter
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import com.example.icare.R
-import com.example.icare.core.theme.gray200
 import com.example.icare.core.theme.gray400
 
 

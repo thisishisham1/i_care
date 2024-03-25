@@ -1,6 +1,5 @@
 package com.example.icare.core.util
 
-import androidx.navigation.NavDestination
 
 sealed class Destinations(val route: String) {
     data object Splash : Destinations("Splash")
