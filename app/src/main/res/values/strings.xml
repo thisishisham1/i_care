@@ -1,5 +1,5 @@
 <resources>
-    // registration
+    <!-- Registration -->
     <string name="app_name">I Care</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
@@ -11,19 +11,19 @@
     <string name="joined_before">Joined us before?</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="login">Login</string>
-    <string name="dont_have_account">Don\'t have account?</string>
-    <string name="description_Forgot_password">Don’t worry! it happens.
-Please enter the address associated with your account.</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="description_forgot_password">Don’t worry! It happens. Please enter the address associated with your account.</string>
     <string name="submit">Submit</string>
-    <string name="em_empty_filed">Empty Filed</string>
-    <string name="em_Invalid_Email">Invalid Email</string>
-    <string name="em_Invalid_phone">Invalid Phone number</string>
-    <string name="em_short_pass">Password must be at least 8 characters long</string>
-    <string name="em_mismatch">Password and Confirm Password do not match</string>
-    <string name="em_incorrect_pass">Incorrect Password</string>
-    <string name="em_email_not_found">Email not founded</string>
-    <string name="em_invalid_email_format">Invalid email format please, try again</string>
-    // onBoarding
+    <string name="empty_field_error">Empty Field</string>
+    <string name="invalid_email_error">Invalid Email</string>
+    <string name="invalid_phone_error">Invalid Phone number</string>
+    <string name="short_password_error">Password must be at least 8 characters long</string>
+    <string name="password_mismatch_error">Password and Confirm Password do not match</string>
+    <string name="incorrect_password_error">Incorrect Password</string>
+    <string name="email_not_found_error">Email not found</string>
+    <string name="invalid_email_format_error">Invalid email format. Please try again</string>
+
+    <!-- Onboarding -->
     <string name="on_boarding1">Digital Smart Diagnoses,\ninstant Relief!</string>
     <string name="on_boarding2">Find a lot of specialist\ndoctors in one place</string>
     <string name="on_boarding3">Find Pharmacies\nNearby</string>
@@ -31,13 +31,40 @@ Please enter the address associated with your account.</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="get_started">Get Started</string>
-    //verify
+
+    <!-- Verification -->
     <string name="verification_code">Verification Code</string>
     <string name="verify">Verify</string>
     <string name="confirm_with_code">Confirm With Code</string>
     <string name="email_verified">Email Verified</string>
-    <string name="congratulation">Congratulations, your email number has been
-verified. You can start using the app</string>
+    <string name="congratulations">Congratulations! Your email has been verified. You can start using the app now</string>
     <string name="reset_password">Reset Password?</string>
     <string name="change_password">Change Password</string>
+
+    <!-- Bottom Navigation Bar -->
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="appointment">Appointment</string>
+    <string name="profile">Profile</string>
+
+    <!-- Search Screen -->
+    <string name="search_hint">Search..</string>
+    <string name="search_tab_doctors">Doctors</string>
+    <string name="search_tab_pharmacies">Pharmacies</string>
+    <string name="search_tab_labs">Labs</string>
+
+    <!-- Appointment Screen -->
+    <string name="appointment_complete">Complete</string>
+    <string name="appointment_cancel">Cancel</string>
+    <string name="appointment_tab_uncompleted">Uncompleted</string>
+    <string name="appointment_tab_completed">Completed</string>
+    <string name="appointment_tab_canceled">Canceled</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_edit">Edit Profile</string>
+    <string name="profile_settings">Settings</string>
+    <string name="profile_terms">Terms and Conditions</string>
+    <string name="profile_logout">Log Out</string>
+    <string name="profile_dialog_agree">Are you sure you want to log out?</string>
+    <string name="profile_cancel">Cancel</string>
 </resources>

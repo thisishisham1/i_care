@@ -2,6 +2,7 @@ package com.example.icare.presentation.mainscreen.screenDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.example.icare.core.util.Destinations
 import com.example.icare.domain.model.listOfDoctor
 import com.example.icare.domain.model.listOfLabs
 import com.example.icare.domain.model.listOfPharmacy
@@ -16,7 +17,7 @@ class DetailsViewModel(val navController: NavController) : ViewModel() {
     }
 
     fun handelDoctorButton() {
-        // TODO: handel book button
+        navController.navigate(Destinations.BookAppointment.route)
     }
 
     fun handleLabButton() {

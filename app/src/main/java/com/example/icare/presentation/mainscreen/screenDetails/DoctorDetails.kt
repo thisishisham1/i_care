@@ -73,7 +73,7 @@ private fun Content(doctor: Doctor, onClickBookButton: () -> Unit) {
         AboutMe()
         WorkingHours()
         Spacer(modifier = Modifier.weight(1f))
-        PrimaryButton(text = "Book", onClick = { onClickBookButton() })
+        PrimaryButton(text = "Book Appointment", onClick = { onClickBookButton() })
     }
 }
 

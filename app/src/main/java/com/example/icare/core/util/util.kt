@@ -21,9 +21,3 @@ fun HeightSpacer(height: Dp = Dimens.smallPadding) {
 fun WidthSpacer(width: Dp = Dimens.smallPadding) {
     Spacer(modifier = Modifier.width(width))
 }
-
-fun navigateAndClearStack(navController: NavController, destinations: String) {
-    navController.navigate(destinations) {
-        popUpTo(0)
-    }
-}

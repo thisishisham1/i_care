@@ -14,9 +14,9 @@ class SearchViewModel(val navController: NavController) : ViewModel() {
         valueState.value = newValue
     }
 
-    fun handleClickDoctor(doctor: Doctor) {
+    fun handleClickDoctor(doctor: Doctor) =
         navController.navigate("${Destinations.DoctorDetails.route}/${doctor.id}")
-    }
+
 
     fun handleClickPharmacy(pharmacy: Pharmacy) =
         navController.navigate("${Destinations.PharmacyDetails.route}/${pharmacy.id}")

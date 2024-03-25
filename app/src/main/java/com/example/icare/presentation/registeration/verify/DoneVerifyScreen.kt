@@ -35,8 +35,8 @@ import com.example.icare.presentation.registeration.component.TextHeader
 @Composable
 fun DoneVerifyScreen(navController: NavHostController) {
     val emailVerified = stringResource(id = R.string.email_verified)
-    val congratulation = stringResource(id = R.string.congratulation)
-    val _continue = stringResource(id = R.string.continue_)
+    val congratulation = stringResource(id = R.string.congratulations)
+    val `continue` = stringResource(id = R.string.continue_)
     Column(
         Modifier
             .fillMaxSize()
@@ -48,7 +48,7 @@ fun DoneVerifyScreen(navController: NavHostController) {
         TextHeader(headerString = emailVerified)
         DescriptionHeader(text = congratulation)
         Spacer(modifier = Modifier.weight(1f))
-        PrimaryButton(text = _continue, onClick = { /*TODO*/ })
+        PrimaryButton(text = `continue`, onClick = { /*TODO*/ })
     }
 }
 

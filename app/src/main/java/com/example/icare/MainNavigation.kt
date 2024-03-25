@@ -18,6 +18,7 @@ import com.example.icare.presentation.registeration.verify.DoneVerifyScreen
 import com.example.icare.presentation.registeration.verify.VerifyScreen
 import com.example.icare.presentation.splash.SplashScreen
 import com.example.icare.presentation.mainscreen.MainScreen
+import com.example.icare.presentation.mainscreen.book_appointment.BookAppointment
 import com.example.icare.presentation.mainscreen.screenDetails.DoctorDetails
 import com.example.icare.presentation.mainscreen.screenDetails.LabDetails
 import com.example.icare.presentation.mainscreen.screenDetails.PharmacyDetails
@@ -71,6 +72,9 @@ fun MainNavigation(context: Context) {
         composable("${Destinations.LabDetails.route}/{labId}") { NavBackStackEntry ->
             val labId = NavBackStackEntry.arguments?.getString("labId")?.toIntOrNull() ?: 0
             LabDetails(labId = labId, navController)
+        }
+        composable(Destinations.BookAppointment.route) {
+            BookAppointment(navController)
         }
     }
 }

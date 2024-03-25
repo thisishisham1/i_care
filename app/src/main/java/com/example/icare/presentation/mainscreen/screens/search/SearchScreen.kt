@@ -28,11 +28,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -45,13 +47,14 @@ import com.example.icare.core.util.Dimens
 import com.example.icare.presentation.mainscreen.screens.search.tabs.Doctors.Doctors
 import com.example.icare.presentation.mainscreen.screens.search.tabs.labs.Labs
 import com.example.icare.presentation.mainscreen.screens.search.tabs.pharmacy.Pharmacies
+import com.example.icare.R
 
 @Composable
 fun SearchScreen(navController: NavController) {
     val searchViewModel = remember {
         SearchViewModel(navController)
     }
-    var selectedTab by remember {
+    var selectedTab by rememberSaveable {
         mutableIntStateOf(0)
     }
     Column(
@@ -98,7 +101,10 @@ private fun Search(searchViewModel: SearchViewModel) {
                         imageVector = Icons.Outlined.Search,
                         contentDescription = "search icon", Modifier.size(17.dp)
                     )
-                    Text(text = "Search..", style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        text = stringResource(id = R.string.search_hint),
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
             },
         )
@@ -108,7 +114,11 @@ private fun Search(searchViewModel: SearchViewModel) {
 
 @Composable
 private fun RowTabs(selectedTab: Int, onClickTab: (Int) -> Unit) {
-    val tabs = listOf("Doctors", "pharmacies", "Labs")
+    val tabs = listOf(
+        stringResource(id = R.string.search_tab_doctors),
+        stringResource(id = R.string.search_tab_pharmacies),
+        stringResource(id = R.string.search_tab_labs)
+    )
     TabRow(selectedTabIndex = selectedTab, divider = {}, indicator = {}) {
         tabs.forEachIndexed { index, title ->
             val isSelected: Boolean = selectedTab == index
@@ -145,8 +155,8 @@ private fun RowTabs(selectedTab: Int, onClickTab: (Int) -> Unit) {
 private fun Content(selectedTab: Int, searchViewModel: SearchViewModel) {
     when (selectedTab) {
         0 -> Doctors(searchViewModel = searchViewModel)
-        1 -> Pharmacies(searchViewModel=searchViewModel)
-        else -> Labs(searchViewModel=searchViewModel)
+        1 -> Pharmacies(searchViewModel = searchViewModel)
+        else -> Labs(searchViewModel = searchViewModel)
     }
 }
 

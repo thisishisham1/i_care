@@ -27,7 +27,7 @@ fun ForgotPasswordScreen(navController: NavHostController) {
         ResetPasswordViewModel(navController)
     }
     val forgotPasswordText = stringResource(id = R.string.forgot_password)
-    val descriptionForgotPassword = stringResource(id = R.string.description_Forgot_password)
+    val descriptionForgotPassword = stringResource(id = R.string.description_forgot_password)
     val submit = stringResource(id = R.string.submit)
     Column(
         Modifier

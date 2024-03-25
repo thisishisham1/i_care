@@ -46,23 +46,21 @@ import com.example.icare.domain.model.listOfDoctor
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    val homeViewModel = remember {
-        HomeViewModel(navController)
-    }
+    val homeViewModel = remember { HomeViewModel(navController) }
     Column(
         Modifier
             .fillMaxSize()
             .padding(horizontal = Dimens.mediumPadding, vertical = Dimens.smallPadding),
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        TopBar({}, {})
+        TopBar(homeViewModel = homeViewModel)
         Categories({})
         NearbyDoctors(homeViewModel)
     }
 }
 
 @Composable
-private fun TopBar(onClickedNotification: () -> Unit, onClickedChat: () -> Unit) {
+private fun TopBar(homeViewModel: HomeViewModel) {
     Row(
         Modifier
             .fillMaxWidth(),
@@ -72,8 +70,16 @@ private fun TopBar(onClickedNotification: () -> Unit, onClickedChat: () -> Unit)
         ProfileImage(model = R.drawable.profile_image)
         Text(text = "Hisham Mohamed", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.weight(1f))
-        NotificationIcon(onClickedNotification)
-        ChatIcon(onClickedChat)
+        IconButton(
+            icon = R.drawable.notification,
+            label = "Notification",
+            onClicked = { homeViewModel.handleNotificationClick() },
+        )
+        IconButton(
+            icon = R.drawable.chat,
+            label = "Chat",
+            onClicked = { homeViewModel.handleChatsClick() },
+        )
     }
 }
 
@@ -92,23 +98,10 @@ private fun ProfileImage(model: Int) {
 }
 
 @Composable
-private fun NotificationIcon(onClicked: () -> Unit) {
+private fun IconButton(onClicked: () -> Unit, icon: Int, label: String) {
     Icon(
-        painter = painterResource(id = R.drawable.notification),
-        contentDescription = "Notification",
-        modifier = Modifier
-            .size(25.dp)
-            .clickable {
-                onClicked()
-            }
-    )
-}
-
-@Composable
-private fun ChatIcon(onClicked: () -> Unit) {
-    Icon(
-        painter = painterResource(id = R.drawable.chat),
-        contentDescription = "Chats",
+        painter = painterResource(id = icon),
+        contentDescription = label,
         modifier = Modifier
             .size(25.dp)
             .clickable {

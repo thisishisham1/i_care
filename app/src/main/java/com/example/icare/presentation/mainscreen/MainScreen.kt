@@ -16,7 +16,7 @@ import com.example.icare.presentation.mainscreen.screens.home.HomeScreen
 import com.example.icare.presentation.mainscreen.screens.profile.ProfileScreen
 import com.example.icare.presentation.mainscreen.screens.search.SearchScreen
 
-private val _Destinations = arrayOf(
+private val destinations = arrayOf(
     BottomNavItems.Home,
     BottomNavItems.Search,
     BottomNavItems.Appointment, BottomNavItems.Profile
@@ -30,7 +30,7 @@ fun MainScreen(navController: NavController) {
 
     Scaffold(bottomBar = {
         BottomNavBar(
-            items = _Destinations,
+            items = destinations,
             selectedIndex = selectedIndex,
             onItemSelected = { newIndex ->
                 selectedIndex = newIndex
@@ -51,7 +51,7 @@ private fun Content(navController: NavController, selectedIndex: Int) {
     when (selectedIndex) {
         0 -> HomeScreen(navController = navController)
         1 -> SearchScreen(navController = navController)
-        2 -> AppointmentScreen(navController = navController)
+        2 -> AppointmentScreen()
         3 -> ProfileScreen(navController = navController)
         else -> {}
     }

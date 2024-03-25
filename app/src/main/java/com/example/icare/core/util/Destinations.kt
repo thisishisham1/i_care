@@ -17,5 +17,5 @@ sealed class Destinations(val route: String) {
     data object DoctorDetails : Destinations("Doctor Details")
     data object PharmacyDetails : Destinations("Pharmacy Details")
     data object LabDetails : Destinations("Lab Details")
-
+    data object BookAppointment:Destinations("Book Appointment")
 }
