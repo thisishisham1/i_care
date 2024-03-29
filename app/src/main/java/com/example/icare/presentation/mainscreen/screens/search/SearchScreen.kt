@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -17,19 +18,19 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,49 +40,57 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.icare.core.theme.black
-import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
 import com.example.icare.core.theme.shapes
+import com.example.icare.R
+import com.example.icare.core.theme.gray400
+import com.example.icare.core.theme.green700
 import com.example.icare.core.util.Dimens
+import com.example.icare.domain.model.Doctor
+import com.example.icare.domain.model.Lab
+import com.example.icare.domain.model.Pharmacy
 import com.example.icare.presentation.mainscreen.screens.search.tabs.Doctors.Doctors
 import com.example.icare.presentation.mainscreen.screens.search.tabs.labs.Labs
 import com.example.icare.presentation.mainscreen.screens.search.tabs.pharmacy.Pharmacies
-import com.example.icare.R
 
 @Composable
 fun SearchScreen(navController: NavController) {
     val searchViewModel = remember {
         SearchViewModel(navController)
     }
-    var selectedTab by rememberSaveable {
-        mutableIntStateOf(0)
-    }
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(horizontal = Dimens.mediumPadding, vertical = Dimens.smallPadding),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        Search(searchViewModel)
-        RowTabs(selectedTab) {
-            selectedTab = it
+    val indexTab by searchViewModel.indexTab.collectAsState()
+    Scaffold(topBar = {
+        SearchBar(searchViewModel)
+    }) {
+        Box(
+            modifier = Modifier
+                .padding(it)
+        ) {
+            Column(
+                Modifier
+                    .padding(
+                        horizontal = Dimens.mediumPadding,
+                        vertical = Dimens.smallPadding
+                    )
+            ) {
+                //1- Row tabs
+                DisplayScreen(indexTab = indexTab, searchViewModel = searchViewModel)
+            }
         }
-        Content(selectedTab = selectedTab, searchViewModel)
     }
+
 }
 
 @Composable
-private fun Search(searchViewModel: SearchViewModel) {
-    Row(
-        Modifier
-            .fillMaxWidth(), horizontalArrangement = Arrangement.Center
-    ) {
+private fun SearchBar(searchViewModel: SearchViewModel) {
+    val searchText by searchViewModel.searchText.collectAsState()
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(0.9f),
-            value = searchViewModel.valueState.value,
-            onValueChange = { newValue -> searchViewModel.onValueChange(newValue) },
+            value = searchText,
+            onValueChange = searchViewModel::onSearchTextChange,
             textStyle = MaterialTheme.typography.titleMedium,
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = gray400.copy(alpha = 0.4f),
@@ -93,7 +102,7 @@ private fun Search(searchViewModel: SearchViewModel) {
             maxLines = 1,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(onSearch = {
-                // TODO: handle button Search
+                // TODO: Add logic to trigger search action
             }),
             placeholder = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -106,10 +115,9 @@ private fun Search(searchViewModel: SearchViewModel) {
                         style = MaterialTheme.typography.titleMedium
                     )
                 }
-            },
+            }
         )
     }
-
 }
 
 @Composable
@@ -125,7 +133,7 @@ private fun RowTabs(selectedTab: Int, onClickTab: (Int) -> Unit) {
             val borderColor: Color = if (isSelected) Color.Transparent else black
             val containerColor: Color = if (selectedTab == index) green500 else neutralWhite
             Tab(
-                selected = selectedTab == index,
+                selected = isSelected,
                 onClick = { onClickTab(index) },
                 selectedContentColor = neutralWhite,
                 unselectedContentColor = black,
@@ -151,12 +159,33 @@ private fun RowTabs(selectedTab: Int, onClickTab: (Int) -> Unit) {
     }
 }
 
+
 @Composable
-private fun Content(selectedTab: Int, searchViewModel: SearchViewModel) {
-    when (selectedTab) {
-        0 -> Doctors(searchViewModel = searchViewModel)
-        1 -> Pharmacies(searchViewModel = searchViewModel)
-        else -> Labs(searchViewModel = searchViewModel)
+private fun DisplayScreen(indexTab: Int, searchViewModel: SearchViewModel) {
+    val filteredList by searchViewModel.filteredList.collectAsState()
+    val isLoading by searchViewModel.isLoading.collectAsState()
+    if (isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator(color = green700, strokeWidth = 3.dp)
+        }
+    } else {
+        when (indexTab) {
+            0 -> Doctors(
+                doctors = filteredList.filterIsInstance<Doctor>(),
+                onClickDoctor = searchViewModel::handleClickItem,
+            )
+
+            1 -> Pharmacies(
+                pharmacies = filteredList.filterIsInstance<Pharmacy>(),
+                onClickPharmacy = searchViewModel::handleClickItem
+            )
+
+            else -> Labs(
+                labs = filteredList.filterIsInstance<Lab>(),
+                onClickLab = searchViewModel::handleClickItem
+            )
+        }
+
     }
 }
 
