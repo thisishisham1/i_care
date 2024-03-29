@@ -57,6 +57,7 @@ class SearchViewModel(val navController: NavController) : ViewModel() {
 
     fun onTabChange(newIndex: Int) {
         _indexTab.value = newIndex
+        fetchData()
     }
 
     fun handleClickItem(item: SearchItem) {

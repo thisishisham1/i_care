@@ -36,7 +36,7 @@ fun AppointmentScreen() {
     val appointmentViewModel = remember {
         AppointmentViewModel()
     }
-    val indexTab by appointmentViewModel.indexTab.collectAsState(initial = 0)
+    val indexTab by appointmentViewModel.indexTab.collectAsState()
     Column(
         Modifier
             .fillMaxSize()
@@ -65,7 +65,6 @@ private fun RowTabs(onClickTab: (Int) -> Unit, selectedTab: Int) {
                 unselectedContentColor = black,
                 modifier = Modifier
                     .height(45.dp)
-                    .width(intrinsicSize = IntrinsicSize.Min)
                     .padding(5.dp)
                     .clip(
                         shapes.medium

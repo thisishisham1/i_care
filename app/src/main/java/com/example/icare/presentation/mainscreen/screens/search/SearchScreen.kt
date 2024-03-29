@@ -6,14 +6,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -75,6 +73,7 @@ fun SearchScreen(navController: NavController) {
                     )
             ) {
                 //1- Row tabs
+                RowTabs(selectedTab = indexTab, onClickTab = searchViewModel::onTabChange)
                 DisplayScreen(indexTab = indexTab, searchViewModel = searchViewModel)
             }
         }
@@ -129,36 +128,39 @@ private fun RowTabs(selectedTab: Int, onClickTab: (Int) -> Unit) {
     )
     TabRow(selectedTabIndex = selectedTab, divider = {}, indicator = {}) {
         tabs.forEachIndexed { index, title ->
-            val isSelected: Boolean = selectedTab == index
-            val borderColor: Color = if (isSelected) Color.Transparent else black
-            val containerColor: Color = if (selectedTab == index) green500 else neutralWhite
-            Tab(
-                selected = isSelected,
-                onClick = { onClickTab(index) },
-                selectedContentColor = neutralWhite,
-                unselectedContentColor = black,
-                modifier = Modifier
-                    .height(45.dp)
-                    .width(intrinsicSize = IntrinsicSize.Min)
-                    .padding(5.dp)
-                    .clip(
-                        shapes.medium
-                    )
-                    .border(
-                        border = BorderStroke(
-                            color = borderColor,
-                            width = if (isSelected) 0.dp else 1.dp
-                        ),
-                        shape = shapes.medium
-                    )
-                    .background(containerColor)
-            ) {
-                TabContent(title = title)
+            DefaultTab(index = index, selectedTab = selectedTab, title = title) {
+                onClickTab(index)
             }
         }
     }
 }
 
+@Composable
+private fun DefaultTab(index: Int, selectedTab: Int, title: String, onClickTab: (Int) -> Unit) {
+    val isSelected: Boolean = selectedTab == index
+    val borderColor: Color = if (isSelected) Color.Transparent else black
+    val containerColor: Color = if (selectedTab == index) green500 else neutralWhite
+    Tab(
+        selected = selectedTab == index,
+        onClick = { onClickTab(index) },
+        modifier = Modifier
+            .heightIn(45.dp)
+            .padding(5.dp)
+            .clip(shapes.medium)
+            .border(
+                border = BorderStroke(
+                    color = borderColor,
+                    width = if (isSelected) 0.dp else 1.dp
+                ),
+                shape = shapes.medium
+            )
+            .background(containerColor),
+        selectedContentColor = neutralWhite,
+        unselectedContentColor = black
+    ) {
+        TabContent(title = title)
+    }
+}
 
 @Composable
 private fun DisplayScreen(indexTab: Int, searchViewModel: SearchViewModel) {
