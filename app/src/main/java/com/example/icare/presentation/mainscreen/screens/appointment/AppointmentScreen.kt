@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -65,6 +66,7 @@ private fun RowTabs(onClickTab: (Int) -> Unit, selectedTab: Int) {
                 unselectedContentColor = black,
                 modifier = Modifier
                     .height(45.dp)
+                    .wrapContentWidth()
                     .padding(5.dp)
                     .clip(
                         shapes.medium

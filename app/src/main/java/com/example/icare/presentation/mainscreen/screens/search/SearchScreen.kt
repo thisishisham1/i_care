@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -145,6 +146,7 @@ private fun DefaultTab(index: Int, selectedTab: Int, title: String, onClickTab: 
         onClick = { onClickTab(index) },
         modifier = Modifier
             .heightIn(45.dp)
+            .wrapContentWidth()
             .padding(5.dp)
             .clip(shapes.medium)
             .border(

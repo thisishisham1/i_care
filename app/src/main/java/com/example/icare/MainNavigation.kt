@@ -19,6 +19,7 @@ import com.example.icare.presentation.registeration.verify.VerifyScreen
 import com.example.icare.presentation.splash.SplashScreen
 import com.example.icare.presentation.mainscreen.MainScreen
 import com.example.icare.presentation.mainscreen.book_appointment.BookAppointment
+import com.example.icare.presentation.mainscreen.chat.ChatScreen
 import com.example.icare.presentation.mainscreen.screenDetails.DoctorDetails
 import com.example.icare.presentation.mainscreen.screenDetails.LabDetails
 import com.example.icare.presentation.mainscreen.screenDetails.PharmacyDetails
@@ -29,7 +30,7 @@ fun MainNavigation(context: Context) {
     val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.MainScreen.route) {
+    NavHost(navController = navController, startDestination = Destinations.MessageScreen.route) {
         composable(Destinations.Splash.route) {
             SplashScreen(navController = navController, preferencesHelper = preferencesHelper)
         }
@@ -75,6 +76,9 @@ fun MainNavigation(context: Context) {
         }
         composable(Destinations.BookAppointment.route) {
             BookAppointment(navController)
+        }
+        composable(Destinations.MessageScreen.route){
+            ChatScreen(navController)
         }
     }
 }
