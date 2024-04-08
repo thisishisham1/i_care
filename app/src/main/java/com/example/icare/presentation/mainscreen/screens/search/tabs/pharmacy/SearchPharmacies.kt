@@ -33,7 +33,6 @@ import com.example.icare.core.theme.shapes
 import com.example.icare.core.util.HeightSpacer
 import com.example.icare.core.util.WidthSpacer
 import com.example.icare.domain.model.Pharmacy
-import com.example.icare.domain.model.SearchItem
 
 @Composable
 fun Pharmacies(onClickPharmacy: (Pharmacy) -> Unit, pharmacies: List<Pharmacy>) {
@@ -58,7 +57,7 @@ fun Pharmacies(onClickPharmacy: (Pharmacy) -> Unit, pharmacies: List<Pharmacy>) 
 }
 
 @Composable
-private fun CardPharmacy(pharmacy: Pharmacy, onClickPharmacy: () -> Unit) {
+fun CardPharmacy(pharmacy: Pharmacy, onClickPharmacy: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

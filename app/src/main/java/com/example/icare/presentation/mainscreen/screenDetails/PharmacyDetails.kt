@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -83,13 +84,11 @@ private fun TopAppBar(detailsViewModel: DetailsViewModel) {
     androidx.compose.material3.TopAppBar(title = {
         Text(
             text = "Pharmacy Details",
-            modifier = Modifier.fillMaxWidth(),
             style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center
         )
     }, navigationIcon = {
         IconButton(onClick = { detailsViewModel.handleBackArrow() }) {
-            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
+            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
         }
     })
 }
@@ -186,7 +185,9 @@ private fun WorkingHours() {
     )
     Text(
         text = "Monday-Friday, 08.00 AM-18.00 PM",
-        style = MaterialTheme.typography.titleMedium, color = gray600
+        style = MaterialTheme.typography.titleMedium,
+        color = gray600,
+        modifier = Modifier.padding(start = 4.dp)
     )
 
 }

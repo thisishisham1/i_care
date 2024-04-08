@@ -53,69 +53,57 @@ android {
 
 dependencies {
     // Core Kotlin extensions
-    implementation("androidx.core:core-ktx:1.12.0")
-
+    implementation(libs.androidx.core.ktx)
     // AndroidX lifecycle extensions
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     // Compose activity integration
-    implementation("androidx.activity:activity-compose:1.8.2")
-
+    implementation(libs.androidx.activity.compose)
     // Jetpack Compose dependencies
-    implementation(platform("androidx.compose:compose-bom:2024.03.00"))
+    implementation(platform(libs.androidx.compose.bom.v20240300))
+    //noinspection UseTomlInstead
     implementation("androidx.compose.ui:ui")
+    //noinspection UseTomlInstead
     implementation("androidx.compose.ui:ui-graphics")
+    //noinspection UseTomlInstead
     implementation("androidx.compose.ui:ui-tooling-preview")
+    //noinspection UseTomlInstead
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("androidx.activity:activity:1.8.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     // Unit testing dependencies
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.03.00"))
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.compose.bom.v20240300))
+    //noinspection UseTomlInstead
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    //noinspection UseTomlInstead
     debugImplementation("androidx.compose.ui:ui-tooling")
+    //noinspection UseTomlInstead
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
     // Navigation Component for Jetpack Compose
-    implementation("androidx.navigation:navigation-compose:2.7.7")
-
+    implementation(libs.androidx.navigation.compose)
     //View model
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Retrofit for HTTP requests
-    val retrofitVersion = "2.9.0"
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-
+    implementation(libs.retrofit.v290)
+    implementation(libs.converter.gson.v290)
     // Coil for image loading in Compose
-    val coilVersion = "2.5.0"
-    implementation("io.coil-kt:coil-compose:$coilVersion")
-    implementation("io.coil-kt:coil:$coilVersion")
-
-
+    implementation(libs.coil.compose)
+    implementation(libs.coil)
     // Room for storing data
-    val roomVersion = "2.6.1"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    ksp("androidx.room:room-compiler:$roomVersion")
-
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     //hilt
-    val hiltVersion = "2.50"
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
-    ksp("com.google.dagger:hilt-android-compiler:$hiltVersion")
-
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
     //faker
-    implementation("com.github.javafaker:javafaker:1.0.2")
-
+    implementation(libs.javafaker)
     //stream sdk
-    val streamSdkVersion = "6.0.8"
-    implementation("io.getstream:stream-chat-android-compose:$streamSdkVersion")
-    implementation("io.getstream:stream-chat-android-offline:$streamSdkVersion")
-    implementation("androidx.compose.material:material-icons-extended:1.6.4")
-
-
+    implementation(libs.stream.chat.android.compose.v608)
+    implementation(libs.stream.chat.android.offline.v608)
+    implementation(libs.androidx.material.icons.extended.v165)
 }

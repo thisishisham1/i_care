@@ -2,7 +2,7 @@ package com.example.icare.domain.model
 
 import com.github.javafaker.Faker
 
-sealed interface SearchItem {
+sealed interface Users {
     val title: String
     fun doseMatchQuery(query: String): Boolean
 }
@@ -16,7 +16,7 @@ data class Doctor(
     val address: String,
     val rating: Double,
     val countReviews: Double
-) : SearchItem {
+) : Users {
     override fun doseMatchQuery(query: String): Boolean {
         val matchingCombinations = listOf(
             name, "${name.first()}"

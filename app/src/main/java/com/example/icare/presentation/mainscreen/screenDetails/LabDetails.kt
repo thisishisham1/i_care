@@ -187,7 +187,9 @@ private fun WorkingHours() {
     )
     Text(
         text = "Monday-Friday, 08.00 AM-18.00 PM",
-        style = MaterialTheme.typography.titleMedium, color = gray600
+        style = MaterialTheme.typography.titleMedium,
+        color = gray600, modifier = Modifier.padding(start = 4.dp)
+
     )
 
 }

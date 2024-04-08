@@ -7,7 +7,7 @@ import com.example.icare.core.util.Destinations
 import com.example.icare.domain.model.Doctor
 import com.example.icare.domain.model.Lab
 import com.example.icare.domain.model.Pharmacy
-import com.example.icare.domain.model.SearchItem
+import com.example.icare.domain.model.Users
 import com.example.icare.domain.model.listOfDoctor
 import com.example.icare.domain.model.listOfLabs
 import com.example.icare.domain.model.listOfPharmacy
@@ -29,7 +29,7 @@ class SearchViewModel(val navController: NavController) : ViewModel() {
     val searchText = _searchText.asStateFlow()
 
 
-    private val _dataList = MutableStateFlow<List<SearchItem>>(emptyList())
+    private val _dataList = MutableStateFlow<List<Users>>(emptyList())
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
@@ -60,7 +60,7 @@ class SearchViewModel(val navController: NavController) : ViewModel() {
         fetchData()
     }
 
-    fun handleClickItem(item: SearchItem) {
+    fun handleClickItem(item: Users) {
         when (item) {
             is Doctor -> navController.navigate("${Destinations.DoctorDetails.route}/${item.id}")
             is Pharmacy -> navController.navigate("${Destinations.PharmacyDetails.route}/${item.id}")
@@ -69,7 +69,7 @@ class SearchViewModel(val navController: NavController) : ViewModel() {
         }
     }
 
-    val filteredList: StateFlow<List<SearchItem>> = _searchText.combine(_dataList) { text, list ->
+    val filteredList: StateFlow<List<Users>> = _searchText.combine(_dataList) { text, list ->
         if (text.isBlank()) {
             list
         } else {
@@ -78,6 +78,6 @@ class SearchViewModel(val navController: NavController) : ViewModel() {
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList<SearchItem>()
+        initialValue = emptyList<Users>()
     )
 }

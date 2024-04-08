@@ -58,7 +58,7 @@ fun HomeScreen(navController: NavController) {
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         TopBar(homeViewModel = homeViewModel)
-        Categories({})
+        Categories(homeViewModel)
         NearbyDoctors(homeViewModel)
     }
 }
@@ -115,7 +115,7 @@ private fun IconButton(onClicked: () -> Unit, icon: Int, label: String) {
 }
 
 @Composable
-private fun Categories(onClicked: () -> Unit) {
+private fun Categories(homeViewModel: HomeViewModel) {
     val listOfCategory = listOf(
         "Personal\ntest" to R.drawable.personal_cat,
         "Chat Bot" to R.drawable.chat_bot_cat,
@@ -128,7 +128,7 @@ private fun Categories(onClicked: () -> Unit) {
         LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             items(listOfCategory) { category ->
                 CardCategory(category = category) {
-                    onClicked()
+                    homeViewModel.handleClickAction(category.first)
                 }
             }
         }
@@ -173,13 +173,15 @@ private fun NearbyDoctors(homeViewModel: HomeViewModel) {
                 text = "See More",
                 style = MaterialTheme.typography.titleSmall,
                 color = gray600,
-                modifier = Modifier.clickable { //todo:handle see more click
+                modifier = Modifier.clickable {
+                    homeViewModel.handleClickSeeMore()
+                    //todo:handle see more click
                 }
             )
         }
         LazyColumn() {
             items(listOfDoctor) { doctor ->
-                DoctorCard(doctor = doctor) {
+                UserCard(doctor = doctor) {
                     homeViewModel.handleNavigateDetails(doctor)
                 }
             }
@@ -188,14 +190,14 @@ private fun NearbyDoctors(homeViewModel: HomeViewModel) {
 }
 
 @Composable
-private fun DoctorCard(doctor: Doctor, onclickDoctor: () -> Unit) {
+fun UserCard(doctor: Doctor, onClickUser: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape = shapes.small)
             .padding(8.dp)
             .clickable {
-                onclickDoctor()
+                onClickUser()
             },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)

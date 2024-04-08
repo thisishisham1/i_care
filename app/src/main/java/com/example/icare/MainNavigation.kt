@@ -23,6 +23,13 @@ import com.example.icare.presentation.mainscreen.chat.ChatScreen
 import com.example.icare.presentation.mainscreen.screenDetails.DoctorDetails
 import com.example.icare.presentation.mainscreen.screenDetails.LabDetails
 import com.example.icare.presentation.mainscreen.screenDetails.PharmacyDetails
+import com.example.icare.presentation.mainscreen.screens.home.category.chatbot.ChatBot
+import com.example.icare.presentation.mainscreen.screens.home.Chats
+import com.example.icare.presentation.mainscreen.screens.home.category.DoctorsScreen
+import com.example.icare.presentation.mainscreen.screens.home.Notifications
+import com.example.icare.presentation.mainscreen.screens.home.category.LabsScreen
+import com.example.icare.presentation.mainscreen.screens.home.category.PharmaciesScreen
+import com.example.icare.presentation.mainscreen.screens.profile.edit_profile.EditProfile
 
 @Composable
 fun MainNavigation(context: Context) {
@@ -30,7 +37,7 @@ fun MainNavigation(context: Context) {
     val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.MessageScreen.route) {
+    NavHost(navController = navController, startDestination = Destinations.ChatBot.route) {
         composable(Destinations.Splash.route) {
             SplashScreen(navController = navController, preferencesHelper = preferencesHelper)
         }
@@ -61,8 +68,8 @@ fun MainNavigation(context: Context) {
         composable(Destinations.MainScreen.route) {
             MainScreen(navController)
         }
-        composable("${Destinations.DoctorDetails.route}/{doctorId}") { NavBackStackEntry ->
-            val doctorId = NavBackStackEntry.arguments?.getString("doctorId")?.toIntOrNull() ?: 0
+        composable("${Destinations.DoctorDetails.route}/{doctorId}") { navBackStackEntry ->
+            val doctorId = navBackStackEntry.arguments?.getString("doctorId")?.toIntOrNull() ?: 0
             DoctorDetails(doctorId = doctorId, navController)
         }
         composable("${Destinations.PharmacyDetails.route}/{pharmacyId}") { NavBackStackEntry ->
@@ -77,8 +84,30 @@ fun MainNavigation(context: Context) {
         composable(Destinations.BookAppointment.route) {
             BookAppointment(navController)
         }
-        composable(Destinations.MessageScreen.route){
+        composable(Destinations.Chat.route) {
             ChatScreen(navController)
+        }
+        composable(Destinations.ChatBot.route) {
+            ChatBot()
+        }
+        composable(Destinations.EditProfile.route) {
+            EditProfile(navController)
+        }
+        composable(Destinations.Chats.route) {
+            Chats()
+        }
+        composable(Destinations.Notifications.route) {
+            Notifications()
+        }
+        composable(Destinations.Doctors.route) {
+            DoctorsScreen(navController = navController)
+        }
+
+        composable(Destinations.Pharmacies.route){
+            PharmaciesScreen(navController = navController)
+        }
+        composable(Destinations.Labs.route){
+            LabsScreen(navController)
         }
     }
 }

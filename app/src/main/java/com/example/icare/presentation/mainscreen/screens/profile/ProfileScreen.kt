@@ -52,7 +52,6 @@ data class UserProfile(
 
 @Composable
 fun ProfileScreen(navController: NavController) {
-    val userInfo = UserProfile(name = "Hisham Mohamed", email = "Hishamohmad19@gmail.com")
     val profileViewModel = remember {
         ProfileViewModel(navController)
     }
@@ -62,7 +61,7 @@ fun ProfileScreen(navController: NavController) {
             .padding(horizontal = Dimens.mediumPadding, vertical = Dimens.largePadding),
     ) {
         ProfileImage()
-        Info(userInfo)
+        Info(profileViewModel.userInfo)
         HeightSpacer(8.dp)
         Content(profileViewModel)
         if (profileViewModel.isDialog.value) LogoutDialog(onClickCancel = {

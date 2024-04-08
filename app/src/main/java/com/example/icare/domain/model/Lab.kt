@@ -9,7 +9,7 @@ data class Lab(
     val address: String,
     val rating: Double,
     val countReview: Double
-) : SearchItem {
+) : Users {
     override fun doseMatchQuery(query: String): Boolean {
         val matchingCombinations = listOf(
             name, "${name.first()}"
