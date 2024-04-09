@@ -4,7 +4,7 @@ package com.example.icare.core.util
 sealed class Destinations(val route: String) {
     data object Splash : Destinations("Splash")
     data object OnBoarding : Destinations("OnBoarding")
-    data object SignIn : Destinations("Sign In")
+    data object Login : Destinations("Sign In")
     data object SignUp : Destinations("Sign Up")
     data object ForgotPassword : Destinations("Forgot Password")
     data object Verify : Destinations("Verify")

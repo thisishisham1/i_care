@@ -28,7 +28,7 @@ import com.example.icare.R
 fun OnBoardingScreen(navController: NavController) {
     val preferencesHelper = PreferencesHelper(LocalContext.current)
     val vm = remember {
-        OnboardingViewModel(preferencesHelper = preferencesHelper)
+        OnboardingViewModel(preferencesHelper = preferencesHelper, navController = navController)
     }
     val coroutineScope = rememberCoroutineScope()
     val next = stringResource(id = R.string.next)
@@ -64,7 +64,7 @@ fun OnBoardingScreen(navController: NavController) {
                 text = buttonState.value,
                 onClick = {
                     coroutineScope.launch {
-                        vm.clickButton(navController, pagerState)
+                        vm.clickButton(pagerState)
                     }
                 },
             )

@@ -32,11 +32,11 @@ class PreferencesHelper(context: Context) {
     }
 
     fun getIntValue(keyInt: String): Int {
-        return sharedPreferences.getInt(keyInt, 0) ?: 0
+        return sharedPreferences.getInt(keyInt, 0)
     }
 
     fun getBooleanValue(keyBool: String): Boolean {
-        return sharedPreferences.getBoolean(keyBool, false) ?: false
+        return sharedPreferences.getBoolean(keyBool, false)
     }
 
 }

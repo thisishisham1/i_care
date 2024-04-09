@@ -26,12 +26,13 @@ fun PrimaryButton(
         .height(
             ButtonHeight
         ),
+    isEnabled: Boolean = true,
     textStyle: TextStyle = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp)
 ) {
     Button(
         onClick = onClick, shape = Shapes().medium, colors = ButtonDefaults.buttonColors(
             containerColor = containerColor, contentColor = contentColor
-        ), modifier = modifier
+        ), modifier = modifier, enabled = isEnabled
     ) {
         Text(text = text, style = textStyle)
     }

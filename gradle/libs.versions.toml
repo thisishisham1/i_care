@@ -36,6 +36,6 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coilVersion" }
 javafaker = { group = "com.github.javafaker", name = "javafaker", version = "1.0.2" }
-firebaseAnalytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseBom" }
-firebaseAuth = {group="com.google.firebase",name="firebase-auth", version.ref="firebaseBom"}
+firebaseAnalytics = { group = "com.google.firebase", name = "firebase-analytics", version = "21.6.1" }
+firebaseAuth = {group="com.google.firebase",name="firebase-auth", version = "22.3.1" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }

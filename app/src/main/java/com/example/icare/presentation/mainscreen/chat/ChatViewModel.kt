@@ -22,7 +22,11 @@ class ChatViewModel(val navController: NavController) : ViewModel() {
         Message("Absolutely!", "John", 1675299327),
         Message("By the way, have you seen the new movie that just came out?", "Me", 1675299328),
         Message("No, I haven't had the chance yet. Is it any good?", "John", 1675299329),
-        Message("It's getting great reviews. We should go see it together sometime.", "Me", 1675299330),
+        Message(
+            "It's getting great reviews. We should go see it together sometime.",
+            "Me",
+            1675299330
+        ),
         Message("That sounds like a plan! Let's do it.", "John", 1675299331),
         Message("Awesome! I'll check the showtimes and let you know.", "Me", 1675299332),
         Message("Sounds good. Looking forward to it!", "John", 1675299333),
@@ -35,9 +39,9 @@ class ChatViewModel(val navController: NavController) : ViewModel() {
     )
 
 
-    fun handleSendMessage(message: String) {
+    /*fun handleSendMessage(message: String) {
         // TODO: handle send message
-    }
+    }*/
 
     fun handleArrowBack() =
         navController.navigateUp()
@@ -57,7 +61,8 @@ class ChatViewModel(val navController: NavController) : ViewModel() {
     fun handleAttachmentClick() {
         // TODO: handle Attachment click
     }
-    fun handleSendClick(){
+
+    fun handleSendClick() {
         // TODO: handle send click
     }
 }

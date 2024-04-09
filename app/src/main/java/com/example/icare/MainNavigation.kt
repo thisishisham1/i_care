@@ -12,7 +12,7 @@ import com.example.icare.presentation.offline.OfflineScreen
 import com.example.icare.presentation.onboarding.OnBoardingScreen
 import com.example.icare.presentation.registeration.forgotpassword.ForgotPasswordScreen
 import com.example.icare.presentation.registeration.forgotpassword.ResetPasswordScreen
-import com.example.icare.presentation.registeration.signin.SignInScreen
+import com.example.icare.presentation.registeration.login.LoginScreen
 import com.example.icare.presentation.registeration.signup.SignUpScreen
 import com.example.icare.presentation.registeration.verify.DoneVerifyScreen
 import com.example.icare.presentation.registeration.verify.VerifyScreen
@@ -37,7 +37,7 @@ fun MainNavigation(context: Context) {
     val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.ChatBot.route) {
+    NavHost(navController = navController, startDestination = Destinations.Login.route) {
         composable(Destinations.Splash.route) {
             SplashScreen(navController = navController, preferencesHelper = preferencesHelper)
         }
@@ -45,10 +45,10 @@ fun MainNavigation(context: Context) {
             OnBoardingScreen(navController)
         }
         composable(Destinations.SignUp.route) {
-            SignUpScreen(navController = navController)
+            SignUpScreen(navController)
         }
-        composable(Destinations.SignIn.route) {
-            SignInScreen(navController)
+        composable(Destinations.Login.route) {
+            LoginScreen(navController)
         }
         composable(Destinations.ForgotPassword.route) {
             ForgotPasswordScreen(navController)
@@ -57,7 +57,7 @@ fun MainNavigation(context: Context) {
             VerifyScreen(navController)
         }
         composable(Destinations.DoneVerify.route) {
-            DoneVerifyScreen(navController)
+            DoneVerifyScreen()
         }
         composable(Destinations.ResetPassword.route) {
             ResetPasswordScreen(navController)
@@ -102,11 +102,10 @@ fun MainNavigation(context: Context) {
         composable(Destinations.Doctors.route) {
             DoctorsScreen(navController = navController)
         }
-
-        composable(Destinations.Pharmacies.route){
+        composable(Destinations.Pharmacies.route) {
             PharmaciesScreen(navController = navController)
         }
-        composable(Destinations.Labs.route){
+        composable(Destinations.Labs.route) {
             LabsScreen(navController)
         }
     }

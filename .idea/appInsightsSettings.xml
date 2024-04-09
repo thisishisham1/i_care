@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.icare" />
-                  <option name="mobileSdkAppId" value="1:234161653605:android:1c7c330e323aadd2cec38c" />
-                  <option name="projectId" value="icare-h1962" />
-                  <option name="projectNumber" value="234161653605" />
+                  <option name="mobileSdkAppId" value="1:295727326684:android:e66c7247e9fd3c7fa61b19" />
+                  <option name="projectId" value="icare-h196" />
+                  <option name="projectNumber" value="295727326684" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

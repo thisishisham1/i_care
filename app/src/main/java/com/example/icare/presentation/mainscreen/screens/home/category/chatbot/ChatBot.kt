@@ -10,8 +10,6 @@ import com.example.icare.core.theme.gray600
 
 @Composable
 fun ChatBot() {
-    val chatBotViewModel: ChatBotViewModel = viewModel()
-    val message = chatBotViewModel.message.value
     Column(
         Modifier
             .fillMaxSize()
