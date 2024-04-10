@@ -2,48 +2,60 @@ package com.example.icare.data.login
 
 import android.util.Patterns
 
-object Validator {
-
-
+object SignUpValidator {
     fun validateCompleteName(name: String): ValidationResult {
         return ValidationResult(
-            (name.isNotEmpty() && name.length >= 2)
+            (name.trim().split("\\s+".toRegex()).size >= 2),
         )
 
     }
 
     fun validatePhoneNumber(phone: String): ValidationResult {
         return ValidationResult(
-            (phone.isNotEmpty() && Patterns.PHONE.matcher(phone).matches())
+            (phone.isNotEmpty() && Patterns.PHONE.matcher(phone).matches()),
         )
     }
 
     fun validateEmail(email: String): ValidationResult {
         return ValidationResult(
-            (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches())
+            (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
         )
     }
 
     fun validatePassword(password: String): ValidationResult {
         return ValidationResult(
-            (password.isNotEmpty() && password.length >= 4)
+            (password.length >= 8),
         )
     }
 
     fun validateConfirmPassword(password: String, confirmPassword: String): ValidationResult {
         return ValidationResult(
-            (confirmPassword == password)
+            (confirmPassword == password),
         )
     }
 
     fun validatePrivacyPolicyAcceptance(statusValue: Boolean): ValidationResult {
         return ValidationResult(
-            statusValue
+            statusValue,
         )
     }
 
 }
 
+object LoginValidator {
+    fun validateEmail(email: String): ValidationResult {
+        return ValidationResult(
+            (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
+        )
+    }
+
+    fun validatePassword(password: String): ValidationResult {
+        return ValidationResult(
+            (password.length >= 8)
+        )
+    }
+}
+
 data class ValidationResult(
-    val status: Boolean = false
+    val status: Boolean = false,
 )

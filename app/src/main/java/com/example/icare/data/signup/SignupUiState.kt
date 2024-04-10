@@ -13,6 +13,7 @@ data class SignupUiState(
     var emailError: Boolean = false,
     val phoneError: Boolean = false,
     var passwordError: Boolean = false,
-    var privacyPolicyError: Boolean = false
+    var privacyPolicyError: Boolean = false,
 
+    var errorMessageForEmail: String? = null
 )

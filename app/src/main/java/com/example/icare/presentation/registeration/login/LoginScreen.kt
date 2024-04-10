@@ -87,7 +87,7 @@ private fun InputFields(loginViewModel: LoginViewModel) {
     }
     Column {
         PrimaryInputTextFiled(
-            isError = !loginViewModel.loginUIState.value.emailError,
+            isError = loginViewModel.loginUIState.value.emailError,
             value = emailValue.value,
             label = stringResource(id = R.string.email),
             onValueChange = {
@@ -97,12 +97,12 @@ private fun InputFields(loginViewModel: LoginViewModel) {
         )
 
         PasswordInputField(
-            isError = !loginViewModel.loginUIState.value.passwordError,
+            errorMessage = if (loginViewModel.loginUIState.value.passwordError) loginViewModel.loginUIState.value.genericError else null,
+            isError = loginViewModel.loginUIState.value.passwordError,
             label = stringResource(id = R.string.password),
             onValueChange = {
                 passwordValue.value = it
                 loginViewModel.onEvent(LoginUIEvent.PasswordChanged(it))
-
             },
             value = passwordValue.value,
         )
@@ -118,10 +118,10 @@ private fun SignInButton(loginViewModel: LoginViewModel) {
         shape = Shapes().medium,
         colors = ButtonDefaults.buttonColors(
             containerColor = green500, contentColor = neutralWhite
-        ), modifier = Modifier
+        ),
+        modifier = Modifier
             .fillMaxWidth()
             .height(ButtonHeight),
-        enabled = loginViewModel.allValidationsPassed.value
     ) {
         if (loginViewModel.loginInProgress.value) {
             CircularProgressIndicator(color = neutralWhite)

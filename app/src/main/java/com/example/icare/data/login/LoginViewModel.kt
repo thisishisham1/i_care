@@ -5,13 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.icare.core.util.Destinations
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 
 
 class LoginViewModel(val navController: NavController) : ViewModel() {
     var loginUIState = mutableStateOf(LoginUIState())
 
-    var allValidationsPassed = mutableStateOf(false)
+    private var allValidationsPassed = mutableStateOf(false)
 
     var loginInProgress = mutableStateOf(false)
 
@@ -30,23 +32,26 @@ class LoginViewModel(val navController: NavController) : ViewModel() {
             }
 
             is LoginUIEvent.LoginButtonClicked -> {
-                loginClick()
+                validateLoginUIDataWithRules()
+                if (allValidationsPassed.value) {
+                    loginClick()
+                }
             }
         }
-        validateLoginUIDataWithRules()
+
     }
 
     private fun validateLoginUIDataWithRules() {
-        val emailResult = Validator.validateEmail(
+        val emailResult = LoginValidator.validateEmail(
             email = loginUIState.value.email
         )
-        val passwordResult = Validator.validatePassword(
+        val passwordResult = LoginValidator.validatePassword(
             password = loginUIState.value.password
         )
 
         loginUIState.value = loginUIState.value.copy(
-            emailError = emailResult.status,
-            passwordError = passwordResult.status
+            emailError = !emailResult.status,
+            passwordError = !passwordResult.status,
         )
 
         allValidationsPassed.value = emailResult.status && passwordResult.status
@@ -56,20 +61,33 @@ class LoginViewModel(val navController: NavController) : ViewModel() {
         loginInProgress.value = true
         val email = loginUIState.value.email
         val password = loginUIState.value.password
-
+        loginUIState.value.emailError = false
+        loginUIState.value.passwordError = false
         FirebaseAuth
             .getInstance()
             .signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                Log.d("Login in button", it.isSuccessful.toString())
-                if (it.isSuccessful) {
-                    loginInProgress.value = false
-                    navController.navigate(Destinations.MainScreen.route)
-                }
-            }.addOnFailureListener {
-                it.localizedMessage?.let { it1 ->
-                    Log.d("Login in button", it1)
-                    loginInProgress.value = false
+            .addOnFailureListener {
+                loginInProgress.value = false
+                val genericError = "Invalid email or password."
+                when (it) {
+                    is FirebaseAuthInvalidCredentialsException -> {
+                        loginUIState.value = loginUIState.value.copy(
+                            passwordError = true,
+                            genericError = genericError
+                        )
+                    }
+                    is FirebaseNetworkException -> {
+                        loginUIState.value = loginUIState.value.copy(
+                            genericError = "Network error. Please check your connection and try again."
+                        )
+                    }
+                    // Handle other specific error cases as needed
+                    else -> {
+                        loginUIState.value = loginUIState.value.copy(
+                            genericError = genericError
+                        )
+                        Log.w("Login", "Error during login: ${it.message}")
+                    }
                 }
             }
     }

@@ -1,6 +1,5 @@
 package com.example.icare.presentation.registeration.signup
 
-import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,11 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.icare.core.util.Dimens
@@ -33,13 +28,13 @@ import com.example.icare.core.util.ButtonHeight
 import com.example.icare.core.util.reusablecomponent.PrimaryInputTextFiled
 import com.example.icare.core.util.reusablecomponent.PasswordInputField
 import com.example.icare.R
-import com.example.icare.core.theme.black
-import com.example.icare.core.theme.blue
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
+import com.example.icare.core.util.Destinations
 import com.example.icare.core.util.WidthSpacer
 import com.example.icare.data.signup.SignUpViewModel
 import com.example.icare.data.signup.SignupUIEvent
+import com.example.icare.presentation.registeration.component.CheckboxComponent
 import com.example.icare.presentation.registeration.component.ImageHeader
 import com.example.icare.presentation.registeration.component.TextHeader
 
@@ -50,7 +45,6 @@ fun SignUpScreen(navController: NavController) {
     val signUpViewModel = remember {
         SignUpViewModel(navController = navController)
     }
-    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,10 +53,14 @@ fun SignUpScreen(navController: NavController) {
     ) {
         ImageHeader(imageRes = imageRes)
         TextHeader(headerString = "Sign up")
-        InputFields(signUpViewModel = signUpViewModel, context = context)
-        AgreementText()
+        InputFields(signUpViewModel = signUpViewModel)
+        CheckboxComponent(onTextSelected = {
+            // TODO: navigate to condition
+        }, onCheckedChange = {
+            signUpViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
+        })
         ContinueButton(signUpViewModel = signUpViewModel)
-        SignInText()
+        SignInText(navController)
     }
 }
 
@@ -73,12 +71,12 @@ private fun ContinueButton(signUpViewModel: SignUpViewModel) {
         shape = Shapes().medium,
         colors = ButtonDefaults.buttonColors(
             containerColor = green500, contentColor = neutralWhite
-        ), modifier = Modifier
+        ),
+        modifier = Modifier
             .fillMaxWidth()
             .height(ButtonHeight),
-        enabled = signUpViewModel.allValidationsPassed.value
     ) {
-        if (signUpViewModel.signUpInProgress.value) {
+        if (signUpViewModel.isRegistrationInProgress.value) {
             CircularProgressIndicator(color = neutralWhite)
         } else
             Text(text = "Login", style = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp))
@@ -86,7 +84,7 @@ private fun ContinueButton(signUpViewModel: SignUpViewModel) {
 }
 
 @Composable
-private fun InputFields(signUpViewModel: SignUpViewModel, context: Context) {
+private fun InputFields(signUpViewModel: SignUpViewModel) {
     val name = remember {
         mutableStateOf("")
     }
@@ -104,7 +102,7 @@ private fun InputFields(signUpViewModel: SignUpViewModel, context: Context) {
     }
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.mediumPadding)) {
         PrimaryInputTextFiled(
-            isError = !signUpViewModel.registrationUIState.value.completeNameError,
+            isError = signUpViewModel.registrationUiState.value.completeNameError,
             value = name.value,
             onValueChange = {
                 name.value = it
@@ -113,7 +111,8 @@ private fun InputFields(signUpViewModel: SignUpViewModel, context: Context) {
             label = "Name"
         )
         PrimaryInputTextFiled(
-            isError = !signUpViewModel.registrationUIState.value.emailError,
+            errorMessage = if (signUpViewModel.registrationUiState.value.emailError) signUpViewModel.registrationUiState.value.errorMessageForEmail else null,
+            isError = signUpViewModel.registrationUiState.value.emailError,
             value = email.value,
             onValueChange = {
                 email.value = it
@@ -122,7 +121,7 @@ private fun InputFields(signUpViewModel: SignUpViewModel, context: Context) {
             label = "Email"
         )
         PrimaryInputTextFiled(
-            isError = !signUpViewModel.registrationUIState.value.phoneError,
+            isError = signUpViewModel.registrationUiState.value.phoneError,
             value = phone.value,
             onValueChange = {
                 phone.value = it
@@ -131,7 +130,7 @@ private fun InputFields(signUpViewModel: SignUpViewModel, context: Context) {
             label = "Phone"
         )
         PasswordInputField(
-            isError = !signUpViewModel.registrationUIState.value.passwordError,
+            isError = signUpViewModel.registrationUiState.value.passwordError,
             label = "Password",
             onValueChange = {
                 password.value = it
@@ -140,7 +139,7 @@ private fun InputFields(signUpViewModel: SignUpViewModel, context: Context) {
             value = password.value
         )
         PasswordInputField(
-            isError = !signUpViewModel.registrationUIState.value.confirmPasswordError,
+            isError = signUpViewModel.registrationUiState.value.confirmPasswordError,
             label = "Confirm Password",
             onValueChange = {
                 confirmPassword.value = it
@@ -149,33 +148,10 @@ private fun InputFields(signUpViewModel: SignUpViewModel, context: Context) {
             value = confirmPassword.value
         )
     }
-
-
 }
 
 @Composable
-private fun AgreementText() {
-    val text = buildAnnotatedString {
-        withStyle(style = SpanStyle(color = black)) {
-            append("By signing up, you’re agree to our ")
-        }
-        withStyle(style = SpanStyle(color = blue)) {
-            append("Terms & Conditions ")
-        }
-        append("and ")
-        withStyle(style = SpanStyle(color = blue)) {
-            append("Privacy Policy")
-        }
-
-    }
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleSmall
-    )
-}
-
-@Composable
-private fun SignInText() {
+private fun SignInText(navController: NavController) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Text(
             text = stringResource(id = R.string.joined_before),
@@ -187,7 +163,9 @@ private fun SignInText() {
             style = MaterialTheme.typography.titleSmall,
             color = green500,
             modifier = Modifier.clickable {
-                //todo:
+                navController.navigate(Destinations.Login.route) {
+                    popUpTo(0)
+                }
             }
         )
     }
