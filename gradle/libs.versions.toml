@@ -3,26 +3,18 @@ androidxComposeBom = "2024.04.00"
 appcompat = "1.6.1"
 composeBomVersion = "2024.04.00"
 constraintlayout = "2.1.4"
-converterGson = "2.11.0"
 coreKtx = "1.12.0"
 lifecycleRuntimeKtx = "2.7.0"
 activityCompose = "1.8.2"
-composeBom = "2024.04.00"  # Updated to latest available version
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 material = "1.11.0"
 materialIconsExtended = "1.6.5"
-materialVersion = "1.11.0"
 navigationCompose = "2.7.7"
-retrofit = "2.11.0"
-retrofitVersion = "2.11.0"  # Updated to a compatible version (consider 2.11.0 if needed)
 coilVersion = "2.6.0"
-roomVersion = "2.6.1"
-hiltVersion = "2.51.1"  # Consider updating to latest stable version
-streamChatAndroidCompose = "6.3.0"
-streamChatAndroidOffline = "6.3.0"
-streamSdkVersion = "6.3.0"
+firebaseBom = "32.8.0"
+playServicesAuth = "21.0.0"
 
 [libraries]
 androidx-activity = { module = "androidx.activity:activity", version.ref = "activityCompose" }
@@ -32,31 +24,18 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-material-icons-extended-v165 = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 compose-bom-v20240300 = { module = "androidx.compose:compose-bom", version.ref = "androidxComposeBom" }
-converter-gson-v290 = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
-material-v1100 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
-retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitVersion" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coilVersion" }
-androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
-ksp = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }  # Using ksp instead of annotationProcessor
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
 javafaker = { group = "com.github.javafaker", name = "javafaker", version = "1.0.2" }
-retrofit-v290 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-stream-chat-android-compose = { group = "io.getstream", name = "stream-chat-android-compose", version.ref = "streamSdkVersion" }
-stream-chat-android-compose-v608 = { module = "io.getstream:stream-chat-android-compose", version.ref = "streamChatAndroidCompose" }
-stream-chat-android-offline = { group = "io.getstream", name = "stream-chat-android-offline", version.ref = "streamSdkVersion" }
-androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.6.5" }
-stream-chat-android-offline-v608 = { module = "io.getstream:stream-chat-android-offline", version.ref = "streamChatAndroidOffline" }
-
+firebaseAnalytics = { group = "com.google.firebase", name = "firebase-analytics", version = "21.6.1" }
+firebaseAuth = {group="com.google.firebase",name="firebase-auth", version = "22.3.1" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }

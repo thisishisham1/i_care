@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -181,7 +182,7 @@ private fun LogoutDialog(onClickLogout: () -> Unit, onClickCancel: () -> Unit) {
                     text = stringResource(id = R.string.profile_logout),
                     style = MaterialTheme.typography.headlineMedium
                 )
-                Divider(thickness = 1.dp)
+                HorizontalDivider(thickness = 1.dp)
                 Text(
                     text = stringResource(id = R.string.profile_dialog_agree),
                     textAlign = TextAlign.Center,

@@ -1,7 +1,5 @@
-package com.example.icare.presentation.registeration.signin
+package com.example.icare.presentation.registeration.login
 
-import PrimaryButton
-import android.content.Context
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.tween
@@ -32,10 +30,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.icare.core.util.ButtonHeight
 import com.example.icare.core.util.Dimens
@@ -46,14 +46,16 @@ import com.example.icare.core.theme.blue
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
 import com.example.icare.core.util.WidthSpacer
+import com.example.icare.data.login.LoginUIEvent
+import com.example.icare.data.login.LoginViewModel
 import com.example.icare.presentation.registeration.component.ImageHeader
 import com.example.icare.presentation.registeration.component.TextHeader
 
 private val imageRes = R.drawable.signin
 
 @Composable
-fun SignInScreen(navController: NavController) {
-    val signInViewModel = remember { SignInViewModel(navController) }
+fun LoginScreen(navController: NavController) {
+    val signInViewModel = remember { LoginViewModel(navController) }
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -66,47 +68,66 @@ fun SignInScreen(navController: NavController) {
     ) {
         ImageHeader(imageRes = imageRes)
         TextHeader(headerString = "Sign In")
-        InputFields(signInViewModel = signInViewModel, context = context)
+        InputFields(loginViewModel = signInViewModel)
         ForgotPassword(signInViewModel)
         Spacer(modifier = Modifier.height(Dimens.mediumPadding))
-        SignInButton(signInViewModel = signInViewModel)
+        SignInButton(loginViewModel = signInViewModel)
         GoogleButton()
         SignUpText(signInViewModel)
     }
 }
 
 @Composable
-private fun InputFields(signInViewModel: SignInViewModel, context: Context) {
-    signInViewModel.inputFields.forEach { (label, state) ->
-        when (label) {
-            "Email" -> PrimaryInputTextFiled(
-                isError = signInViewModel.isError(label),
-                errorMessage = signInViewModel.errorMessage(label, context),
-                value = state.value,
-                label = stringResource(id = R.string.email),
-                onValueChange = { state.value = it }
-            )
-
-            "Password" -> PasswordInputField(
-                isError = signInViewModel.isError(label),
-                label = stringResource(id = R.string.password),
-                onValueChange = { state.value = it },
-                value = state.value,
-                errorMessage = signInViewModel.errorMessage(label, context),
-            )
-        }
+private fun InputFields(loginViewModel: LoginViewModel) {
+    val emailValue = remember {
+        mutableStateOf("")
     }
+    val passwordValue = remember {
+        mutableStateOf("")
+    }
+    Column {
+        PrimaryInputTextFiled(
+            isError = loginViewModel.loginUIState.value.emailError,
+            value = emailValue.value,
+            label = stringResource(id = R.string.email),
+            onValueChange = {
+                emailValue.value = it
+                loginViewModel.onEvent(LoginUIEvent.EmailChanged(it))
+            }
+        )
+
+        PasswordInputField(
+            errorMessage = if (loginViewModel.loginUIState.value.passwordError) loginViewModel.loginUIState.value.genericError else null,
+            isError = loginViewModel.loginUIState.value.passwordError,
+            label = stringResource(id = R.string.password),
+            onValueChange = {
+                passwordValue.value = it
+                loginViewModel.onEvent(LoginUIEvent.PasswordChanged(it))
+            },
+            value = passwordValue.value,
+        )
+    }
+
+
 }
 
 @Composable
-private fun SignInButton(signInViewModel: SignInViewModel) {
-    PrimaryButton(
-        text = stringResource(id = R.string.login),
-        onClick = { signInViewModel.handleSignInButton() },
+private fun SignInButton(loginViewModel: LoginViewModel) {
+    Button(
+        onClick = { loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked) },
+        shape = Shapes().medium,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = green500, contentColor = neutralWhite
+        ),
         modifier = Modifier
             .fillMaxWidth()
-            .height(ButtonHeight)
-    )
+            .height(ButtonHeight),
+    ) {
+        if (loginViewModel.loginInProgress.value) {
+            CircularProgressIndicator(color = neutralWhite)
+        } else
+            Text(text = "Login", style = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp))
+    }
 }
 
 @Composable
@@ -167,28 +188,28 @@ private fun GoogleButton(
 }
 
 @Composable
-private fun ProgressIndicator() {
+private fun ProgressIndicator(color: Color = green500) {
     CircularProgressIndicator(
-        modifier = Modifier.size(20.dp),
+        modifier = Modifier.size(15.dp),
         color = green500,
         strokeWidth = 3.dp
     )
 }
 
 @Composable
-private fun ForgotPassword(signInViewModel: SignInViewModel) {
+private fun ForgotPassword(loginViewModel: LoginViewModel) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
         Text(
             text = stringResource(id = R.string.forgot_password),
             style = MaterialTheme.typography.titleSmall, color = blue,
-            modifier = Modifier.clickable { signInViewModel.handleForgotPasswordButton() },
+            modifier = Modifier.clickable { loginViewModel.handleForgotPasswordButton() },
         )
     }
 
 }
 
 @Composable
-private fun SignUpText(signInViewModel: SignInViewModel) {
+private fun SignUpText(loginViewModel: LoginViewModel) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Text(
             text = stringResource(id = R.string.dont_have_account),
@@ -200,7 +221,7 @@ private fun SignUpText(signInViewModel: SignInViewModel) {
             style = MaterialTheme.typography.titleSmall,
             color = green500,
             modifier = Modifier.clickable {
-                signInViewModel.handleSignUpButton()
+                loginViewModel.handleSignUpButton()
             }
         )
     }

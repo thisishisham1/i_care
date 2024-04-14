@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.icare.presentation.onboarding.Page
 import com.example.icare.core.util.Destinations
 import com.example.icare.core.util.Dimens
 import com.example.icare.core.theme.green500
@@ -58,7 +57,7 @@ fun OnBoardingPage(
                 color = green500, modifier = modifier.clickable {
                     preferencesHelper.saveBooleanValue("onBoarding", true)
                     navController.popBackStack()
-                    navController.navigate(Destinations.SignIn.route)
+                    navController.navigate(Destinations.Login.route)
                 }
             )
             Icon(

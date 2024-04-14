@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -52,13 +52,9 @@ android {
 }
 
 dependencies {
-    // Core Kotlin extensions
     implementation(libs.androidx.core.ktx)
-    // AndroidX lifecycle extensions
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    // Compose activity integration
     implementation(libs.androidx.activity.compose)
-    // Jetpack Compose dependencies
     implementation(platform(libs.androidx.compose.bom.v20240300))
     //noinspection UseTomlInstead
     implementation("androidx.compose.ui:ui")
@@ -72,7 +68,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    // Unit testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -83,27 +78,14 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     //noinspection UseTomlInstead
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    // Navigation Component for Jetpack Compose
     implementation(libs.androidx.navigation.compose)
-    //View model
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    // Retrofit for HTTP requests
-    implementation(libs.retrofit.v290)
-    implementation(libs.converter.gson.v290)
-    // Coil for image loading in Compose
     implementation(libs.coil.compose)
     implementation(libs.coil)
-    // Room for storing data
-    implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
-    ksp(libs.androidx.room.compiler)
-    //hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-    //faker
     implementation(libs.javafaker)
-    //stream sdk
-    implementation(libs.stream.chat.android.compose.v608)
-    implementation(libs.stream.chat.android.offline.v608)
     implementation(libs.androidx.material.icons.extended.v165)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebaseAnalytics)
+    implementation(libs.firebaseAuth)
+    implementation(libs.play.services.auth)
 }

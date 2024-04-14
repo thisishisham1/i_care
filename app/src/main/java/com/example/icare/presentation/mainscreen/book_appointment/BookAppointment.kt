@@ -41,10 +41,12 @@ import com.example.icare.core.theme.neutralWhite
 import com.example.icare.core.theme.shapes
 import com.example.icare.core.util.Dimens
 import PrimaryButton
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
@@ -52,13 +54,14 @@ import com.example.icare.R
 import com.example.icare.core.theme.gray400
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BookAppointment(navController: NavHostController) {
     val bookAppointmentVieModel = remember {
         BookAppointmentVieModel(navController)
     }
     Scaffold(topBar = { TopAppBar(bookAppointmentVieModel = bookAppointmentVieModel) }) {
-        Content(it = it)
+        Content()
     }
 }
 
@@ -74,13 +77,13 @@ private fun TopAppBar(bookAppointmentVieModel: BookAppointmentVieModel) {
         )
     }, navigationIcon = {
         IconButton(onClick = { bookAppointmentVieModel.handleBackArrow() }) {
-            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
+            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
         }
     })
 }
 
 @Composable
-private fun Content(it: PaddingValues) {
+private fun Content() {
     val dialogState = remember {
         mutableStateOf(false)
     }
@@ -124,7 +127,8 @@ private fun Date() {
 
 @Composable
 private fun Time() {
-    val timeListSelected = remember { mutableStateListOf<Boolean>().apply { repeat(8) { add(false) } } }
+    val timeListSelected =
+        remember { mutableStateListOf<Boolean>().apply { repeat(8) { add(false) } } }
 
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(text = "Select Hour", style = MaterialTheme.typography.headlineMedium)

@@ -8,19 +8,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.icare.core.util.Destinations
 import com.example.icare.data.PreferencesHelper
-import com.example.icare.presentation.mainscreen.MainScreen
-import com.example.icare.presentation.mainscreen.book_appointment.BookAppointment
-import com.example.icare.presentation.mainscreen.chat.ChatScreen
-import com.example.icare.presentation.mainscreen.screenDetails.DoctorDetails
-import com.example.icare.presentation.mainscreen.screenDetails.LabDetails
-import com.example.icare.presentation.mainscreen.screenDetails.PharmacyDetails
-import com.example.icare.presentation.mainscreen.screens.home.Chats
-import com.example.icare.presentation.mainscreen.screens.home.Notifications
-import com.example.icare.presentation.mainscreen.screens.home.category.DoctorsScreen
-import com.example.icare.presentation.mainscreen.screens.home.category.LabsScreen
-import com.example.icare.presentation.mainscreen.screens.home.category.PharmaciesScreen
-import com.example.icare.presentation.mainscreen.screens.home.category.chatbot.ChatBot
-import com.example.icare.presentation.mainscreen.screens.profile.edit_profile.EditProfile
 import com.example.icare.presentation.offline.OfflineScreen
 import com.example.icare.presentation.onboarding.OnBoardingScreen
 import com.example.icare.presentation.registeration.forgotpassword.ForgotPasswordScreen
@@ -30,6 +17,19 @@ import com.example.icare.presentation.registeration.signup.SignUpScreen
 import com.example.icare.presentation.registeration.verify.DoneVerifyScreen
 import com.example.icare.presentation.registeration.verify.VerifyScreen
 import com.example.icare.presentation.splash.SplashScreen
+import com.example.icare.presentation.mainscreen.MainScreen
+import com.example.icare.presentation.mainscreen.book_appointment.BookAppointment
+import com.example.icare.presentation.mainscreen.chat.ChatScreen
+import com.example.icare.presentation.mainscreen.screenDetails.DoctorDetails
+import com.example.icare.presentation.mainscreen.screenDetails.LabDetails
+import com.example.icare.presentation.mainscreen.screenDetails.PharmacyDetails
+import com.example.icare.presentation.mainscreen.screens.home.category.chatbot.ChatBot
+import com.example.icare.presentation.mainscreen.screens.home.Chats
+import com.example.icare.presentation.mainscreen.screens.home.category.DoctorsScreen
+import com.example.icare.presentation.mainscreen.screens.home.Notifications
+import com.example.icare.presentation.mainscreen.screens.home.category.LabsScreen
+import com.example.icare.presentation.mainscreen.screens.home.category.PharmaciesScreen
+import com.example.icare.presentation.mainscreen.screens.profile.edit_profile.EditProfile
 
 @Composable
 fun MainNavigation(context: Context) {
@@ -37,7 +37,7 @@ fun MainNavigation(context: Context) {
     val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.Chat.route) {
+    NavHost(navController = navController, startDestination = Destinations.ChatBot.route) {
         composable(Destinations.Splash.route) {
             SplashScreen(navController = navController, preferencesHelper = preferencesHelper)
         }
@@ -88,7 +88,7 @@ fun MainNavigation(context: Context) {
             ChatScreen(navController)
         }
         composable(Destinations.ChatBot.route) {
-            ChatBot(navController)
+            ChatBot()
         }
         composable(Destinations.EditProfile.route) {
             EditProfile(navController)

@@ -33,7 +33,7 @@ import com.example.icare.presentation.registeration.component.DescriptionHeader
 import com.example.icare.presentation.registeration.component.TextHeader
 
 @Composable
-fun DoneVerifyScreen(navController: NavHostController) {
+fun DoneVerifyScreen() {
     val emailVerified = stringResource(id = R.string.email_verified)
     val congratulation = stringResource(id = R.string.congratulations)
     val `continue` = stringResource(id = R.string.continue_)
