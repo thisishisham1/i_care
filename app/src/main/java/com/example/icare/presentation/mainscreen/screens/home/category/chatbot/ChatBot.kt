@@ -1,23 +1,27 @@
 package com.example.icare.presentation.mainscreen.screens.home.category.chatbot
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import android.annotation.SuppressLint
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.icare.core.theme.gray600
+import androidx.navigation.NavController
+import com.example.icare.core.util.reusablecomponent.DefaultMessageInput
+import com.example.icare.core.util.reusablecomponent.DefaultTopAppBar
+import com.example.icare.core.util.reusablecomponent.MessageList
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ChatBot() {
+fun ChatBot(navController: NavController) {
     val chatBotViewModel: ChatBotViewModel = viewModel()
-    val message = chatBotViewModel.message.value
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(gray600)
-    ) {
-
-
+    Scaffold(topBar = {
+        DefaultTopAppBar(title = "Chat bot", navController = navController)
+    }, bottomBar = {
+        DefaultMessageInput(
+            onAttachmentClicked = chatBotViewModel::handleAttachmentButton,
+            onSend = chatBotViewModel::handleSendClick,
+            onValueChange = chatBotViewModel::onValueChange
+        )
+    }) {
+        MessageList(messages = chatBotViewModel.messages)
     }
 }

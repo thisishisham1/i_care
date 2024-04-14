@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.icare.core.util.reusablecomponent.TopAppBar
+import com.example.icare.core.util.reusablecomponent.DefaultTopAppBar
 import com.example.icare.domain.model.listOfDoctor
 import com.example.icare.presentation.mainscreen.screens.home.UserCard
 import com.example.icare.presentation.mainscreen.screens.home.HomeViewModel
@@ -22,7 +22,7 @@ fun DoctorsScreen(navController: NavController) {
         HomeViewModel(navController = navController)
     }
     Scaffold(topBar = {
-        TopAppBar(title = "Nearby Doctors", navController = navController)
+        DefaultTopAppBar(title = "Nearby Doctors", navController = navController)
     }) {
         Box(Modifier.padding(it)) {
             NearbyDoctors(homeViewModel = homeViewModel)

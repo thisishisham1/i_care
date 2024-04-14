@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.reusablecomponent.TopAppBar
+import com.example.icare.core.util.reusablecomponent.DefaultTopAppBar
 import com.example.icare.domain.model.listOfPharmacy
 import com.example.icare.presentation.mainscreen.screens.home.HomeViewModel
 import com.example.icare.presentation.mainscreen.screens.search.tabs.pharmacy.CardPharmacy
@@ -25,10 +25,10 @@ fun PharmaciesScreen(navController: NavController) {
         HomeViewModel(navController)
     }
     Scaffold(topBar = {
-        TopAppBar(title = "Nearby Pharmacies", navController = navController)
+        DefaultTopAppBar(title = "Nearby Pharmacies", navController = navController)
     }) {
         Box(modifier = Modifier.padding(it)) {
-            Content(homeViewModel =homeViewModel)
+            Content(homeViewModel = homeViewModel)
         }
     }
 }
