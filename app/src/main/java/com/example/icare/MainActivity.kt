@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.icare.data.PreferencesHelper
+import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.core.theme.ICareTheme
 
 class MainActivity : ComponentActivity() {

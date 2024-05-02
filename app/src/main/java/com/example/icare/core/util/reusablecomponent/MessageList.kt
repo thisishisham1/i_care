@@ -21,7 +21,7 @@ import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
 import com.example.icare.core.util.Dimens
-import com.example.icare.domain.model.Message
+import com.example.icare.model.classes.Message
 
 @Composable
 private fun MessageBubble(

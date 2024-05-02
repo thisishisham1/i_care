@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -84,8 +83,4 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.javafaker)
     implementation(libs.androidx.material.icons.extended.v165)
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebaseAnalytics)
-    implementation(libs.firebaseAuth)
-    implementation(libs.play.services.auth)
 }
