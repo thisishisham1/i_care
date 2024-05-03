@@ -3,7 +3,7 @@ package com.example.icare.viewmodel.main.bottomnavitems.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.icare.core.util.Destinations
+import com.example.icare.model.classes.Destinations
 import com.example.icare.model.classes.Doctor
 import com.example.icare.model.classes.Lab
 import com.example.icare.model.classes.Pharmacy
@@ -62,9 +62,9 @@ class SearchViewModel(val navController: NavController) : ViewModel() {
 
     fun handleClickItem(item: Users) {
         when (item) {
-            is Doctor -> navController.navigate("${Destinations.DoctorDetails.route}/${item.id}")
-            is Pharmacy -> navController.navigate("${Destinations.PharmacyDetails.route}/${item.id}")
-            is Lab -> navController.navigate("${Destinations.LabDetails.route}/${item.id}")
+            is Doctor -> navController.navigate("${Destinations.Details.DoctorDetails.route}/${item.id}")
+            is Pharmacy -> navController.navigate("${Destinations.Details.PharmacyDetails.route}/${item.id}")
+            is Lab -> navController.navigate("${Destinations.Details.LabDetails.route}/${item.id}")
 
         }
     }

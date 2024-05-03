@@ -2,7 +2,7 @@ package com.example.icare.viewmodel.main.details
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.icare.core.util.Destinations
+import com.example.icare.model.classes.Destinations
 import com.example.icare.model.classes.listOfDoctor
 import com.example.icare.model.classes.listOfLabs
 import com.example.icare.model.classes.listOfPharmacy
@@ -17,7 +17,7 @@ class DetailsViewModel(val navController: NavController) : ViewModel() {
     }
 
     fun handelDoctorButton() {
-        navController.navigate(Destinations.BookAppointment.route)
+        navController.navigate(Destinations.Appointment.BookAppointment.route)
     }
 
     fun handleLabButton() {

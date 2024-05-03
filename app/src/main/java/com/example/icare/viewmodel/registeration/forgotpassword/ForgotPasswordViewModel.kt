@@ -6,7 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.icare.core.util.Destinations
+import com.example.icare.model.classes.Destinations
 import com.example.icare.model.classes.ErrorTypes
 
 class ForgotPasswordViewModel(val navController: NavController) : ViewModel() {
@@ -47,7 +47,7 @@ class ForgotPasswordViewModel(val navController: NavController) : ViewModel() {
         when {
             emailValue.value.isEmpty() -> setError(ErrorTypes.EMPTY)
             !validateEmailFormat() -> setError(ErrorTypes.INVALID_EMAIL_FORMAT)
-            emailValue.value == "Hishamohmad19@gmail.com" -> navController.navigate(Destinations.ResetPassword.route)
+            emailValue.value == "Hishamohmad19@gmail.com" -> navController.navigate(Destinations.Auth.ResetPassword.route)
             else -> setError(ErrorTypes.EMAIL_NOT_FOUNDED)
         }
     }

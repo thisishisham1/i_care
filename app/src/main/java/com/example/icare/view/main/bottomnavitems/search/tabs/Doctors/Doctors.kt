@@ -30,8 +30,8 @@ import coil.compose.AsyncImage
 import com.example.icare.R
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.shapes
-import com.example.icare.core.util.HeightSpacer
-import com.example.icare.core.util.WidthSpacer
+import com.example.icare.core.util.reusablecomponent.HeightSpacer
+import com.example.icare.core.util.reusablecomponent.WidthSpacer
 import com.example.icare.model.classes.Doctor
 
 @Composable

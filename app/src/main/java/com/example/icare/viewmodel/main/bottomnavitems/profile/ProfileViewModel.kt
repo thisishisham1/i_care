@@ -3,7 +3,7 @@ package com.example.icare.viewmodel.main.bottomnavitems.profile
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.icare.core.util.Destinations
+import com.example.icare.model.classes.Destinations
 import com.example.icare.view.main.bottomnavitems.profile.UserProfile
 
 class ProfileViewModel(private val navController: NavController) : ViewModel() {
@@ -13,7 +13,7 @@ class ProfileViewModel(private val navController: NavController) : ViewModel() {
     fun handleClickAction(action: String) {
         when (action) {
             "Edit Profile" -> {
-                navController.navigate(Destinations.EditProfile.route)
+                navController.navigate(Destinations.Profile.EditProfile.route)
             }
 
             "Settings" -> {

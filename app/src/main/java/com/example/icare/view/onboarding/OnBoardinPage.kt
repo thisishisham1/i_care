@@ -28,10 +28,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.icare.core.util.Destinations
-import com.example.icare.core.util.Dimens
-import com.example.icare.core.theme.green500
 import com.example.icare.R
+import com.example.icare.core.theme.green500
+import com.example.icare.core.util.Dimens
+import com.example.icare.model.classes.Destinations
 import com.example.icare.model.sharedPreferences.PreferencesHelper
 
 @Composable
@@ -57,7 +57,7 @@ fun OnBoardingPage(
                 color = green500, modifier = modifier.clickable {
                     preferencesHelper.saveBooleanValue("onBoarding", true)
                     navController.popBackStack()
-                    navController.navigate(Destinations.Login.route)
+                    navController.navigate(Destinations.Auth.Login.route)
                 }
             )
             Icon(

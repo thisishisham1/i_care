@@ -3,7 +3,7 @@ package com.example.icare.viewmodel.registeration.login
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.icare.core.util.Destinations
+import com.example.icare.model.classes.Destinations
 import com.example.icare.view.registeration.login.LoginUIEvent
 import com.example.icare.view.registeration.login.LoginUIState
 import com.example.icare.view.registeration.login.LoginValidator
@@ -57,21 +57,16 @@ class LoginViewModel(val navController: NavController) : ViewModel() {
     }
 
     private fun loginClick() {
-        loginInProgress.value = true
-        val email = loginUIState.value.email
-        val password = loginUIState.value.password
-        loginUIState.value.emailError = false
-        loginUIState.value.passwordError = false
 
     }
 
 
     fun handleForgotPasswordButton() {
-        navController.navigate(Destinations.ForgotPassword.route)
+        navController.navigate(Destinations.Auth.ForgotPassword.route)
     }
 
     fun handleSignUpButton() {
-        navController.navigate(Destinations.SignUp.route)
+        navController.navigate(Destinations.Auth.SignUp.route)
     }
 
 }

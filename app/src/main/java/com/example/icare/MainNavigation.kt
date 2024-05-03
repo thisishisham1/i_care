@@ -2,11 +2,11 @@ package com.example.icare
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.icare.core.util.Destinations
+import com.example.icare.model.classes.Destinations
 import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.view.main.MainView
 import com.example.icare.view.main.book.BookView
@@ -34,74 +34,78 @@ import com.example.icare.view.splash.SplashView
 @Composable
 fun MainNavigation(context: Context) {
     val navController = rememberNavController()
-    val preferencesHelper = remember {
+    // Use rememberSaveable to save the preferencesHelper instance across configuration changes
+    val preferencesHelper = rememberSaveable {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.MainScreen.route) {
-        composable(Destinations.Splash.route) {
-            SplashView(navController = navController, preferencesHelper = preferencesHelper)
+    NavHost(navController = navController, startDestination = Destinations.Main.MainScreen.route) {
+        composable(Destinations.Main.Splash.route) {
+            SplashView(
+                navController = navController,
+                preferencesHelper = preferencesHelper
+            )
         }
-        composable(Destinations.OnBoarding.route) {
+        composable(Destinations.Main.OnBoarding.route) {
             OnBoardingView(navController)
         }
-        composable(Destinations.SignUp.route) {
+        composable(Destinations.Auth.SignUp.route) {
             SignUpView(navController = navController)
         }
-        composable(Destinations.Login.route) {
+        composable(Destinations.Auth.Login.route) {
             LoginView(navController)
         }
-        composable(Destinations.ForgotPassword.route) {
+        composable(Destinations.Auth.ForgotPassword.route) {
             ForgotPasswordVeiw(navController)
         }
-        composable(Destinations.Verify.route) {
+        composable(Destinations.Auth.Verify.route) {
             VerifyView(navController)
         }
-        composable(Destinations.DoneVerify.route) {
+        composable(Destinations.Auth.DoneVerify.route) {
             DoneVerifyView()
         }
-        composable(Destinations.ResetPassword.route) {
+        composable(Destinations.Auth.ResetPassword.route) {
             ResetPasswordView(navController)
         }
-        composable(Destinations.Offline.route) {
+        composable(Destinations.Main.Offline.route) {
             OfflineView()
         }
-        composable(Destinations.MainScreen.route) {
+        composable(Destinations.Main.MainScreen.route) {
             MainView(navController)
         }
-        composable("${Destinations.DoctorDetails.route}/{doctorId}") { navBackStackEntry ->
+        composable("${Destinations.Details.DoctorDetails.route}/{doctorId}") { navBackStackEntry ->
             val doctorId = navBackStackEntry.arguments?.getString("doctorId")?.toIntOrNull() ?: 0
             DoctorDetailsView(doctorId = doctorId, navController)
         }
-        composable("${Destinations.PharmacyDetails.route}/{pharmacyId}") { NavBackStackEntry ->
+        composable("${Destinations.Details.PharmacyDetails.route}/{pharmacyId}") { NavBackStackEntry ->
             val pharmacyId =
                 NavBackStackEntry.arguments?.getString("pharmacyId")?.toIntOrNull() ?: 0
             PharmacyDetailsView(pharmacyId = pharmacyId, navController)
         }
-        composable("${Destinations.LabDetails.route}/{labId}") { NavBackStackEntry ->
+        composable("${Destinations.Details.LabDetails.route}/{labId}") { NavBackStackEntry ->
             val labId = NavBackStackEntry.arguments?.getString("labId")?.toIntOrNull() ?: 0
             LabDetailsView(labId = labId, navController)
         }
-        composable(Destinations.BookAppointment.route) {
+        composable(Destinations.Appointment.BookAppointment.route) {
             BookView(navController)
         }
-        composable(Destinations.Chat.route) { ChatView(navController) }
-        composable(Destinations.ChatBot.route) { ChatBotView() }
-        composable(Destinations.EditProfile.route) {
+        composable(Destinations.Chat.Conversation.route) { ChatView(navController) }
+        composable(Destinations.Chat.ChatBot.route) { ChatBotView() }
+        composable(Destinations.Profile.EditProfile.route) {
             EditProfileView(navController)
         }
-        composable(Destinations.Chats.route) {
+        composable(Destinations.Lists.Chats.route) {
             ChatsView()
         }
-        composable(Destinations.Notifications.route) {
+        composable(Destinations.Profile.Notifications.route) {
             NotificationsView()
         }
-        composable(Destinations.Doctors.route) {
+        composable(Destinations.Lists.Doctors.route) {
             DoctorsView(navController = navController)
         }
-        composable(Destinations.Pharmacies.route) {
+        composable(Destinations.Lists.Pharmacies.route) {
             PharmaciesView(navController = navController)
         }
-        composable(Destinations.Labs.route) {
+        composable(Destinations.Lists.Labs.route) {
             LabsView(navController)
         }
     }

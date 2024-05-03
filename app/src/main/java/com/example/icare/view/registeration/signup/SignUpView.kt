@@ -21,17 +21,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.icare.R
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
-import com.example.icare.core.util.ButtonHeight
-import com.example.icare.core.util.Destinations
 import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.WidthSpacer
 import com.example.icare.core.util.reusablecomponent.PasswordInputField
 import com.example.icare.core.util.reusablecomponent.PrimaryInputTextFiled
+import com.example.icare.core.util.reusablecomponent.WidthSpacer
+import com.example.icare.model.classes.Destinations
 import com.example.icare.view.registeration.component.CheckboxComponent
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
@@ -73,7 +73,7 @@ private fun ContinueButton(signUpViewModel: SignUpViewModel) {
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .height(ButtonHeight),
+            .height(60.dp),
     ) {
         if (signUpViewModel.isRegistrationInProgress.value) {
             CircularProgressIndicator(color = neutralWhite)
@@ -162,7 +162,7 @@ private fun SignInText(navController: NavController) {
             style = MaterialTheme.typography.titleSmall,
             color = green500,
             modifier = Modifier.clickable {
-                navController.navigate(Destinations.Login.route) {
+                navController.navigate(Destinations.Auth.Login.route) {
                     popUpTo(0)
                 }
             }

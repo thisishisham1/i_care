@@ -26,10 +26,9 @@ import coil.request.ImageRequest
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.green500
-import com.example.icare.core.util.SizeImage
 
 @Composable
-fun ImageHeader(imageRes: Int, sizeImage: Dp = SizeImage) {
+fun ImageHeader(imageRes: Int, sizeImage: Dp = 270.dp) {
     Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)

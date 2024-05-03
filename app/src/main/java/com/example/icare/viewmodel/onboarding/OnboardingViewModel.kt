@@ -4,7 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.icare.core.util.Destinations
+import com.example.icare.model.classes.Destinations
 import com.example.icare.model.sharedPreferences.PreferencesHelper
 
 class OnboardingViewModel(
@@ -18,7 +18,7 @@ class OnboardingViewModel(
         if (pagerState.currentPage == 3) {
             preferencesHelper.saveBooleanValue("onBoarding", true)
             navController.popBackStack()
-            navController.navigate(Destinations.Login.route)
+            navController.navigate(Destinations.Auth.Login.route)
         } else {
             pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
         }

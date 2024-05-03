@@ -3,7 +3,7 @@ package com.example.icare.viewmodel.registeration.verify
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.icare.core.util.Destinations
+import com.example.icare.model.classes.Destinations
 
 class VerifyViewModel(val navController: NavController) : ViewModel() {
     val textFieldStates = (1..4).map { mutableStateOf("") }.toMutableList()
@@ -12,7 +12,7 @@ class VerifyViewModel(val navController: NavController) : ViewModel() {
         val entreCode = textFieldStates.joinToString("") { it.value }
         val isCorrect = checkCode(entreCode)
         if (isCorrect) {
-            navController.navigate(Destinations.DoneVerify.route) {
+            navController.navigate(Destinations.Auth.DoneVerify.route) {
                 popUpTo(0)
             }
         } else {

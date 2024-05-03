@@ -31,7 +31,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -41,11 +40,10 @@ import com.example.icare.R
 import com.example.icare.core.theme.blue
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
-import com.example.icare.core.util.ButtonHeight
 import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.WidthSpacer
 import com.example.icare.core.util.reusablecomponent.PasswordInputField
 import com.example.icare.core.util.reusablecomponent.PrimaryInputTextFiled
+import com.example.icare.core.util.reusablecomponent.WidthSpacer
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
 import com.example.icare.viewmodel.registeration.login.LoginViewModel
@@ -55,7 +53,6 @@ private val imageRes = R.drawable.signin
 @Composable
 fun LoginView(navController: NavController) {
     val signInViewModel = remember { LoginViewModel(navController) }
-    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -120,7 +117,7 @@ private fun SignInButton(loginViewModel: LoginViewModel) {
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .height(ButtonHeight),
+            .height(65.dp),
     ) {
         if (loginViewModel.loginInProgress.value) {
             CircularProgressIndicator(color = neutralWhite)
@@ -139,7 +136,7 @@ private fun GoogleButton(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(ButtonHeight)
+            .height(65.dp)
             .border(
                 width = 2.dp,
                 color = green500, // Define your border color

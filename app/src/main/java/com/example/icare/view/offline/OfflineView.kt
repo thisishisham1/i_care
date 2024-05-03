@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import com.example.icare.R
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.HeightSpacer
+import com.example.icare.core.util.reusablecomponent.HeightSpacer
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
 
