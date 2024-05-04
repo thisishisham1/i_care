@@ -1,5 +1,7 @@
-package com.example.icare.core.util.reusablecomponent
+package com.example.icare.core.reusablecomponent
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -16,11 +19,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.icare.core.Dimens
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
-import com.example.icare.core.util.Dimens
 import com.example.icare.model.classes.Message
 
 @Composable
@@ -29,18 +32,19 @@ private fun MessageBubble(
     isCurrentUser: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val backgroundColor = if (isCurrentUser) green500 else gray400.copy(alpha = 0.2f)
-    val contentColor = if (isCurrentUser) neutralWhite else black
+    val (backgroundColor, contentColor) = if (isCurrentUser) Pair(green500, neutralWhite) else Pair(
+        gray400.copy(alpha = 0.2f),
+        black
+    )
+
     Row(
         modifier = modifier.fillMaxSize(),
         horizontalArrangement = if (isCurrentUser) Arrangement.End else Arrangement.Start
     ) {
         Surface(
-            shape = RoundedCornerShape(
-                topStart = 12.dp,
-                bottomEnd = 12.dp,
-                bottomStart = if (!isCurrentUser) 0.dp else 12.dp,
-                topEnd = if (isCurrentUser) 0.dp else 12.dp
+            shape = RoundedCornerShape(12.dp).copy(
+                bottomStart = if (!isCurrentUser) CornerSize(0.dp) else CornerSize(12.dp),
+                topEnd = if (isCurrentUser) CornerSize(0.dp) else CornerSize(12.dp)
             ),
             color = backgroundColor,
             modifier = Modifier
@@ -60,7 +64,7 @@ private fun MessageBubble(
 }
 
 @Composable
-fun MessageList(messages: List<Message>) {
+fun MessageList(messages: List<Message>, isBotTyping: Boolean = false) {
     Column(
         Modifier
             .fillMaxSize()
@@ -70,6 +74,14 @@ fun MessageList(messages: List<Message>) {
             items(messages) { message ->
                 val isCurrentUser = message.senderId == "Me"
                 MessageBubble(message = message, isCurrentUser = isCurrentUser)
+            }
+            item {
+                AnimatedVisibility(visible = isBotTyping) {
+                    Text(
+                        text = "Bot is typing...",
+                        modifier = Modifier.animateContentSize() // This will animate the size change
+                    )
+                }
             }
         }
     }

@@ -13,8 +13,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.icare.R
-import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.reusablecomponent.PrimaryInputTextFiled
+import com.example.icare.core.Dimens
+import com.example.icare.core.reusablecomponent.PrimaryInputTextFiled
 import com.example.icare.view.registeration.component.DescriptionHeader
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader

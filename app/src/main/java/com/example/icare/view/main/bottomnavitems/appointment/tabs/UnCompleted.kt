@@ -31,11 +31,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.icare.R
+import com.example.icare.core.Dimens
+import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.blur
 import com.example.icare.core.theme.shapes
-import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.reusablecomponent.WidthSpacer
 import com.example.icare.model.classes.Doctor
 import com.example.icare.model.classes.listOfDoctor
 import com.example.icare.viewmodel.main.bottomnavitems.appointment.AppointmentViewModel

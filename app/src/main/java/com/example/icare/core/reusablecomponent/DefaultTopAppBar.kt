@@ -1,4 +1,4 @@
-package com.example.icare.core.util.reusablecomponent
+package com.example.icare.core.reusablecomponent
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack

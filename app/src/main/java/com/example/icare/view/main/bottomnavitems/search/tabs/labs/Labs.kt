@@ -28,10 +28,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.icare.R
+import com.example.icare.core.reusablecomponent.HeightSpacer
+import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.shapes
-import com.example.icare.core.util.reusablecomponent.HeightSpacer
-import com.example.icare.core.util.reusablecomponent.WidthSpacer
 import com.example.icare.model.classes.Lab
 
 

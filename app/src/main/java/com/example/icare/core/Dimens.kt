@@ -1,4 +1,4 @@
-package com.example.icare.core.util
+package com.example.icare.core
 
 import androidx.compose.ui.unit.dp
 

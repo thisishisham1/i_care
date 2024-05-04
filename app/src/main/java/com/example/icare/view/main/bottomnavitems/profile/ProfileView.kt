@@ -35,15 +35,15 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.icare.R
+import com.example.icare.core.Dimens
+import com.example.icare.core.reusablecomponent.HeightSpacer
+import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.blur
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.neutralWhite
 import com.example.icare.core.theme.shapes
-import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.reusablecomponent.HeightSpacer
-import com.example.icare.core.util.reusablecomponent.WidthSpacer
 import com.example.icare.viewmodel.main.bottomnavitems.profile.ProfileViewModel
 
 data class UserProfile(

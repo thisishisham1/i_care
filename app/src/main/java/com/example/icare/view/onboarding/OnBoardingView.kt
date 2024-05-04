@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.example.icare.R
-import com.example.icare.core.util.Dimens
+import com.example.icare.core.Dimens
 import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.viewmodel.onboarding.OnboardingViewModel
 import kotlinx.coroutines.launch

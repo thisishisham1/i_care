@@ -15,9 +15,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.icare.R
-import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.reusablecomponent.HeightSpacer
-import com.example.icare.core.util.reusablecomponent.PasswordInputField
+import com.example.icare.core.Dimens
+import com.example.icare.core.reusablecomponent.HeightSpacer
+import com.example.icare.core.reusablecomponent.PasswordInputField
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
 import com.example.icare.viewmodel.registeration.forgotpassword.ForgotPasswordViewModel

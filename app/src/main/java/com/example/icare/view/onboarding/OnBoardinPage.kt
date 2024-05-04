@@ -29,8 +29,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.icare.R
+import com.example.icare.core.Dimens
 import com.example.icare.core.theme.green500
-import com.example.icare.core.util.Dimens
 import com.example.icare.model.classes.Destinations
 import com.example.icare.model.sharedPreferences.PreferencesHelper
 

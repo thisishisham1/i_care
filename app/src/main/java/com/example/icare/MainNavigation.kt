@@ -2,7 +2,7 @@ package com.example.icare
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -34,11 +34,13 @@ import com.example.icare.view.splash.SplashView
 @Composable
 fun MainNavigation(context: Context) {
     val navController = rememberNavController()
-    // Use rememberSaveable to save the preferencesHelper instance across configuration changes
-    val preferencesHelper = rememberSaveable {
+    val preferencesHelper = remember {
         PreferencesHelper(context)
     }
-    NavHost(navController = navController, startDestination = Destinations.Main.MainScreen.route) {
+    NavHost(
+        navController = navController,
+        startDestination = Destinations.Chat.ChatBot.route
+    ) {
         composable(Destinations.Main.Splash.route) {
             SplashView(
                 navController = navController,
@@ -47,6 +49,12 @@ fun MainNavigation(context: Context) {
         }
         composable(Destinations.Main.OnBoarding.route) {
             OnBoardingView(navController)
+        }
+        composable(Destinations.Main.Offline.route) {
+            OfflineView()
+        }
+        composable(Destinations.Main.MainScreen.route) {
+            MainView(navController)
         }
         composable(Destinations.Auth.SignUp.route) {
             SignUpView(navController = navController)
@@ -66,38 +74,32 @@ fun MainNavigation(context: Context) {
         composable(Destinations.Auth.ResetPassword.route) {
             ResetPasswordView(navController)
         }
-        composable(Destinations.Main.Offline.route) {
-            OfflineView()
-        }
-        composable(Destinations.Main.MainScreen.route) {
-            MainView(navController)
-        }
         composable("${Destinations.Details.DoctorDetails.route}/{doctorId}") { navBackStackEntry ->
             val doctorId = navBackStackEntry.arguments?.getString("doctorId")?.toIntOrNull() ?: 0
             DoctorDetailsView(doctorId = doctorId, navController)
         }
-        composable("${Destinations.Details.PharmacyDetails.route}/{pharmacyId}") { NavBackStackEntry ->
+        composable("${Destinations.Details.PharmacyDetails.route}/{pharmacyId}") {
             val pharmacyId =
-                NavBackStackEntry.arguments?.getString("pharmacyId")?.toIntOrNull() ?: 0
+                it.arguments?.getString("pharmacyId")?.toIntOrNull() ?: 0
             PharmacyDetailsView(pharmacyId = pharmacyId, navController)
         }
-        composable("${Destinations.Details.LabDetails.route}/{labId}") { NavBackStackEntry ->
-            val labId = NavBackStackEntry.arguments?.getString("labId")?.toIntOrNull() ?: 0
+        composable("${Destinations.Details.LabDetails.route}/{labId}") {
+            val labId = it.arguments?.getString("labId")?.toIntOrNull() ?: 0
             LabDetailsView(labId = labId, navController)
         }
         composable(Destinations.Appointment.BookAppointment.route) {
             BookView(navController)
         }
         composable(Destinations.Chat.Conversation.route) { ChatView(navController) }
-        composable(Destinations.Chat.ChatBot.route) { ChatBotView() }
+        composable(Destinations.Chat.ChatBot.route) { ChatBotView(navController) }
         composable(Destinations.Profile.EditProfile.route) {
             EditProfileView(navController)
         }
-        composable(Destinations.Lists.Chats.route) {
-            ChatsView()
-        }
         composable(Destinations.Profile.Notifications.route) {
             NotificationsView()
+        }
+        composable(Destinations.Lists.Chats.route) {
+            ChatsView()
         }
         composable(Destinations.Lists.Doctors.route) {
             DoctorsView(navController = navController)

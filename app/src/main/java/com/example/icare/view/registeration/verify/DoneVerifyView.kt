@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.icare.R
-import com.example.icare.core.util.Dimens
+import com.example.icare.core.Dimens
 import com.example.icare.view.registeration.component.DescriptionHeader
 import com.example.icare.view.registeration.component.TextHeader
 

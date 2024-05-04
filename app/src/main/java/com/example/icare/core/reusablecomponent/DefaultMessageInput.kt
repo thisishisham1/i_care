@@ -1,4 +1,4 @@
-package com.example.icare.core.util.reusablecomponent
+package com.example.icare.core.reusablecomponent
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
@@ -32,12 +32,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.example.icare.core.Dimens
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
 import com.example.icare.core.theme.shapes
-import com.example.icare.core.util.Dimens
 
 @Composable
 fun DefaultMessageInput(

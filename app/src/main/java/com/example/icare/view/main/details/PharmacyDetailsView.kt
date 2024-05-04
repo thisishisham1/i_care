@@ -33,11 +33,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.icare.R
+import com.example.icare.core.Dimens
+import com.example.icare.core.reusablecomponent.HeightSpacer
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.shapes
-import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.reusablecomponent.HeightSpacer
 import com.example.icare.model.classes.Pharmacy
 import com.example.icare.viewmodel.main.details.DetailsViewModel
 

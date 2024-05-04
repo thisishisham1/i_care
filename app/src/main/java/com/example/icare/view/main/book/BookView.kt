@@ -43,13 +43,13 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.icare.R
+import com.example.icare.core.Dimens
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.blur
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
 import com.example.icare.core.theme.shapes
-import com.example.icare.core.util.Dimens
 import com.example.icare.viewmodel.main.book.BookAppointmentVieModel
 
 

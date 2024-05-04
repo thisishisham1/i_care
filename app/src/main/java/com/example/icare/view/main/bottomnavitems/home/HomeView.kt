@@ -38,12 +38,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.icare.R
+import com.example.icare.core.Dimens
+import com.example.icare.core.reusablecomponent.HeightSpacer
+import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.shapes
-import com.example.icare.core.util.Dimens
-import com.example.icare.core.util.reusablecomponent.HeightSpacer
-import com.example.icare.core.util.reusablecomponent.WidthSpacer
 import com.example.icare.model.classes.Doctor
 import com.example.icare.model.classes.listOfDoctor
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel

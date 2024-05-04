@@ -1,4 +1,4 @@
-package com.example.icare.core.util.reusablecomponent
+package com.example.icare.core.reusablecomponent
 
 
 import androidx.compose.foundation.clickable
@@ -21,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -30,15 +29,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.icare.R
-import com.example.icare.core.theme.green500
-import com.example.icare.core.theme.shapes
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.green200
+import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.green700
 import com.example.icare.core.theme.red500
+import com.example.icare.core.theme.shapes
 
 @Composable
 fun PrimaryInputTextFiled(

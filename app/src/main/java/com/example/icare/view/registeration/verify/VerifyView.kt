@@ -30,9 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.icare.R
+import com.example.icare.core.Dimens
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.shapes
-import com.example.icare.core.util.Dimens
 import com.example.icare.view.registeration.component.DescriptionHeader
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
