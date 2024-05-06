@@ -7,6 +7,7 @@ sealed class Destinations(val route: String) {
         object OnBoarding : Main("onBoarding")
         object MainScreen : Main("mainScreen")
         object Offline : Main("offline")
+        object TermsAndConditions : Main("termsAndConditions")
     }
 
     sealed class Auth(route: String) : Destinations(route) {

@@ -83,4 +83,22 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.javafaker)
     implementation(libs.androidx.material.icons.extended.v165)
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converterGson)
+
+    // OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.loggingInterceptor)
+
+    // Gson
+    implementation(libs.gson)
+
+    // Coroutines
+    implementation(libs.coroutinesCore)
+    implementation(libs.coroutinesAndroid)
+
+    // Koin
+    implementation(libs.koinCore)
+    implementation(libs.koinAndroid)
 }

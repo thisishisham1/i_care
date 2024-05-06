@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.icare.model.classes.Destinations
 import com.example.icare.model.sharedPreferences.PreferencesHelper
+import com.example.icare.view.TermsAndConditions
 import com.example.icare.view.main.MainView
 import com.example.icare.view.main.book.BookView
 import com.example.icare.view.main.bottomnavitems.home.ChatsView
@@ -39,7 +40,7 @@ fun MainNavigation(context: Context) {
     }
     NavHost(
         navController = navController,
-        startDestination = Destinations.Chat.ChatBot.route
+        startDestination = Destinations.Main.TermsAndConditions.route
     ) {
         composable(Destinations.Main.Splash.route) {
             SplashView(
@@ -109,6 +110,9 @@ fun MainNavigation(context: Context) {
         }
         composable(Destinations.Lists.Labs.route) {
             LabsView(navController)
+        }
+        composable(Destinations.Main.TermsAndConditions.route) {
+            TermsAndConditions(navController)
         }
     }
 }

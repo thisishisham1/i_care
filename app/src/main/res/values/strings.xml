@@ -23,6 +23,21 @@
     <string name="email_not_found_error">Email not found</string>
     <string name="invalid_email_format_error">Invalid email format. Please try again</string>
 
+    <!--Terms and Conditions-->
+    <string name="terms_conditions">Terms &amp; Conditions</string>
+    <string name="use_license_title">1. Use License</string>
+    <string name="use_license_content">Permission is granted to temporarily download one copy of the App for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license, you may not:\n\n\t- modify or copy the materials.\n\t- use the materials for any commercial purpose, or for any public display (commercial or non-commercial).\n\t- attempt to decompile or reverse engineer any software contained in the App.\n\t- remove any copyright or other proprietary notations from the materials; or\n\t- transfer the materials to another person or \"mirror\" the materials on any other server.</string>
+    <string name="medical_disclaimer_title">2. Medical Disclaimer</string>
+    <string name="medical_disclaimer_content">The content provided by ICare is for informational purposes only and should not be considered medical advice. Users should consult with a qualified healthcare professional for specific concerns regarding their health.</string>
+    <string name="limitations_title">3. Limitations</string>
+    <string name="limitations_content">In no event shall ICare or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the App.</string>
+    <string name="governing_law_title">4. Governing Law</string>
+    <string name="governing_law_content">These Terms shall be governed and construed in accordance with the laws of Egypt, without regard to its conflict of law provisions.</string>
+    <string name="changes_title">5. Changes</string>
+    <string name="changes_content">We reserve the right, at our sole discretion, to modify or replace these Terms at any time.</string>
+    <string name="initial_statement">By downloading, installing, or using the ICare, you agree to be bound by these Terms and Conditions Terms.</string>
+    <string name="final_statement">By using the App, you signify your acceptance of these Terms. If you do not agree to these Terms, please do not use the App.</string>
+
     <!-- Onboarding -->
     <string name="on_boarding1">Digital Smart Diagnoses,\ninstant Relief!</string>
     <string name="on_boarding2">Find a lot of specialist\ndoctors in one place</string>
