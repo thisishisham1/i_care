@@ -66,6 +66,9 @@ class ForgotPasswordViewModel(val navController: NavController) : ViewModel() {
                 }
 
                 "Confirm Password" -> {
+                    if (value.value.isEmpty()) {
+                        setPasswordError(ErrorTypes.EMPTY, label)
+                    }
                     if (value.value != passwordFields["Password"]?.value) {
                         setPasswordError(ErrorTypes.PASSWORD_MISMATCH, label)
                     }

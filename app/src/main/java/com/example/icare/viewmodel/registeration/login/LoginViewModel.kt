@@ -57,7 +57,9 @@ class LoginViewModel(val navController: NavController) : ViewModel() {
     }
 
     private fun loginClick() {
-
+        navController.navigate(Destinations.Main.MainScreen.route) {
+            popUpTo(0)
+        }
     }
 
 

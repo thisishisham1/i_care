@@ -29,16 +29,16 @@ fun OfflineView() {
         ImageHeader(imageRes = R.drawable.no_internet)
         TextHeader(headerString = "No network connection", color = gray500)
         HeightSpacer(
-            Dimens
-                .largePadding
+            Dimens.largePadding
         )
         TryAgain()
     }
 }
 
+
 @Composable
 fun TryAgain() {
     TextButton(onClick = { /*TODO*/ }) {
-        Text(text = "Try Again", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Refresh", style = MaterialTheme.typography.titleMedium)
     }
 }

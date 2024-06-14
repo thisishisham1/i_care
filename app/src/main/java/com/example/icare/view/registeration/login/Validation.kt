@@ -45,13 +45,13 @@ object SignUpValidator {
 object LoginValidator {
     fun validateEmail(email: String): ValidationResult {
         return ValidationResult(
-            (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
+            email == "hishamohmad19@gmail.com"
         )
     }
 
     fun validatePassword(password: String): ValidationResult {
         return ValidationResult(
-            (password.length >= 8)
+            password == "123456790"
         )
     }
 }

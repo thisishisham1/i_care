@@ -24,7 +24,7 @@ import com.example.icare.view.main.details.LabDetailsView
 import com.example.icare.view.main.details.PharmacyDetailsView
 import com.example.icare.view.offline.OfflineView
 import com.example.icare.view.onboarding.OnBoardingView
-import com.example.icare.view.registeration.forgotpassword.ForgotPasswordVeiw
+import com.example.icare.view.registeration.forgotpassword.ForgotPasswordView
 import com.example.icare.view.registeration.forgotpassword.ResetPasswordView
 import com.example.icare.view.registeration.login.LoginView
 import com.example.icare.view.registeration.signup.SignUpView
@@ -39,13 +39,11 @@ fun MainNavigation(context: Context) {
         PreferencesHelper(context)
     }
     NavHost(
-        navController = navController,
-        startDestination = Destinations.Main.TermsAndConditions.route
+        navController = navController, startDestination = Destinations.Main.Splash.route
     ) {
         composable(Destinations.Main.Splash.route) {
             SplashView(
-                navController = navController,
-                preferencesHelper = preferencesHelper
+                navController = navController, preferencesHelper = preferencesHelper
             )
         }
         composable(Destinations.Main.OnBoarding.route) {
@@ -64,7 +62,7 @@ fun MainNavigation(context: Context) {
             LoginView(navController)
         }
         composable(Destinations.Auth.ForgotPassword.route) {
-            ForgotPasswordVeiw(navController)
+            ForgotPasswordView(navController)
         }
         composable(Destinations.Auth.Verify.route) {
             VerifyView(navController)
@@ -80,8 +78,7 @@ fun MainNavigation(context: Context) {
             DoctorDetailsView(doctorId = doctorId, navController)
         }
         composable("${Destinations.Details.PharmacyDetails.route}/{pharmacyId}") {
-            val pharmacyId =
-                it.arguments?.getString("pharmacyId")?.toIntOrNull() ?: 0
+            val pharmacyId = it.arguments?.getString("pharmacyId")?.toIntOrNull() ?: 0
             PharmacyDetailsView(pharmacyId = pharmacyId, navController)
         }
         composable("${Destinations.Details.LabDetails.route}/{labId}") {

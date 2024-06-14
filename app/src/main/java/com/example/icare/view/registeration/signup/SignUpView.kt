@@ -54,7 +54,7 @@ fun SignUpView(navController: NavController) {
         TextHeader(headerString = "Sign up")
         InputFields(signUpViewModel = signUpViewModel)
         CheckboxComponent(onTextSelected = {
-            // TODO: navigate to condition
+            navController.navigate(Destinations.Main.TermsAndConditions.route)
         }, onCheckedChange = {
             signUpViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
         })
