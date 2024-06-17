@@ -42,17 +42,15 @@ object SignUpValidator {
 
 }
 
+
 object LoginValidator {
     fun validateEmail(email: String): ValidationResult {
-        return ValidationResult(
-            email == "hishamohmad19@gmail.com"
-        )
+        val emailPattern = Patterns.EMAIL_ADDRESS
+        return ValidationResult(emailPattern.matcher(email).matches())
     }
 
     fun validatePassword(password: String): ValidationResult {
-        return ValidationResult(
-            password == "123456790"
-        )
+        return ValidationResult(password.isNotEmpty())
     }
 }
 

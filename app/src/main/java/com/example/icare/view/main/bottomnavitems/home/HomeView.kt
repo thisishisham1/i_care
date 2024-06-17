@@ -44,8 +44,8 @@ import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.Doctor
-import com.example.icare.model.classes.listOfDoctor
+import com.example.icare.model.classes.users.Doctor
+import com.example.icare.model.classes.users.listOfDoctor
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 

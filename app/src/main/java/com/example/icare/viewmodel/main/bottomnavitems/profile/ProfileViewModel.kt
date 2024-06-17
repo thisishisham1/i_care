@@ -32,7 +32,10 @@ class ProfileViewModel(private val navController: NavController) : ViewModel() {
     }
 
     fun handleLogoutDialog() {
-        isDialog.value = true
+        navController.navigate(Destinations.Auth.Login.route) {
+            popUpTo(0)
+        }
+        isDialog.value = false
     }
 
     fun handleCancelDialog() {

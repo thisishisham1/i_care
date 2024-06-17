@@ -3,10 +3,10 @@ package com.example.icare.viewmodel.main.bottomnavitems.home
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.Doctor
-import com.example.icare.model.classes.Lab
-import com.example.icare.model.classes.Pharmacy
-import com.example.icare.model.classes.Users
+import com.example.icare.model.classes.users.Doctor
+import com.example.icare.model.classes.users.Lab
+import com.example.icare.model.classes.users.Pharmacy
+import com.example.icare.model.classes.users.Users
 
 class HomeViewModel(val navController: NavController) : ViewModel() {
     fun handleNavigationDetail(user: Users) {

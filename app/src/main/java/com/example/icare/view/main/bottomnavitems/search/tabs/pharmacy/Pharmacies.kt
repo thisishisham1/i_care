@@ -32,7 +32,7 @@ import com.example.icare.core.reusablecomponent.HeightSpacer
 import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.Pharmacy
+import com.example.icare.model.classes.users.Pharmacy
 
 @Composable
 fun Pharmacies(onClickPharmacy: (Pharmacy) -> Unit, pharmacies: List<Pharmacy>) {

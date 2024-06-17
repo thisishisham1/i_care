@@ -32,7 +32,7 @@ import com.example.icare.core.reusablecomponent.HeightSpacer
 import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.Lab
+import com.example.icare.model.classes.users.Lab
 
 
 @Composable

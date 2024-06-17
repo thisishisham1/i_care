@@ -1,4 +1,4 @@
-package com.example.icare.model.classes
+package com.example.icare.model.classes.users
 
 data class Pharmacy(
     override val title: String,

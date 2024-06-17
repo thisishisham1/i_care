@@ -2,6 +2,7 @@ package com.example.icare.view.registeration.signup
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,9 +14,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.icare.R
 import com.example.icare.core.Dimens
+import com.example.icare.core.reusablecomponent.BackArrow
 import com.example.icare.core.reusablecomponent.PasswordInputField
 import com.example.icare.core.reusablecomponent.PrimaryInputTextFiled
 import com.example.icare.core.reusablecomponent.WidthSpacer
@@ -39,27 +44,40 @@ import com.example.icare.viewmodel.registeration.signup.SignUpViewModel
 
 private val imageRes = R.drawable.signup
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpView(navController: NavController) {
     val signUpViewModel = remember {
         SignUpViewModel(navController = navController)
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = Dimens.largePadding, vertical = Dimens.mediumPadding),
-    ) {
-        ImageHeader(imageRes = imageRes)
-        TextHeader(headerString = "Sign up")
-        InputFields(signUpViewModel = signUpViewModel)
-        CheckboxComponent(onTextSelected = {
-            navController.navigate(Destinations.Main.TermsAndConditions.route)
-        }, onCheckedChange = {
-            signUpViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
-        })
-        ContinueButton(signUpViewModel = signUpViewModel)
-        SignInText(navController)
+    Scaffold(topBar = {
+        TopAppBar(
+            title = { /*TODO*/ },
+            navigationIcon = { BackArrow(navController = navController) })
+    }) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = Dimens.largePadding, vertical = Dimens.mediumPadding),
+            ) {
+                ImageHeader(imageRes = imageRes)
+                TextHeader(headerString = "Sign up")
+                InputFields(signUpViewModel = signUpViewModel)
+                CheckboxComponent(onTextSelected = {
+                    navController.navigate(Destinations.Main.TermsAndConditions.route)
+                }, onCheckedChange = {
+                    signUpViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
+                })
+                ContinueButton(signUpViewModel = signUpViewModel)
+                SignInText(navController)
+            }
+        }
     }
 }
 

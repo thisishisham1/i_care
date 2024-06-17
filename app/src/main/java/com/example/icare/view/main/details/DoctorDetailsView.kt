@@ -39,7 +39,7 @@ import com.example.icare.core.reusablecomponent.HeightSpacer
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.Doctor
+import com.example.icare.model.classes.users.Doctor
 import com.example.icare.viewmodel.main.details.DetailsViewModel
 
 @Composable

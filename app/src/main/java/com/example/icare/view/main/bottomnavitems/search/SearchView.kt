@@ -46,9 +46,9 @@ import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.green700
 import com.example.icare.core.theme.neutralWhite
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.Doctor
-import com.example.icare.model.classes.Lab
-import com.example.icare.model.classes.Pharmacy
+import com.example.icare.model.classes.users.Doctor
+import com.example.icare.model.classes.users.Lab
+import com.example.icare.model.classes.users.Pharmacy
 import com.example.icare.view.main.bottomnavitems.search.tabs.Doctors.Doctors
 import com.example.icare.view.main.bottomnavitems.search.tabs.labs.Labs
 import com.example.icare.view.main.bottomnavitems.search.tabs.pharmacy.Pharmacies

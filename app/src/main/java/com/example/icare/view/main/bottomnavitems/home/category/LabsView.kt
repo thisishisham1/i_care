@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
-import com.example.icare.model.classes.listOfLabs
+import com.example.icare.model.classes.users.listOfLabs
 import com.example.icare.view.main.bottomnavitems.search.tabs.labs.CardDoctor
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 

@@ -32,7 +32,7 @@ import com.example.icare.core.reusablecomponent.HeightSpacer
 import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.Doctor
+import com.example.icare.model.classes.users.Doctor
 
 @Composable
 fun Doctors(onClickDoctor: (Doctor) -> Unit, doctors: List<Doctor>) {

@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -56,6 +58,7 @@ fun LoginView(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(
                 vertical = Dimens.mediumPadding, horizontal = Dimens.largePadding
             ),
@@ -102,6 +105,7 @@ private fun InputFields(loginViewModel: LoginViewModel) {
             },
             value = passwordValue.value,
         )
+        Text(text = loginViewModel.errorMessage.value ?: "")
     }
 
 
@@ -119,10 +123,30 @@ private fun SignInButton(loginViewModel: LoginViewModel) {
             .fillMaxWidth()
             .height(65.dp),
     ) {
-        if (loginViewModel.loginInProgress.value) {
-            CircularProgressIndicator(color = neutralWhite)
-        } else
-            Text(text = "Login", style = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp))
+        Row(
+            Modifier
+                .fillMaxSize()
+                .animateContentSize(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = FastOutLinearInEasing
+                    )
+                ),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (loginViewModel.isChecking.value) {
+                ProgressIndicator()
+
+            } else {
+                Text(
+                    text = "Login",
+                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp)
+                )
+
+            }
+
+        }
     }
 }
 
