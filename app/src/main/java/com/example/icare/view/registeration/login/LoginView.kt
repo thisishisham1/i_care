@@ -46,6 +46,7 @@ import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.blue
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
+import com.example.icare.core.theme.red500
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
 import com.example.icare.viewmodel.registeration.login.LoginViewModel
@@ -54,7 +55,7 @@ private val imageRes = R.drawable.signin
 
 @Composable
 fun LoginView(navController: NavController) {
-    val signInViewModel = remember { LoginViewModel(navController) }
+    val vm = remember { LoginViewModel(navController) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -67,12 +68,20 @@ fun LoginView(navController: NavController) {
     ) {
         ImageHeader(imageRes = imageRes)
         TextHeader(headerString = "Sign In")
-        InputFields(loginViewModel = signInViewModel)
-        ForgotPassword(signInViewModel)
+        InputFields(loginViewModel = vm)
+        Text(
+            modifier = Modifier
+                .align(Alignment.Start)
+                .animateContentSize(),
+            text = vm.errorMessage.value ?: "",
+            color = red500,
+            style = MaterialTheme.typography.titleMedium
+        )
+        ForgotPassword(vm)
         Spacer(modifier = Modifier.height(Dimens.mediumPadding))
-        SignInButton(loginViewModel = signInViewModel)
+        SignInButton(loginViewModel = vm)
         GoogleButton()
-        SignUpText(signInViewModel)
+        SignUpText(vm)
     }
 }
 
@@ -105,7 +114,6 @@ private fun InputFields(loginViewModel: LoginViewModel) {
             },
             value = passwordValue.value,
         )
-        Text(text = loginViewModel.errorMessage.value ?: "")
     }
 
 
@@ -123,30 +131,18 @@ private fun SignInButton(loginViewModel: LoginViewModel) {
             .fillMaxWidth()
             .height(65.dp),
     ) {
-        Row(
-            Modifier
-                .fillMaxSize()
-                .animateContentSize(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = FastOutLinearInEasing
-                    )
-                ),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (loginViewModel.isChecking.value) {
-                ProgressIndicator()
 
-            } else {
-                Text(
-                    text = "Login",
-                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp)
-                )
+        if (loginViewModel.isChecking.value) {
+            ProgressIndicator(color = neutralWhite)
 
-            }
+        } else {
+            Text(
+                text = "Login",
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp)
+            )
 
         }
+
     }
 }
 
@@ -211,7 +207,7 @@ private fun GoogleButton(
 private fun ProgressIndicator(color: Color = green500) {
     CircularProgressIndicator(
         modifier = Modifier.size(15.dp),
-        color = green500,
+        color = color,
         strokeWidth = 3.dp
     )
 }

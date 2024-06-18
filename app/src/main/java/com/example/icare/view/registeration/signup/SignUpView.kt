@@ -1,5 +1,6 @@
 package com.example.icare.view.registeration.signup
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,6 +38,7 @@ import com.example.icare.core.reusablecomponent.PrimaryInputTextFiled
 import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
+import com.example.icare.core.theme.red500
 import com.example.icare.model.classes.Destinations
 import com.example.icare.view.registeration.component.CheckboxComponent
 import com.example.icare.view.registeration.component.ImageHeader
@@ -47,7 +50,7 @@ private val imageRes = R.drawable.signup
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpView(navController: NavController) {
-    val signUpViewModel = remember {
+    val vm = remember {
         SignUpViewModel(navController = navController)
     }
     Scaffold(topBar = {
@@ -68,13 +71,21 @@ fun SignUpView(navController: NavController) {
             ) {
                 ImageHeader(imageRes = imageRes)
                 TextHeader(headerString = "Sign up")
-                InputFields(signUpViewModel = signUpViewModel)
+                InputFields(signUpViewModel = vm)
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .animateContentSize(),
+                    text = vm.errorMessage.value ?: "",
+                    color = red500,
+                    style = MaterialTheme.typography.bodyLarge
+                )
                 CheckboxComponent(onTextSelected = {
                     navController.navigate(Destinations.Main.TermsAndConditions.route)
                 }, onCheckedChange = {
-                    signUpViewModel.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
+                    vm.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
                 })
-                ContinueButton(signUpViewModel = signUpViewModel)
+                ContinueButton(vm = vm)
                 SignInText(navController)
             }
         }
@@ -82,9 +93,9 @@ fun SignUpView(navController: NavController) {
 }
 
 @Composable
-private fun ContinueButton(signUpViewModel: SignUpViewModel) {
+private fun ContinueButton(vm: SignUpViewModel) {
     Button(
-        onClick = { signUpViewModel.onEvent(SignupUIEvent.RegisterButtonClicked) },
+        onClick = { vm.onEvent(SignupUIEvent.RegisterButtonClicked) },
         shape = Shapes().medium,
         colors = ButtonDefaults.buttonColors(
             containerColor = green500, contentColor = neutralWhite
@@ -93,7 +104,7 @@ private fun ContinueButton(signUpViewModel: SignUpViewModel) {
             .fillMaxWidth()
             .height(60.dp),
     ) {
-        if (signUpViewModel.isRegistrationInProgress.value) {
+        if (vm.isRegistrationInProgress.value) {
             CircularProgressIndicator(color = neutralWhite)
         } else
             Text(text = "Login", style = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp))

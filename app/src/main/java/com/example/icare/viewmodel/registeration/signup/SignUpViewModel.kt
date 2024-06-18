@@ -2,17 +2,27 @@ package com.example.icare.viewmodel.registeration.signup
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.icare.model.classes.Destinations
+import com.example.icare.model.classes.RegisterRequest
+import com.example.icare.model.classes.UserResponse
+import com.example.icare.repository.AuthRepository
 import com.example.icare.view.registeration.login.SignUpValidator
 import com.example.icare.view.registeration.signup.SignUpUiState
 import com.example.icare.view.registeration.signup.SignupUIEvent
+import com.google.gson.Gson
+import kotlinx.coroutines.launch
 
 class SignUpViewModel(private val navController: NavController) : ViewModel() {
     var registrationUiState = mutableStateOf(SignUpUiState())
 
-    var isRegistrationDataValid = mutableStateOf(false)
+    private var isRegistrationDataValid = mutableStateOf(false)
 
     var isRegistrationInProgress = mutableStateOf(false)
+
+    var errorMessage = mutableStateOf<String?>(null)
+
 
     fun onEvent(event: SignupUIEvent) {
         when (event) {
@@ -45,7 +55,7 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
             is SignupUIEvent.RegisterButtonClicked -> {
                 validateDataWithRules()
                 if (isRegistrationDataValid.value) {
-                    initiateRegistration()
+                    handleRegisterButtonClick()
                 }
             }
 
@@ -65,9 +75,53 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
 
 
     private fun handleRegisterButtonClick() {
-        validateDataWithRules()
-        if (isRegistrationDataValid.value) {
-            initiateRegistration()
+        viewModelScope.launch {
+            try {
+                isRegistrationInProgress.value = true
+                val response = AuthRepository().registerUser(
+                    RegisterRequest(
+                        email = registrationUiState.value.email,
+                        name1 = registrationUiState.value.completeName,
+                        phone = registrationUiState.value.phone,
+                        pass = registrationUiState.value.password
+                    )
+                )
+                if (response.status) {
+                    navController.navigate(Destinations.Main.MainScreen.route) {
+                        popUpTo(0)
+                    }
+                } else {
+                    errorMessage.value = response.message
+                }
+            } catch (e: retrofit2.HttpException) {
+                when (e.code()) {
+                    400 -> {
+                        val errorJsonString = e.response()?.errorBody()?.string()
+                        val errorResponse =
+                            Gson().fromJson(errorJsonString, UserResponse::class.java)
+                        errorMessage.value = errorResponse.message
+                    }
+
+                    401 -> errorMessage.value = "Unauthorized: Please check your credentials."
+                    403 -> errorMessage.value =
+                        "Forbidden: You don't have permission to access the resource."
+
+                    404 -> errorMessage.value =
+                        "Not Found: The resource you are looking for could not be found."
+
+                    500 -> errorMessage.value =
+                        "Internal Server Error: Something went wrong on the server."
+
+                    else -> errorMessage.value = "An unknown error occurred."
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                errorMessage.value =
+                    "An error occurred during login. Please check your network connection and try again."
+
+            } finally {
+                isRegistrationInProgress.value = false
+            }
         }
     }
 
@@ -104,20 +158,10 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
         )
 
 
-        isRegistrationDataValid.value = nameResult.status &&
-                emailResult.status &&
-                passwordResult.status &&
-                phoneResult.status &&
-                confirmPasswordResult.status &&
-                privacyPolicyResult.status
+        isRegistrationDataValid.value =
+            nameResult.status && emailResult.status && passwordResult.status && phoneResult.status && confirmPasswordResult.status && privacyPolicyResult.status
 
     }
 
-
-    private fun initiateRegistration() {
-        isRegistrationInProgress.value = true
-        val email = registrationUiState.value.email
-        val password = registrationUiState.value.password
-    }
 
 }

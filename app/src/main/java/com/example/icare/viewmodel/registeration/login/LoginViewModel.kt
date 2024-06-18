@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.icare.model.classes.Destinations
+import com.example.icare.model.classes.LoginRequest
 import com.example.icare.model.classes.UserResponse
 import com.example.icare.repository.AuthRepository
 import com.example.icare.view.registeration.login.LoginUIEvent
@@ -20,7 +21,6 @@ class LoginViewModel(val navController: NavController) : ViewModel() {
     var errorMessage = mutableStateOf<String?>(null)
     private var allValidationsPassed = mutableStateOf(false)
     var isChecking = mutableStateOf(false)
-    var loginInProgress = mutableStateOf(false)
 
     private val authRepository = AuthRepository()
     fun onEvent(event: LoginUIEvent) {
@@ -38,10 +38,7 @@ class LoginViewModel(val navController: NavController) : ViewModel() {
             }
 
             is LoginUIEvent.LoginButtonClicked -> {
-                validateLoginUIDataWithRules()
-                if (allValidationsPassed.value) {
-                    loginClick()
-                }
+                loginClick()
             }
         }
 
@@ -70,7 +67,14 @@ class LoginViewModel(val navController: NavController) : ViewModel() {
                 isChecking.value = true
                 Log.d("LoginClick", "After setting isChecking")
                 val response =
-                    authRepository.loginUser(loginUIState.value.email, loginUIState.value.password)
+                    authRepository.loginUser(
+                        LoginRequest(
+                            email =
+                            loginUIState.value.email,
+                            pass =
+                            loginUIState.value.password
+                        )
+                    )
                 if (response.status) {
                     navController.navigate(Destinations.Main.MainScreen.route) {
                         popUpTo(0)

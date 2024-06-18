@@ -1,20 +1,22 @@
 package com.example.icare.model.classes
 
-data class LoginRequest(val email: String, val password: String)
-data class UserResponse(
-    val img: String,
-    val id: String,
+data class LoginRequest(val email: String, val pass: String)
+data class RegisterRequest(
+    val name1: String,
     val email: String,
-    val username: String,
-    val gender: String,
-    val isAdmin: Boolean,
-    val role: String = "patient",
-    val reservations: List<String>,
-    val ratings: List<String>,
-    val createdAt: String,
-    val updatedAt: String,
-    val v: Int,
-    val token: String,
+    val phone: String,
+    val pass: String
+)
+
+data class UserResponse(
     val status: Boolean,
+    val name1: String,
+    val phone: String,
+    val email: String,
+    val pass: String,
+    val updated_at: String,
+    val created_at: String,
+    val id: Int,
+    val patient_token: String,
     val message: String?
 )
