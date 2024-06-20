@@ -1,5 +1,6 @@
 package com.example.icare.viewmodel.main.bottomnavitems.home
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.icare.model.classes.Destinations
@@ -23,8 +24,8 @@ class HomeViewModel(val navController: NavController) : ViewModel() {
 
     fun handleClickAction(action: String) {
         when (action) {
-            "Personal test" -> {
-                // TODO: handel personal test click
+            "Personal\ntest" -> {
+                navController.navigate("${Destinations.WebView.WebViewScreen.route}/${Uri.encode("https://icarembti.streamlit.app/")}")
             }
 
             "Chat Bot" -> {

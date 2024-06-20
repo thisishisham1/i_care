@@ -46,4 +46,8 @@ sealed class Destinations(val route: String) {
         object Pharmacies : Lists("pharmacies")
         object Labs : Lists("labs")
     }
+
+    sealed class WebView(route: String) : Destinations(route) {
+        object WebViewScreen : WebView("webview/{url}")
+    }
 }

@@ -16,6 +16,7 @@ import com.example.icare.view.main.bottomnavitems.home.NotificationsView
 import com.example.icare.view.main.bottomnavitems.home.category.DoctorsView
 import com.example.icare.view.main.bottomnavitems.home.category.LabsView
 import com.example.icare.view.main.bottomnavitems.home.category.PharmaciesView
+import com.example.icare.view.main.bottomnavitems.home.category.WebViewScreen
 import com.example.icare.view.main.bottomnavitems.home.category.chatbot.ChatBotView
 import com.example.icare.view.main.bottomnavitems.profile.edit.EditProfileView
 import com.example.icare.view.main.chat.ChatView
@@ -39,7 +40,7 @@ fun MainNavigation(context: Context) {
         PreferencesHelper(context)
     }
     NavHost(
-        navController = navController, startDestination = Destinations.Auth.Login.route
+        navController = navController, startDestination = Destinations.Main.MainScreen.route
     ) {
         composable(Destinations.Main.Splash.route) {
             SplashView(
@@ -110,6 +111,12 @@ fun MainNavigation(context: Context) {
         }
         composable(Destinations.Main.TermsAndConditions.route) {
             TermsAndConditions(navController)
+        }
+        composable("${Destinations.WebView.WebViewScreen.route}/{url}") { backStackEntry ->
+            val url = backStackEntry.arguments?.getString("url")
+            if (url != null) {
+                WebViewScreen(url, navController)
+            }
         }
     }
 }
