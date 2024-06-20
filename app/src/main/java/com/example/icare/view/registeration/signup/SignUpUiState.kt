@@ -6,14 +6,16 @@ data class SignUpUiState(
     val phone: String = "",
     var password: String = "",
     var privacyPolicyAccepted: Boolean = false,
-    var confirmPassword: String = "",
 
-    var confirmPasswordError: Boolean = false,
-    var completeNameError: Boolean = false,
-    var emailError: Boolean = false,
-    val phoneError: Boolean = false,
-    var passwordError: Boolean = false,
-    var privacyPolicyError: Boolean = false,
+    var isNameError: Boolean = false,
+    var isEmailError: Boolean = false,
+    val isPhoneError: Boolean = false,
+    var isPasswordError: Boolean = false,
+    var isPrivacyPolicyError: Boolean = false,
 
-    var errorMessageForEmail: String? = null
+    val nameError: String? = null,
+    val emailError: String? = null,
+    val phoneError: String? = null,
+    val passwordError: String? = null
+
 )

@@ -24,7 +24,6 @@ import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.BackArrow
 import com.example.icare.core.reusablecomponent.HeightSpacer
-import com.example.icare.core.reusablecomponent.PasswordInputField
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
 import com.example.icare.viewmodel.registeration.forgotpassword.ForgotPasswordViewModel
@@ -74,12 +73,12 @@ private fun InputFields(resetPasswordViewModel: ForgotPasswordViewModel) {
     val context = LocalContext.current
     resetPasswordViewModel.passwordFields.forEach { (label, value) ->
         HeightSpacer()
-        PasswordInputField(
+        /*PasswordInputField(
             isError = resetPasswordViewModel.isError(label),
             errorMessage = resetPasswordViewModel.getErrorMessage(context, label),
             label = label,
             onValueChange = { value.value = it },
             value = value.value
-        )
+        )*/
     }
 }

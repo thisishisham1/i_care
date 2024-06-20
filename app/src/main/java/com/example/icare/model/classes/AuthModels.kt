@@ -20,3 +20,13 @@ data class UserResponse(
     val patient_token: String,
     val message: String?
 )
+
+// Improved code:
+sealed class AuthError(override val message: String? = null) : Throwable(message) {
+    data class BadRequest(val error: String) : AuthError(error)
+    object Unauthorized : AuthError("Unauthorized access.")
+    object Forbidden : AuthError("Access is forbidden.")
+    object NotFound : AuthError("Resource not found.")
+    object InternalServerError : AuthError("Internal server error.")
+    data class Unknown(val error: String) : AuthError(error)
+}

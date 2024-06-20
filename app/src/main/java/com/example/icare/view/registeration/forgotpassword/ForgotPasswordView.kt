@@ -16,7 +16,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.icare.R
@@ -72,11 +71,9 @@ fun ForgotPasswordView(navController: NavHostController) {
 
 @Composable
 private fun InputFiled(resetPasswordViewModel: ForgotPasswordViewModel) {
-    val context = LocalContext.current
     val label = stringResource(id = R.string.email)
     PrimaryInputTextFiled(
         isError = resetPasswordViewModel.isError(),
-        errorMessage = resetPasswordViewModel.getErrorMessage(context),
         value = resetPasswordViewModel.emailValue.value,
         onValueChange = { resetPasswordViewModel.emailValue.value = it },
         label = label

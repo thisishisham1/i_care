@@ -1,11 +1,12 @@
 package com.example.icare.view.registeration.login
 
 data class LoginUIState(
-    var email: String = "",
-    var password: String = "",
+    val email: String = "",
+    val password: String = "",
 
-    var emailError: Boolean = false,
-    var passwordError: Boolean = false,
+    val isEmailError: Boolean = false,
+    val isPasswordError: Boolean = false,
 
-    var genericError: String? = null
+    val emailError: String? = null,
+    val passwordError: String? = null
 )
