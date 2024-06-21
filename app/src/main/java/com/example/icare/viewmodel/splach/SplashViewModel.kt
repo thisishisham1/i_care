@@ -33,9 +33,13 @@ class SplashViewModel(private val preferencesHelper: PreferencesHelper) : ViewMo
     }
 
     private fun navigate(navController: NavController) {
-        val destinations = if (this.preferencesHelper.getBooleanValue("onBoarding")) {
-            Destinations.Auth.Login.route
-        } else Destinations.Main.OnBoarding.route
+        val destinations =
+            if (this.preferencesHelper.getBooleanValue("onBoarding")) {
+                if (this.preferencesHelper.isUserLoggedIn()) {
+                    Destinations.Main.MainScreen.route
+                } else
+                    Destinations.Auth.Login.route
+            } else Destinations.Main.OnBoarding.route
         navController.navigate(destinations) {
             popUpTo(0)
         }

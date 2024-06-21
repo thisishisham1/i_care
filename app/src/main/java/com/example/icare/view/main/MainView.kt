@@ -11,6 +11,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.view.main.bottomnavitems.appointment.AppointmentScreen
 import com.example.icare.view.main.bottomnavitems.home.HomeScreen
 import com.example.icare.view.main.bottomnavitems.profile.ProfileScreen
@@ -23,7 +24,7 @@ private val destinations = arrayOf(
 )
 
 @Composable
-fun MainView(navController: NavController) {
+fun MainView(navController: NavController, preferencesHelper: PreferencesHelper) {
     var selectedIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
@@ -41,18 +42,22 @@ fun MainView(navController: NavController) {
                 .fillMaxSize()
                 .padding(it)
         ) {
-            Content(navController = navController, selectedIndex = selectedIndex)
+            Content(navController = navController, selectedIndex = selectedIndex, preferencesHelper)
         }
     }
 }
 
 @Composable
-private fun Content(navController: NavController, selectedIndex: Int) {
+private fun Content(
+    navController: NavController,
+    selectedIndex: Int,
+    preferencesHelper: PreferencesHelper
+) {
     when (selectedIndex) {
         0 -> HomeScreen(navController = navController)
         1 -> SearchScreen(navController = navController)
         2 -> AppointmentScreen()
-        3 -> ProfileScreen(navController = navController)
+        3 -> ProfileScreen(navController = navController, preferencesHelper)
         else -> {}
     }
 

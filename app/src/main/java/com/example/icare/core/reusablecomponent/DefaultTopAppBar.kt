@@ -15,7 +15,7 @@ fun DefaultTopAppBar(title: String, navController: NavController) {
     androidx.compose.material3.TopAppBar(title = {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleLarge
         )
     }, navigationIcon = {
         androidx.compose.material3.IconButton(onClick = { navController.navigateUp() }) {

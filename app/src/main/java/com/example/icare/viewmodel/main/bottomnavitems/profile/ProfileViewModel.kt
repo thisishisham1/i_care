@@ -4,9 +4,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.icare.model.classes.Destinations
+import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.view.main.bottomnavitems.profile.UserProfile
 
-class ProfileViewModel(private val navController: NavController) : ViewModel() {
+class ProfileViewModel(
+    private val navController: NavController,
+    private val preferencesHelper: PreferencesHelper
+) : ViewModel() {
     var isDialog = mutableStateOf(false)
     val userInfo = UserProfile(name = "Hisham Mohamed", email = "Hishamohmad19@gmail.com")
 
@@ -35,6 +39,7 @@ class ProfileViewModel(private val navController: NavController) : ViewModel() {
         navController.navigate(Destinations.Auth.Login.route) {
             popUpTo(0)
         }
+        preferencesHelper.saveUserLogin(null)
         isDialog.value = false
     }
 

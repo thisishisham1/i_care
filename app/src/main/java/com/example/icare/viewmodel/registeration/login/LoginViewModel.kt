@@ -9,13 +9,17 @@ import androidx.navigation.NavController
 import com.example.icare.model.classes.AuthError
 import com.example.icare.model.classes.Destinations
 import com.example.icare.model.classes.LoginRequest
+import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.repository.AuthRepository
 import com.example.icare.view.registeration.login.LoginUIEvent
 import com.example.icare.view.registeration.login.LoginUIState
 import kotlinx.coroutines.launch
 
 
-class LoginViewModel(val navController: NavController) : ViewModel() {
+class LoginViewModel(
+    val navController: NavController,
+    private val preferencesHelper: PreferencesHelper
+) : ViewModel() {
     private val _loginUiState = mutableStateOf(LoginUIState())
     val loginUiState: State<LoginUIState> get() = _loginUiState
 
@@ -24,8 +28,6 @@ class LoginViewModel(val navController: NavController) : ViewModel() {
 
     private val _errorMessage = mutableStateOf<String?>(null)
     val errorMessage: State<String?> get() = _errorMessage
-
-    val isUnSpecificError = mutableStateOf(false)
 
     private val authRepository = AuthRepository()
 
@@ -60,6 +62,9 @@ class LoginViewModel(val navController: NavController) : ViewModel() {
                     )
                 )
                 if (response.isSuccess) {
+                    val userResponse = response.getOrNull()
+                    val userToken = userResponse?.patient_token
+                    preferencesHelper.saveUserLogin(userToken!!)
                     navController.navigate(Destinations.Main.MainScreen.route) {
                         popUpTo(0)
                     }
@@ -130,11 +135,6 @@ class LoginViewModel(val navController: NavController) : ViewModel() {
 
     fun handleSignUpButton() {
         navController.navigate(Destinations.Auth.SignUp.route)
-    }
-
-    private fun resetState() {
-        _errorMessage.value = null
-        _loginUiState.value = LoginUIState()
     }
 
 }

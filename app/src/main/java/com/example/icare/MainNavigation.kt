@@ -40,7 +40,7 @@ fun MainNavigation(context: Context) {
         PreferencesHelper(context)
     }
     NavHost(
-        navController = navController, startDestination = Destinations.Main.MainScreen.route
+        navController = navController, startDestination = Destinations.Main.Splash.route
     ) {
         composable(Destinations.Main.Splash.route) {
             SplashView(
@@ -54,13 +54,13 @@ fun MainNavigation(context: Context) {
             OfflineView()
         }
         composable(Destinations.Main.MainScreen.route) {
-            MainView(navController)
+            MainView(navController, preferencesHelper)
         }
         composable(Destinations.Auth.SignUp.route) {
             SignUpView(navController = navController)
         }
         composable(Destinations.Auth.Login.route) {
-            LoginView(navController)
+            LoginView(navController, preferencesHelper)
         }
         composable(Destinations.Auth.ForgotPassword.route) {
             ForgotPasswordView(navController)

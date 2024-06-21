@@ -51,6 +51,7 @@ import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.blue
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
+import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
 import com.example.icare.viewmodel.registeration.login.LoginViewModel
@@ -58,8 +59,8 @@ import com.example.icare.viewmodel.registeration.login.LoginViewModel
 private val imageRes = R.drawable.signin
 
 @Composable
-fun LoginView(navController: NavController) {
-    val vm = remember { LoginViewModel(navController) }
+fun LoginView(navController: NavController, preferencesHelper: PreferencesHelper) {
+    val vm = remember { LoginViewModel(navController, preferencesHelper) }
 
     Column(
         modifier = Modifier

@@ -44,6 +44,7 @@ import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.neutralWhite
 import com.example.icare.core.theme.shapes
+import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.viewmodel.main.bottomnavitems.profile.ProfileViewModel
 
 data class UserProfile(
@@ -52,9 +53,9 @@ data class UserProfile(
 )
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(navController: NavController, preferencesHelper: PreferencesHelper) {
     val profileViewModel = remember {
-        ProfileViewModel(navController)
+        ProfileViewModel(navController, preferencesHelper)
     }
     Column(
         Modifier
