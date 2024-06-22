@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -52,49 +51,58 @@ android {
 }
 
 dependencies {
-    // Core Kotlin extensions
-    implementation("androidx.core:core-ktx:1.12.0")
-
-    // AndroidX lifecycle extensions
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-
-    // Compose activity integration
-    implementation("androidx.activity:activity-compose:1.8.2")
-
-    // Jetpack Compose dependencies
-    implementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom.v20240300))
+    //noinspection UseTomlInstead
     implementation("androidx.compose.ui:ui")
+    //noinspection UseTomlInstead
     implementation("androidx.compose.ui:ui-graphics")
+    //noinspection UseTomlInstead
     implementation("androidx.compose.ui:ui-tooling-preview")
+    //noinspection UseTomlInstead
     implementation("androidx.compose.material3:material3")
-
-    // Unit testing dependencies
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.compose.bom.v20240300))
+    //noinspection UseTomlInstead
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    //noinspection UseTomlInstead
     debugImplementation("androidx.compose.ui:ui-tooling")
+    //noinspection UseTomlInstead
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil)
+    implementation(libs.javafaker)
+    implementation(libs.androidx.material.icons.extended.v165)
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converterGson)
 
-    // Navigation Component for Jetpack Compose
-    implementation("androidx.navigation:navigation-compose:2.7.6")
+    // OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.loggingInterceptor)
 
-    // Retrofit for HTTP requests
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    // Gson
+    implementation(libs.gson)
 
-    // Coil for image loading in Compose
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    // Coroutines
+    implementation(libs.coroutinesCore)
+    implementation(libs.coroutinesAndroid)
 
-    // Room for storing data
-    val room_version = "2.6.1"
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
+    // Koin
+    implementation(libs.koinCore)
+    implementation(libs.koinAndroid)
 
-    //hilt
-    implementation("com.google.dagger:hilt-android:2.50")
-    ksp("com.google.dagger:hilt-android-compiler:2.50")
+
+    implementation(libs.lottie.compose) // Use the latest version
 
 }
