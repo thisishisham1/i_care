@@ -5,18 +5,15 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -41,21 +38,22 @@ fun PrimaryInputTextFiled(
     isError: Boolean = false,
     errorMessage: String? = null
 ) {
-    var isFocused by remember { mutableStateOf(false) }
+    val isFocused by remember { mutableStateOf(false) }
     val labelColor = animateColorAsState(
-        targetValue = if (isFocused || value.isNotEmpty()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+        targetValue = if (isFocused || value.isNotEmpty()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+        label = ""
     )
     val borderColor = animateColorAsState(
-        targetValue = if (isError) MaterialTheme.colorScheme.error else if (isFocused) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+        targetValue = if (isError) MaterialTheme.colorScheme.error else if (isFocused) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+        label = ""
     )
     val trailingIconColor = animateColorAsState(
-        targetValue = if (isError) MaterialTheme.colorScheme.error else if (isFocused) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+        targetValue = if (isError) MaterialTheme.colorScheme.error else if (isFocused) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+        label = ""
     )
     Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
         OutlinedTextField(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(TextFieldDefaults.MinHeight),
+            modifier = modifier.fillMaxWidth(),
             value = value,
             onValueChange = onValueChange,
             textStyle = textStyle,
@@ -72,8 +70,7 @@ fun PrimaryInputTextFiled(
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon,
             keyboardOptions = KeyboardOptions(
-                imeAction = keyboardAction,
-                keyboardType = keyboardType
+                imeAction = keyboardAction, keyboardType = keyboardType
             ),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = borderColor.value,

@@ -56,31 +56,24 @@ fun DefaultMessageInput(
             .padding(Dimens.mediumPadding)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.Bottom
+        verticalAlignment = Alignment.CenterVertically
     ) {
         MessageTextFiled(inputMessage = inputMessage,
-            onSend = { onSend(inputMessage.value) },
+            onSend = { onSend(inputMessage.value) }, // Pass the message to onSend
             onValueChange = { onValueChange(inputMessage.value) },
             onAttachmentClicked = { onAttachmentClicked() },
             isHaveCameraButton = isHaveCameraButton,
             onCameraClicked = { onCameraClicked() })
-        IconButton(
-            onClick = {
-                onSend(inputMessage.value)
-                inputMessage.value = ""
-            },
-            modifier = Modifier
-                .clip(shape = CircleShape)
-                .background(green500)
-                .align(Alignment.Bottom),
-            content = {
-                Icon(
-                    Icons.AutoMirrored.Filled.Send,
-                    contentDescription = "send",
-                    tint = neutralWhite
-                )
-            }
-        )
+        IconButton(onClick = {
+            onSend(inputMessage.value) // Pass the message to onSend
+            inputMessage.value = ""
+        }, modifier = Modifier
+            .clip(shape = CircleShape)
+            .background(green500), content = {
+            Icon(
+                Icons.AutoMirrored.Filled.Send, contentDescription = "send", tint = neutralWhite
+            )
+        })
     }
 }
 
@@ -104,8 +97,7 @@ private fun MessageTextFiled(
         },
         placeholder = {
             Text(
-                text = "Message...",
-                style = MaterialTheme.typography.titleMedium
+                text = "Message...", style = MaterialTheme.typography.titleMedium
             )
         },
         trailingIcon = {
@@ -149,8 +141,7 @@ private fun MessageTextFiled(
 
 @Composable
 private fun AttachmentButton(onAttachmentClicked: () -> Unit) {
-    IconButton(
-        onClick = { onAttachmentClicked() },
+    IconButton(onClick = { onAttachmentClicked() },
         modifier = Modifier.padding(end = 4.dp),
         content = {
             Icon(
@@ -158,21 +149,16 @@ private fun AttachmentButton(onAttachmentClicked: () -> Unit) {
                 contentDescription = "Attachment",
                 modifier = Modifier.size(24.dp)
             )
-        }
-    )
+        })
 }
 
 @Composable
 private fun CameraButton(onCameraClicked: () -> Unit) {
-    IconButton(
-        onClick = { onCameraClicked() },
-        modifier = Modifier.padding(end = 4.dp),
-        content = {
-            Icon(
-                Icons.Filled.PhotoCamera,
-                contentDescription = "Attachment",
-                modifier = Modifier.size(24.dp)
-            )
-        }
-    )
+    IconButton(onClick = { onCameraClicked() }, modifier = Modifier.padding(end = 4.dp), content = {
+        Icon(
+            Icons.Filled.PhotoCamera,
+            contentDescription = "Attachment",
+            modifier = Modifier.size(24.dp)
+        )
+    })
 }

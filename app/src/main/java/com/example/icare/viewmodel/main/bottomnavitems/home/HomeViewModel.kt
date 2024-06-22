@@ -29,7 +29,7 @@ class HomeViewModel(val navController: NavController) : ViewModel() {
             }
 
             "Chat Bot" -> {
-                // todo: Handle settings action
+                navController.navigate(Destinations.Chat.ChatBot.route)
             }
 
             "Labs" -> {

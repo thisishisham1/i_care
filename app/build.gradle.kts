@@ -101,4 +101,8 @@ dependencies {
     // Koin
     implementation(libs.koinCore)
     implementation(libs.koinAndroid)
+
+
+    implementation(libs.lottie.compose) // Use the latest version
+
 }

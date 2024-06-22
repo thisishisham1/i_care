@@ -21,8 +21,6 @@ fun ChatView(navController: NavController) {
         DefaultTopAppBar(title = "Dr Hisham Mohamed", navController = navController)
     }, bottomBar = {
         DefaultMessageInput(
-            isHaveCameraButton = true,
-            onCameraClicked = chatViewModel::handleCameraClick,
             onAttachmentClicked = chatViewModel::handleAttachmentClick,
             onSend = chatViewModel::handleSendMessage,
             onValueChange = chatViewModel::onChangeValue

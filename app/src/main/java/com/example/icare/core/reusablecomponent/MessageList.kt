@@ -29,13 +29,16 @@ import com.example.icare.model.classes.Message
 @Composable
 private fun MessageBubble(
     message: Message,
-    isCurrentUser: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isBotTyping: Boolean, // This parameter seems unused. Consider removing it.
+    isCurrentUser: Boolean
 ) {
-    val (backgroundColor, contentColor) = if (isCurrentUser) Pair(green500, neutralWhite) else Pair(
-        gray400.copy(alpha = 0.2f),
-        black
-    )
+    // Use more descriptive variable names for clarity
+    val (bubbleBackgroundColor, bubbleTextColor) = if (isCurrentUser) {
+        Pair(green500, neutralWhite)
+    } else {
+        Pair(gray400.copy(alpha = 0.2f), black)
+    }
 
     Row(
         modifier = modifier.fillMaxSize(),
@@ -43,23 +46,25 @@ private fun MessageBubble(
     ) {
         Surface(
             shape = RoundedCornerShape(12.dp).copy(
-                bottomStart = if (!isCurrentUser) CornerSize(0.dp) else CornerSize(12.dp),
+                bottomStart = if (isCurrentUser) CornerSize(12.dp) else CornerSize(0.dp), // Simplified conditional
                 topEnd = if (isCurrentUser) CornerSize(0.dp) else CornerSize(12.dp)
             ),
-            color = backgroundColor,
+            color = bubbleBackgroundColor,
             modifier = Modifier
                 .wrapContentHeight()
                 .widthIn(max = 300.dp)
                 .padding(8.dp),
         ) {
+
             Text(
                 text = message.content,
-                color = contentColor,
-                modifier = Modifier.padding(8.dp),
+                color = bubbleTextColor,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .animateContentSize(),
                 style = MaterialTheme.typography.titleMedium,
             )
         }
-
     }
 }
 
@@ -73,7 +78,9 @@ fun MessageList(messages: List<Message>, isBotTyping: Boolean = false) {
         LazyColumn {
             items(messages) { message ->
                 val isCurrentUser = message.senderId == "Me"
-                MessageBubble(message = message, isCurrentUser = isCurrentUser)
+                MessageBubble(
+                    message = message, isBotTyping = isBotTyping, isCurrentUser = isCurrentUser
+                )
             }
             item {
                 AnimatedVisibility(visible = isBotTyping) {

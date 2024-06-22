@@ -50,12 +50,9 @@ class ChatViewModel(val navController: NavController) : ViewModel() {
     )
 
 
-    fun handleSendMessage(message: String) {
+    fun handleSendMessage(inputMessage: String) {
         // TODO: handle send message
     }
-
-    fun handleArrowBack() =
-        navController.navigateUp()
 
     fun onChangeValue(value: String) {
         _message.value = value

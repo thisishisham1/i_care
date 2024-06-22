@@ -1,6 +1,7 @@
 package com.example.icare.repository
 
 import com.example.icare.model.classes.AuthError
+import com.example.icare.model.classes.ChatBotRequest
 import com.example.icare.model.classes.LoginRequest
 import com.example.icare.model.classes.RegisterRequest
 import com.example.icare.model.classes.UserResponse
@@ -47,5 +48,14 @@ class AuthRepository {
         }
     }
 
+}
+
+class ChatBotRepository {
+    private val apiService = RetrofitInstance.apiServiceChatBot
+
+    suspend fun getDiagnosis(request: ChatBotRequest): String {
+        val response = apiService.getDiagnosis(listOf(request))
+        return response
+    }
 }
 

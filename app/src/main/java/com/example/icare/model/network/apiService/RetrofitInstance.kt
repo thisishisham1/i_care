@@ -11,4 +11,11 @@ object RetrofitInstance {
 
         retrofit.create(ApiService::class.java)
     }
+    val apiServiceChatBot: ApiServiceChatBot by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://icarechatbot-production.up.railway.app/")
+            .addConverterFactory(GsonConverterFactory.create()).build()
+
+        retrofit.create(ApiServiceChatBot::class.java)
+    }
 }

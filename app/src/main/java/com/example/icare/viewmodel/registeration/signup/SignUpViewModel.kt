@@ -87,14 +87,14 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
                     _errorMessage.value = registrationError?.message
                     when (registrationError) {
                         is AuthError.BadRequest -> {
+                            if (registrationError.error.contains("Name")) {
+                                _registrationUiState.value = registrationUiState.value.copy(
+                                    nameError = registrationError.error, isNameError = true
+                                )
+                            }
                             if (registrationError.error.contains("Email")) {
                                 _registrationUiState.value = registrationUiState.value.copy(
                                     emailError = registrationError.error, isEmailError = true
-                                )
-                            }
-                            if (registrationError.error.contains("Password")) {
-                                _registrationUiState.value = registrationUiState.value.copy(
-                                    passwordError = registrationError.error, isPasswordError = true
                                 )
                             }
                             if (registrationError.error.contains("Phone")) {
@@ -102,11 +102,13 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
                                     phoneError = registrationError.error, isPhoneError = true
                                 )
                             }
-                            if (registrationError.error.contains("Name")) {
+                            if (registrationError.error.contains("Password")) {
                                 _registrationUiState.value = registrationUiState.value.copy(
-                                    nameError = registrationError.error, isNameError = true
+                                    passwordError = registrationError.error, isPasswordError = true
                                 )
                             }
+
+
                         }
 
                         else -> {

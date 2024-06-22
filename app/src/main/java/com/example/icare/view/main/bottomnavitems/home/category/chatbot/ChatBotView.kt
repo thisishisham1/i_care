@@ -11,6 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.icare.R
 import com.example.icare.core.reusablecomponent.DefaultMessageInput
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
 import com.example.icare.core.reusablecomponent.MessageList
@@ -25,15 +29,24 @@ fun ChatBotView(navController: NavController) {
         DefaultTopAppBar(title = "Chat Bot", navController = navController)
     }, bottomBar = {
         DefaultMessageInput(
-            isHaveCameraButton = true,
-            onCameraClicked = chatBotViewModel::onCameraClicked,
             onAttachmentClicked = chatBotViewModel::onAttachmentClicked,
             onSend = chatBotViewModel::onSendClicked,
-            onValueChange = chatBotViewModel::onChangeValue
+            onValueChange = chatBotViewModel::onUserInputChanged
         )
     }) {
-        Box(modifier = Modifier.padding(top = 56.dp, bottom = 56.dp)) {
-            MessageList(messages = chatBotState.messages, isBotTyping = chatBotState.isBotTyping)
+        if (chatBotState.messages.isEmpty()) Loader()
+        else Box(modifier = Modifier.padding(top = 56.dp, bottom = 56.dp)) {
+            MessageList(
+                messages = chatBotState.messages, isBotTyping = chatBotState.isBotTyping
+            )
         }
     }
+}
+
+@Composable
+fun Loader() {
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.hi))
+    LottieAnimation(
+        composition = composition, iterations = Int.MAX_VALUE, reverseOnRepeat = true
+    )
 }
