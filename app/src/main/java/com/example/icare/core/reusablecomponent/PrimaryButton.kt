@@ -11,22 +11,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.icare.core.theme.green500
-import com.example.icare.core.theme.neutralWhite
 
 @Composable
 fun PrimaryButton(
     text: String,
     onClick: () -> Unit,
-    containerColor: Color = green500,
-    contentColor: Color = neutralWhite,
+    containerColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
     modifier: Modifier = Modifier
         .fillMaxWidth()
-        .height(
-            65.dp
-        ),
+        .height(56.dp),
     isEnabled: Boolean = true,
-    textStyle: TextStyle = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp)
+    textStyle: TextStyle = MaterialTheme.typography.labelLarge.copy(fontSize = 18.sp)
 ) {
     Button(
         onClick = onClick, shape = Shapes().medium, colors = ButtonDefaults.buttonColors(

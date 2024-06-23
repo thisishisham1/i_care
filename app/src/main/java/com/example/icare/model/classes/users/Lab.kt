@@ -11,12 +11,13 @@ data class Lab(
     val countReview: Double
 ) : Users {
     override fun doseMatchQuery(query: String): Boolean {
+        val normalizedQuery = query.trim().lowercase() // Normalize the query forbetter matching
+
         val matchingCombinations = listOf(
-            name, "${name.first()}"
+            name.lowercase(), "${name.first()}", "${name.first()}${name.last()}"
         )
-        return matchingCombinations.any {
-            it.contains(query, ignoreCase = true)
-        }
+
+        return matchingCombinations.any { it.contains(normalizedQuery) }
     }
 }
 

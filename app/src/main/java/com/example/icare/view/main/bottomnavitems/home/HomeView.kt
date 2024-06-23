@@ -258,7 +258,7 @@ fun UserCard(doctor: Doctor, onClickUser: () -> Unit) {
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape),
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(

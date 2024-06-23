@@ -7,28 +7,27 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.icare.core.theme.gray400
-import com.example.icare.core.theme.green500
 
 @Composable
 fun PageIndicator(
     modifier: Modifier = Modifier,
     pageSize: Int,
     selectedPage: Int,
-    selectedColor: Color = green500,
-    unselectedColor: Color = gray400
+    selectedColor: Color = MaterialTheme.colorScheme.primary,
+    unselectedColor: Color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
 ) {
-    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         repeat(pageSize) { page ->
             Box(
                 modifier = modifier
-                    .width(15.dp)
-                    .height(7.dp)
+                    .width(if (page == selectedPage) 24.dp else 12.dp)
+                    .height(8.dp)
                     .clip(RoundedCornerShape(10.dp))
                     .background(color = if (page == selectedPage) selectedColor else unselectedColor)
             )

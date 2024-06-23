@@ -18,12 +18,13 @@ data class Doctor(
     val countReviews: Double
 ) : Users {
     override fun doseMatchQuery(query: String): Boolean {
+        val normalizedQuery = query.trim().lowercase() // Normalize the query forbetter matching
+
         val matchingCombinations = listOf(
-            name, "${name.first()}"
+            name.lowercase(), "${name.first()}", "${name.first()}${name.last()}"
         )
-        return matchingCombinations.any {
-            it.contains(query, ignoreCase = true)
-        }
+
+        return matchingCombinations.any { it.contains(normalizedQuery) }
     }
 }
 
@@ -37,6 +38,6 @@ val listOfDoctor = (0 until 150).map { index ->
         filed = faker.job().field().lowercase(),
         address = faker.address().fullAddress(),
         rating = (3..5).random().toDouble(),
-        countReviews = (100..1000).random().toDouble()
+        countReviews = (100..1000).random().toDouble(),
     )
 }
