@@ -17,7 +17,7 @@ import com.example.icare.view.main.bottomnavitems.home.HomeScreen
 import com.example.icare.view.main.bottomnavitems.profile.ProfileScreen
 import com.example.icare.view.main.bottomnavitems.search.SearchScreen
 
-private val destinations = arrayOf(
+private val destinations = listOf(
     BottomNavItems.Home,
     BottomNavItems.Search,
     BottomNavItems.Appointment, BottomNavItems.Profile

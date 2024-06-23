@@ -1,5 +1,6 @@
 package com.example.icare.view.registeration.signup
 
+import PrimaryButton
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -7,25 +8,24 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,20 +36,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.BackArrow
 import com.example.icare.core.reusablecomponent.PrimaryInputTextFiled
 import com.example.icare.core.reusablecomponent.ProgressIndicator
-import com.example.icare.core.reusablecomponent.WidthSpacer
-import com.example.icare.core.theme.green500
-import com.example.icare.core.theme.neutralWhite
 import com.example.icare.model.classes.Destinations
 import com.example.icare.view.registeration.component.CheckboxComponent
 import com.example.icare.view.registeration.component.ImageHeader
-import com.example.icare.view.registeration.component.TextHeader
 import com.example.icare.viewmodel.registeration.signup.SignUpViewModel
 
 private val imageRes = R.drawable.signup
@@ -61,61 +56,54 @@ fun SignUpView(navController: NavController) {
         SignUpViewModel(navController = navController)
     }
     Scaffold(topBar = {
-        TopAppBar(title = { /*TODO*/ },
+        CenterAlignedTopAppBar( // Use CenterAlignedTopAppBar for Material 3
+            title = { Text(text = stringResource(id = R.string.sign_up)) }, //Set title
             navigationIcon = { BackArrow(navController = navController) })
-    }) {
-        Box(
-            Modifier
+    }) { innerPadding ->
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = Dimens.largePadding, vertical = Dimens.mediumPadding)
+                .padding(
+                    bottom = innerPadding.calculateBottomPadding(),
+                    top = innerPadding.calculateTopPadding()
+                ),
         ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = Dimens.largePadding, vertical = Dimens.mediumPadding),
-            ) {
-                ImageHeader(imageRes = imageRes)
-                TextHeader(headerString = "Sign up")
-                InputFields(signUpViewModel = vm)
+            ImageHeader(imageRes = imageRes)
+            InputFields(signUpViewModel = vm)
+            ErrorMessage(
+                errorMessage = vm.errorMessage.value,
+                isError = vm.errorMessage.value != null,
+                modifier = Modifier.align(Alignment.Start)
+            )
 
-                ErrorMessage(
-                    errorMessage = vm.errorMessage.value,
-                    isError = vm.errorMessage.value != null,
-                    modifier = Modifier.align(Alignment.Start)
-                )
-
-                CheckboxComponent(onTextSelected = {
-                    navController.navigate(Destinations.Main.TermsAndConditions.route)
-                }, onCheckedChange = {
-                    vm.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
-                })
-                ContinueButton(vm = vm)
-                SignInText(navController)
-            }
+            CheckboxComponent(onTextSelected = {
+                navController.navigate(Destinations.Main.TermsAndConditions.route)
+            }, onCheckedChange = {
+                vm.onEvent(SignupUIEvent.PrivacyPolicyCheckBoxClicked(it))
+            })
+            ContinueButton(vm = vm)
+            Spacer(modifier = Modifier.height(Dimens.smallPadding))
+            SignInText(navController)
         }
     }
 }
 
+
 @Composable
 private fun ContinueButton(vm: SignUpViewModel) {
-    Button(
-        onClick = { vm.onEvent(SignupUIEvent.RegisterButtonClicked) },
-        shape = Shapes().medium,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = green500, contentColor = neutralWhite
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(60.dp),
-    ) {
-        if (vm.isRegistrationInProgress.value) {
-            ProgressIndicator(color = neutralWhite)
-        } else Text(
-            text = "Login", style = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp)
+    if (vm.isRegistrationInProgress.value) {
+        ProgressIndicator()
+    } else {
+        PrimaryButton(
+            text = if (vm.isRegistrationInProgress.value) "" else stringResource(id = R.string.continue_), // Hide text when loading, use string resource
+            onClick = { vm.onEvent(SignupUIEvent.RegisterButtonClicked) },
+            isEnabled = !vm.isRegistrationInProgress.value
         )
     }
+
 }
 
 @Composable
@@ -172,15 +160,13 @@ private fun InputFields(signUpViewModel: SignUpViewModel) {
             label = stringResource(id = R.string.password), isPassword = isPasswordVisible,
             trailingIcon = {
                 val iconRes = if (isPasswordVisible) R.drawable.show else R.drawable.hide
-                Icon(
-                    painterResource(id = iconRes),
-                    contentDescription = "",
-                    Modifier
-                        .requiredSize(if (isPasswordVisible) 25.dp else 20.dp)
-                        .clickable {
-                            isPasswordVisible = !isPasswordVisible
-                        },
-                )
+                IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                    Icon(
+                        painterResource(id = iconRes),
+                        contentDescription = if (isPasswordVisible) "Hide Password" else "Show Password", // Add content description
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             },
         )
     }
@@ -191,12 +177,12 @@ private fun SignInText(navController: NavController) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Text(
             text = stringResource(id = R.string.joined_before),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.labelMedium
         )
-        WidthSpacer()
+        Spacer(modifier = Modifier.width(4.dp))
         Text(text = stringResource(id = R.string.sign_in),
-            style = MaterialTheme.typography.titleSmall,
-            color = green500,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.clickable {
                 navController.navigate(Destinations.Auth.Login.route) {
                     popUpTo(0)
@@ -216,7 +202,7 @@ fun ErrorMessage(isError: Boolean, errorMessage: String?, modifier: Modifier) {
             Text(
                 text = errorMessage ?: "",
                 color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.labelSmall
             )
         }
     }

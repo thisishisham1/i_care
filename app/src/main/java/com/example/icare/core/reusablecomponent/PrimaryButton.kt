@@ -22,7 +22,7 @@ fun PrimaryButton(
         .fillMaxWidth()
         .height(56.dp),
     isEnabled: Boolean = true,
-    textStyle: TextStyle = MaterialTheme.typography.labelLarge.copy(fontSize = 18.sp)
+    textStyle: TextStyle = MaterialTheme.typography.labelLarge.copy(fontSize = 20.sp)
 ) {
     Button(
         onClick = onClick, shape = Shapes().medium, colors = ButtonDefaults.buttonColors(

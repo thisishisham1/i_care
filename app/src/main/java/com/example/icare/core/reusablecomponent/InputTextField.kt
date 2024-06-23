@@ -60,7 +60,7 @@ fun PrimaryInputTextFiled(
             label = {
                 Text(
                     text = label,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.labelMedium,
                     color = labelColor.value
                 )
             },
