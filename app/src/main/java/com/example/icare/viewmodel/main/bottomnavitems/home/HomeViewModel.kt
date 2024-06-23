@@ -24,7 +24,7 @@ class HomeViewModel(val navController: NavController) : ViewModel() {
 
     fun handleClickAction(action: String) {
         when (action) {
-            "Personal\ntest" -> {
+            "Personal Test" -> {
                 navController.navigate("${Destinations.WebView.WebViewScreen.route}/${Uri.encode("https://icarembti.streamlit.app/")}")
             }
 

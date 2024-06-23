@@ -11,7 +11,7 @@ data class Doctor(
     override val title: String,
     val id: Int,
     val name: String,
-    val imageUrl: String = "https://example.com/default_image.jpg",
+    val imageUrl: String = "https://img.freepik.com/free-photo/3d-illustration-businessman-white-suit-glasses_1142-40726.jpg?t=st=1719115049~exp=1719118649~hmac=a64b452d624bdee2912a1f6bbddece8dc805c683b1b1489193ec388a3fad89d7&w=740",
     val filed: String,
     val address: String,
     val rating: Double,

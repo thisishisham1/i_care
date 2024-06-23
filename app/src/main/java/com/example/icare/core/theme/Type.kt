@@ -25,30 +25,64 @@ val gilroyFontFamily = FontFamily(
     Font(R.font.gilroy_thin, FontWeight.Thin)
 )
 
-val Typography = Typography(
+val AppTypography = Typography(
     headlineLarge = TextStyle(
         fontFamily = gilroyFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 25.sp
+        fontSize = 30.sp, // Increased for better prominence
+        lineHeight = 36.sp // Added line height for better readability
     ),
     headlineMedium = TextStyle(
         fontFamily = gilroyFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 22.sp
+        fontSize = 24.sp, // Increased for better readability
+        lineHeight = 30.sp
     ),
     titleLarge = TextStyle(
         fontFamily = sfFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp
+        fontSize = 18.sp, // Adjusted for better balance
+        lineHeight = 24.sp
     ),
     titleMedium = TextStyle(
         fontFamily = sfFontFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 17.sp
+        fontSize = 16.sp, // Adjusted for better balance
+        lineHeight = 20.sp
     ),
     titleSmall = TextStyle(
         fontFamily = sfFontFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 15.sp
+        fontSize = 14.sp, // Adjusted for better balance
+        lineHeight = 18.sp
+    ),
+    bodyLarge = TextStyle( // Added bodyLarge style
+        fontFamily = sfFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 24.sp
+    ),
+    bodyMedium = TextStyle( // Added bodyMedium style
+        fontFamily = sfFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 20.sp
+    ),
+    bodySmall = TextStyle( // Added bodySmall style
+        fontFamily = sfFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 16.sp
+    ),
+    labelLarge = TextStyle(
+        fontFamily = sfFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        lineHeight = 24.sp
+    ),
+    labelMedium = TextStyle(
+        fontFamily = sfFontFamily,
+        fontWeight = FontWeight.Medium, fontSize = 14.sp,
+        lineHeight = 20.sp
     )
 )
