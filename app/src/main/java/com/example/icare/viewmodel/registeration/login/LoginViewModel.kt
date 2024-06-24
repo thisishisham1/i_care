@@ -17,8 +17,7 @@ import kotlinx.coroutines.launch
 
 
 class LoginViewModel(
-    val navController: NavController,
-    private val preferencesHelper: PreferencesHelper
+    val navController: NavController, private val preferencesHelper: PreferencesHelper
 ) : ViewModel() {
     private val _loginUiState = mutableStateOf(LoginUIState())
     val loginUiState: State<LoginUIState> get() = _loginUiState
@@ -87,6 +86,12 @@ class LoginViewModel(
                                     "Incorrect email or password.", ignoreCase = true
                                 )
                             ) {
+                                _loginUiState.value = loginUiState.value.copy(
+                                    emailError = loginError.error, isEmailError = true
+                                )
+                                _loginUiState.value = loginUiState.value.copy(
+                                    passwordError = loginError.error, isPasswordError = true
+                                )
                                 _errorMessage.value = loginError.error
                             }
                         }
@@ -125,8 +130,12 @@ class LoginViewModel(
                 Log.e("LoginClick", "Unexpected error occurred ", t)
             } finally {
                 _loginInProgress.value = false
+
             }
         }
+        _loginUiState.value = _loginUiState.value.copy(
+            isEmailError = false, isPasswordError = false, emailError = null, passwordError = null
+        )
     }
 
     fun handleForgotPasswordButton() {

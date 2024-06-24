@@ -4,23 +4,13 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.users.Doctor
-import com.example.icare.model.classes.users.Lab
-import com.example.icare.model.classes.users.Pharmacy
-import com.example.icare.model.classes.users.Users
+import com.example.icare.model.classes.User
 
 class HomeViewModel(val navController: NavController) : ViewModel() {
-    fun handleNavigationDetail(user: Users) {
-        when (user) {
-            is Doctor -> navController.navigate("${Destinations.Details.DoctorDetails.route}/${user.id}")
-            is Pharmacy -> navController.navigate("${Destinations.Details.PharmacyDetails.route}/${user.id}")
-            is Lab -> navController.navigate("${Destinations.Details.LabDetails.route}/${user.id}")
-        }
+    fun handleNavigationDetail(user: User) {
+        navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}/${user.title}")
     }
 
-    fun handleNavigateDetails(doctor: Doctor) {
-        navController.navigate("${Destinations.Details.DoctorDetails.route}/${doctor.id}")
-    }
 
     fun handleClickAction(action: String) {
         when (action) {

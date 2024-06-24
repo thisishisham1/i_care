@@ -11,24 +11,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.icare.core.reusablecomponent.ProgressIndicator
 
 @Composable
 fun PrimaryButton(
+    isLoading: Boolean = false,
     text: String,
     onClick: () -> Unit,
     containerColor: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
-    modifier: Modifier = Modifier
-        .fillMaxWidth()
-        .height(56.dp),
     isEnabled: Boolean = true,
-    textStyle: TextStyle = MaterialTheme.typography.labelLarge.copy(fontSize = 20.sp)
+    textStyle: TextStyle = MaterialTheme.typography.labelLarge.copy(fontSize = 20.sp),
 ) {
     Button(
         onClick = onClick, shape = Shapes().medium, colors = ButtonDefaults.buttonColors(
             containerColor = containerColor, contentColor = contentColor
-        ), modifier = modifier, enabled = isEnabled
-    ) {
-        Text(text = text, style = textStyle)
-    }
+        ), modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp), enabled = isEnabled, content = {
+            if (isLoading) {
+                ProgressIndicator()
+            } else
+                Text(text = text, style = textStyle)
+        }
+    )
 }

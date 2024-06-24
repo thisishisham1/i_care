@@ -36,11 +36,10 @@ fun PrimaryInputTextFiled(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     isError: Boolean = false,
-    errorMessage: String? = null
 ) {
     val isFocused by remember { mutableStateOf(false) }
     val labelColor = animateColorAsState(
-        targetValue = if (isFocused || value.isNotEmpty()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+        targetValue = if (isError) MaterialTheme.colorScheme.error else if (isFocused || value.isNotEmpty()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant, // Prioritize error color
         label = ""
     )
     val borderColor = animateColorAsState(

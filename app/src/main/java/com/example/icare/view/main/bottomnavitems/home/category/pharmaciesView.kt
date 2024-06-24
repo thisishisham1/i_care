@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
-import com.example.icare.model.classes.users.listOfPharmacy
-import com.example.icare.view.main.bottomnavitems.search.tabs.pharmacy.CardPharmacy
+import com.example.icare.core.reusablecomponent.UserCard
+import com.example.icare.model.classes.listOfPharmacy
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
@@ -43,9 +43,7 @@ private fun Content(homeViewModel: HomeViewModel) {
     ) {
         LazyColumn(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             items(listOfPharmacy) { pharmacy ->
-                CardPharmacy(
-                    pharmacy = pharmacy,
-                    onClickPharmacy = { homeViewModel.handleNavigationDetail(pharmacy) })
+                UserCard(user = pharmacy) { homeViewModel.handleNavigationDetail(pharmacy) }
             }
         }
     }

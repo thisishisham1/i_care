@@ -7,7 +7,6 @@ plugins {
 android {
     namespace = "com.example.icare"
     compileSdk = 34
-
     defaultConfig {
         applicationId = "com.example.icare"
         minSdk = 24
@@ -20,7 +19,6 @@ android {
             useSupportLibrary = true
         }
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -49,7 +47,6 @@ android {
         }
     }
 }
-
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

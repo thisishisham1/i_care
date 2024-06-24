@@ -20,9 +20,7 @@ import com.example.icare.view.main.bottomnavitems.home.category.WebViewScreen
 import com.example.icare.view.main.bottomnavitems.home.category.chatbot.ChatBotView
 import com.example.icare.view.main.bottomnavitems.profile.edit.EditProfileView
 import com.example.icare.view.main.chat.ChatView
-import com.example.icare.view.main.details.DoctorDetailsView
-import com.example.icare.view.main.details.LabDetailsView
-import com.example.icare.view.main.details.PharmacyDetailsView
+import com.example.icare.view.main.details.UserDetailsView
 import com.example.icare.view.offline.OfflineView
 import com.example.icare.view.onboarding.OnBoardingView
 import com.example.icare.view.registeration.forgotpassword.ForgotPasswordView
@@ -40,7 +38,7 @@ fun MainNavigation(context: Context) {
         PreferencesHelper(context)
     }
     NavHost(
-        navController = navController, startDestination = Destinations.Auth.Login.route
+        navController = navController, startDestination = Destinations.Main.MainScreen.route
     ) {
         composable(Destinations.Main.Splash.route) {
             SplashView(
@@ -74,18 +72,12 @@ fun MainNavigation(context: Context) {
         composable(Destinations.Auth.ResetPassword.route) {
             ResetPasswordView(navController)
         }
-        composable("${Destinations.Details.DoctorDetails.route}/{doctorId}") { navBackStackEntry ->
-            val doctorId = navBackStackEntry.arguments?.getString("doctorId")?.toIntOrNull() ?: 0
-            DoctorDetailsView(doctorId = doctorId, navController)
+        composable("${Destinations.Details.UserDetails.route}/{userId}/{userType}") { navBackStackEntry ->
+            val userId = navBackStackEntry.arguments?.getString("userId")?.toIntOrNull() ?: 0
+            val userType = navBackStackEntry.arguments?.getString("userType") ?: ""
+            UserDetailsView(userId = userId, userType = userType, navController = navController)
         }
-        composable("${Destinations.Details.PharmacyDetails.route}/{pharmacyId}") {
-            val pharmacyId = it.arguments?.getString("pharmacyId")?.toIntOrNull() ?: 0
-            PharmacyDetailsView(pharmacyId = pharmacyId, navController)
-        }
-        composable("${Destinations.Details.LabDetails.route}/{labId}") {
-            val labId = it.arguments?.getString("labId")?.toIntOrNull() ?: 0
-            LabDetailsView(labId = labId, navController)
-        }
+
         composable(Destinations.Appointment.BookAppointment.route) {
             BookView(navController)
         }

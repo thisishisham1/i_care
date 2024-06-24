@@ -20,9 +20,7 @@ sealed class Destinations(val route: String) {
     }
 
     sealed class Details(route: String) : Destinations(route) {
-        object LabDetails : Details("labDetails")
-        object DoctorDetails : Details("doctorDetails")
-        object PharmacyDetails : Details("pharmacyDetails")
+        object UserDetails : Details("userDetails")
     }
 
     sealed class Chat(route: String) : Destinations(route) {

@@ -4,13 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.users.Doctor
-import com.example.icare.model.classes.users.Lab
-import com.example.icare.model.classes.users.Pharmacy
-import com.example.icare.model.classes.users.Users
-import com.example.icare.model.classes.users.listOfDoctor
-import com.example.icare.model.classes.users.listOfLabs
-import com.example.icare.model.classes.users.listOfPharmacy
+import com.example.icare.model.classes.User
+import com.example.icare.model.classes.Users
+import com.example.icare.model.classes.listOfDoctor
+import com.example.icare.model.classes.listOfLabs
+import com.example.icare.model.classes.listOfPharmacy
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -60,13 +58,8 @@ class SearchViewModel(val navController: NavController) : ViewModel() {
         fetchData()
     }
 
-    fun handleClickItem(item: Users) {
-        when (item) {
-            is Doctor -> navController.navigate("${Destinations.Details.DoctorDetails.route}/${item.id}")
-            is Pharmacy -> navController.navigate("${Destinations.Details.PharmacyDetails.route}/${item.id}")
-            is Lab -> navController.navigate("${Destinations.Details.LabDetails.route}/${item.id}")
-
-        }
+    fun handleClickItem(user: User) {
+        navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}/${user.title}")
     }
 
     val filteredList: StateFlow<List<Users>> = _searchText.combine(_dataList) { text, list ->
@@ -76,8 +69,6 @@ class SearchViewModel(val navController: NavController) : ViewModel() {
             list.filter { it.doseMatchQuery(text) }
         }
     }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList<Users>()
+        viewModelScope, SharingStarted.WhileSubscribed(5000), initialValue = emptyList<Users>()
     )
 }

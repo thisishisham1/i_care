@@ -3,10 +3,6 @@ package com.example.icare
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import com.example.icare.core.theme.ICareTheme
 import com.example.icare.model.classes.ConnectivityObserver
@@ -28,13 +24,9 @@ class MainActivity : ComponentActivity(), ConnectivityObserver {
                     ConnectivityObserver.Status.AVAILABLE -> {
                         setContent {
                             ICareTheme {
-                                // A surface container using the 'background' color from the theme
-                                Surface(
-                                    modifier = Modifier.fillMaxSize(),
-                                    color = MaterialTheme.colorScheme.background
-                                ) {
-                                    MainNavigation(context = this@MainActivity)
-                                }
+
+                                MainNavigation(context = this@MainActivity)
+
                             }
                         }
                     }
@@ -42,12 +34,7 @@ class MainActivity : ComponentActivity(), ConnectivityObserver {
                     ConnectivityObserver.Status.UNAVAILABLE -> {
                         setContent {
                             ICareTheme {
-                                Surface(
-                                    modifier = Modifier.fillMaxSize(),
-                                    color = MaterialTheme.colorScheme.background
-                                ) {
-                                    OfflineView()
-                                }
+                                OfflineView()
                             }
                         }
                     }

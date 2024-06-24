@@ -3,9 +3,9 @@ package com.example.icare.viewmodel.main.details
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.users.listOfDoctor
-import com.example.icare.model.classes.users.listOfLabs
-import com.example.icare.model.classes.users.listOfPharmacy
+import com.example.icare.model.classes.listOfDoctor
+import com.example.icare.model.classes.listOfLabs
+import com.example.icare.model.classes.listOfPharmacy
 
 class DetailsViewModel(val navController: NavController) : ViewModel() {
     fun getDoctorDetails(doctorId: Int) = listOfDoctor.first { it.id == doctorId }
@@ -22,5 +22,17 @@ class DetailsViewModel(val navController: NavController) : ViewModel() {
 
     fun handleLabButton() {
         // TODO: handel order button
+    }
+
+    fun handleDoctorBookButtonClick() {
+        TODO("Not yet implemented")
+    }
+
+    fun handleLabBookButtonClick() {
+        TODO("Not yet implemented")
+    }
+
+    fun handlePharmacyBookButtonClick() {
+        TODO("Not yet implemented")
     }
 }

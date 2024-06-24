@@ -23,7 +23,6 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
     private val _errorMessage = mutableStateOf<String?>(null)
     val errorMessage: State<String?> get() = _errorMessage
 
-    val isUnSpecificError = mutableStateOf(false)
 
     fun onEvent(event: SignupUIEvent) {
         when (event) {
@@ -92,12 +91,12 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
                                     nameError = registrationError.error, isNameError = true
                                 )
                             }
-                            if (registrationError.error.contains("Email")) {
+                            if (registrationError.error.contains("Email", ignoreCase = true)) {
                                 _registrationUiState.value = registrationUiState.value.copy(
                                     emailError = registrationError.error, isEmailError = true
                                 )
                             }
-                            if (registrationError.error.contains("Phone")) {
+                            if (registrationError.error.contains("Phone", ignoreCase = true)) {
                                 _registrationUiState.value = registrationUiState.value.copy(
                                     phoneError = registrationError.error, isPhoneError = true
                                 )
@@ -107,8 +106,26 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
                                     passwordError = registrationError.error, isPasswordError = true
                                 )
                             }
+                        }
 
+                        is AuthError.Unauthorized -> {
+                            _errorMessage.value = registrationError.message
+                        }
 
+                        is AuthError.Forbidden -> {
+                            _errorMessage.value = registrationError.message
+                        }
+
+                        is AuthError.NotFound -> {
+                            _errorMessage.value = registrationError.message
+                        }
+
+                        is AuthError.InternalServerError -> {
+                            _errorMessage.value = registrationError.message
+                        }
+
+                        is AuthError.Unknown -> {
+                            _errorMessage.value = registrationError.message
                         }
 
                         else -> {
@@ -126,6 +143,16 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
                 _isRegistrationInProgress.value = false
             }
         }
+        _registrationUiState.value = _registrationUiState.value.copy(
+            isEmailError = false,
+            isPasswordError = false,
+            emailError = null,
+            passwordError = null,
+            nameError = null,
+            isNameError = false,
+            isPhoneError = false,
+            phoneError = null
+        )
     }
 
     private fun resetState() {

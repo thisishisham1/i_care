@@ -49,7 +49,6 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.PrimaryInputTextFiled
-import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
@@ -103,7 +102,8 @@ private fun InputFields(vm: LoginViewModel) {
         mutableStateOf(true)
     }
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.smallPadding)) {
-        PrimaryInputTextFiled(isError = vm.loginUiState.value.isEmailError,
+        PrimaryInputTextFiled(
+            isError = vm.loginUiState.value.isEmailError,
             value = emailValue.value,
             label = stringResource(id = R.string.email),
             onValueChange = {
@@ -137,15 +137,12 @@ private fun InputFields(vm: LoginViewModel) {
 
 @Composable
 private fun SignInButton(loginViewModel: LoginViewModel) {
-    if (loginViewModel.isLoginInProgress.value) {
-        ProgressIndicator()
-    } else {
-        PrimaryButton( // Use PrimaryButton composable
-            text = "Login", // Show text when not loading
-            onClick = { loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked) },
-            isEnabled = !loginViewModel.isLoginInProgress.value // Disable button when loading
-        )
-    }
+    PrimaryButton(
+        text = "Login",
+        onClick = { loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked) },
+        isEnabled = !loginViewModel.isLoginInProgress.value,
+        isLoading = loginViewModel.isLoginInProgress.value
+    )
 }
 
 @Composable

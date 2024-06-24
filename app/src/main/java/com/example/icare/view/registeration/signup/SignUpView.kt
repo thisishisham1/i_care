@@ -41,7 +41,6 @@ import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.BackArrow
 import com.example.icare.core.reusablecomponent.PrimaryInputTextFiled
-import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.model.classes.Destinations
 import com.example.icare.view.registeration.component.CheckboxComponent
 import com.example.icare.view.registeration.component.ImageHeader
@@ -94,17 +93,16 @@ fun SignUpView(navController: NavController) {
 
 @Composable
 private fun ContinueButton(vm: SignUpViewModel) {
-    if (vm.isRegistrationInProgress.value) {
-        ProgressIndicator()
-    } else {
-        PrimaryButton(
-            text = if (vm.isRegistrationInProgress.value) "" else stringResource(id = R.string.continue_), // Hide text when loading, use string resource
-            onClick = { vm.onEvent(SignupUIEvent.RegisterButtonClicked) },
-            isEnabled = !vm.isRegistrationInProgress.value
-        )
-    }
 
+
+    PrimaryButton(
+        text = stringResource(id = R.string.continue_),
+        onClick = { vm.onEvent(SignupUIEvent.RegisterButtonClicked) },
+        isEnabled = !vm.isRegistrationInProgress.value,
+        isLoading = vm.isRegistrationInProgress.value
+    )
 }
+
 
 @Composable
 private fun InputFields(signUpViewModel: SignUpViewModel) {
@@ -152,6 +150,7 @@ private fun InputFields(signUpViewModel: SignUpViewModel) {
             mutableStateOf(true)
         }
         PrimaryInputTextFiled(
+            isError = signUpViewModel.registrationUiState.value.isPasswordError,
             value = password.value,
             onValueChange = {
                 password.value = it
