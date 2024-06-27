@@ -61,9 +61,18 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
                     phone = event.phone
                 )
             }
+
+            is SignupUIEvent.LoginButtonClick -> {
+                handleLoginClick()
+            }
         }
     }
 
+    private fun handleLoginClick() {
+        navController.navigate(Destinations.Auth.Login.route) {
+            popUpTo(0)
+        }
+    }
 
     private fun handleRegisterButtonClick() {
         viewModelScope.launch {
@@ -153,10 +162,5 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
             isPhoneError = false,
             phoneError = null
         )
-    }
-
-    private fun resetState() {
-        _errorMessage.value = null
-        _registrationUiState.value = SignUpUiState()
     }
 }

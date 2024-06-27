@@ -8,8 +8,7 @@ import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.view.main.bottomnavitems.profile.UserProfile
 
 class ProfileViewModel(
-    private val navController: NavController,
-    private val preferencesHelper: PreferencesHelper
+    private val navController: NavController, private val preferencesHelper: PreferencesHelper
 ) : ViewModel() {
     var isDialog = mutableStateOf(false)
     val userInfo = UserProfile(name = "Hisham Mohamed", email = "Hishamohmad19@gmail.com")
@@ -25,7 +24,7 @@ class ProfileViewModel(
             }
 
             "Terms and Conditions" -> {
-                // todo: Handle terms and conditions action
+                navController.navigate(Destinations.Main.TermsAndConditions.route)
             }
 
             "Log Out" -> {

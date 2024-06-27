@@ -1,19 +1,21 @@
 package com.example.icare.view.main.bottomnavitems.home
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.icare.core.theme.gray400
+import androidx.navigation.NavController
+import com.example.icare.core.reusablecomponent.DefaultTopAppBar
 
 @Composable
-fun NotificationsView() {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(gray400)
-    ) {
-
+fun NotificationsView(navController: NavController) {
+    Scaffold(
+        topBar = {
+            DefaultTopAppBar(title = "Notification", navController = navController)
+        }
+    ) { innerPadding ->
+        Box(Modifier.padding(innerPadding)) {
+        }
     }
 }

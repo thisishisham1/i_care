@@ -47,9 +47,23 @@ class LoginViewModel(
             is LoginUIEvent.LoginButtonClicked -> {
                 loginClick()
             }
+
+            is LoginUIEvent.GoogleButtonClick -> {
+                handleGoogleClick()
+            }
+
+            is LoginUIEvent.SignUpClick -> {
+                signUpClick()
+            }
+
+            is LoginUIEvent.ForgotPasswordClick -> {
+                forgotPasswordClick()
+            }
         }
 
     }
+
+    private fun handleGoogleClick() {}
 
     private fun loginClick() {
         viewModelScope.launch {
@@ -138,13 +152,12 @@ class LoginViewModel(
         )
     }
 
-    fun handleForgotPasswordButton() {
+    private fun forgotPasswordClick() {
         navController.navigate(Destinations.Auth.ForgotPassword.route)
     }
 
-    fun handleSignUpButton() {
+    private fun signUpClick() {
         navController.navigate(Destinations.Auth.SignUp.route)
     }
 
 }
-

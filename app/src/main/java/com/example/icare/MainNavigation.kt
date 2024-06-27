@@ -87,7 +87,7 @@ fun MainNavigation(context: Context) {
             EditProfileView(navController)
         }
         composable(Destinations.Profile.Notifications.route) {
-            NotificationsView()
+            NotificationsView(navController)
         }
         composable(Destinations.Lists.Chats.route) {
             ChatsView()

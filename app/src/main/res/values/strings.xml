@@ -83,4 +83,6 @@
     <string name="profile_dialog_agree">Are you sure you want to log out?</string>
     <string name="profile_cancel">Cancel</string>
     <string name="title_activity_chat">ChatActivity</string>
+
+    <string name="client_id">732477492878-rduf2vdjctl8cfmsjnams6kupll6nqev.apps.googleusercontent.com</string>
 </resources>

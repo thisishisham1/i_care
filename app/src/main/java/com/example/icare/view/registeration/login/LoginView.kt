@@ -38,7 +38,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -56,6 +55,7 @@ import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
 import com.example.icare.viewmodel.registeration.login.LoginViewModel
+
 
 private val imageRes = R.drawable.signin
 
@@ -102,8 +102,7 @@ private fun InputFields(vm: LoginViewModel) {
         mutableStateOf(true)
     }
     Column(verticalArrangement = Arrangement.spacedBy(Dimens.smallPadding)) {
-        PrimaryInputTextFiled(
-            isError = vm.loginUiState.value.isEmailError,
+        PrimaryInputTextFiled(isError = vm.loginUiState.value.isEmailError,
             value = emailValue.value,
             label = stringResource(id = R.string.email),
             onValueChange = {
@@ -169,7 +168,7 @@ private fun GoogleButton(
                 .height(56.dp),
             shape = Shapes().medium,
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White
+                containerColor = neutralWhite
             ),
             contentPadding = PaddingValues(0.dp)
         ) {
@@ -189,7 +188,7 @@ private fun GoogleButton(
                         painter = painterResource(id = R.drawable.google),
                         contentDescription = "google icon",
                         modifier = Modifier.size(25.dp),
-                        tint = if (clicked) neutralWhite else Color.Unspecified
+                        tint = if (clicked) neutralWhite else androidx.compose.ui.graphics.Color.Unspecified
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
@@ -215,7 +214,7 @@ private fun ForgotPassword(loginViewModel: LoginViewModel) {
         Text(
             text = stringResource(id = R.string.forgot_password),
             style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.clickable { loginViewModel.handleForgotPasswordButton() },
+            modifier = Modifier.clickable { loginViewModel.onEvent(LoginUIEvent.ForgotPasswordClick) },
         )
     }
 
@@ -233,7 +232,7 @@ private fun SignUpText(loginViewModel: LoginViewModel) {
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.clickable {
-                loginViewModel.handleSignUpButton()
+                loginViewModel.onEvent(LoginUIEvent.SignUpClick)
             })
     }
 }

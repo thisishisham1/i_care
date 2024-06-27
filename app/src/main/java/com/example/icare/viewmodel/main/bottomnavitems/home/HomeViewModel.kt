@@ -35,7 +35,7 @@ class HomeViewModel(val navController: NavController) : ViewModel() {
     fun handleClickSeeMore() = navController.navigate(Destinations.Lists.Doctors.route)
 
     fun handleNotificationClick() {
-        // TODO: handle notification Click
+        navController.navigate(Destinations.Profile.Notifications.route)
     }
 
     fun handleChatsClick() {

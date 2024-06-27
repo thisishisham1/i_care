@@ -85,7 +85,7 @@ fun SignUpView(navController: NavController) {
             })
             ContinueButton(vm = vm)
             Spacer(modifier = Modifier.height(Dimens.smallPadding))
-            SignInText(navController)
+            SignInText(vm)
         }
     }
 }
@@ -172,7 +172,7 @@ private fun InputFields(signUpViewModel: SignUpViewModel) {
 }
 
 @Composable
-private fun SignInText(navController: NavController) {
+private fun SignInText(signUpViewModel: SignUpViewModel) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Text(
             text = stringResource(id = R.string.joined_before),
@@ -183,9 +183,7 @@ private fun SignInText(navController: NavController) {
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.clickable {
-                navController.navigate(Destinations.Auth.Login.route) {
-                    popUpTo(0)
-                }
+                signUpViewModel.onEvent(SignupUIEvent.LoginButtonClick)
             })
     }
 }
