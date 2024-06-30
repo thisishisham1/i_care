@@ -14,7 +14,7 @@ class HomeViewModel(val navController: NavController) : ViewModel() {
 
     fun handleClickAction(action: String) {
         when (action) {
-            "Personal Test" -> {
+            "Personality Test" -> {
                 navController.navigate("${Destinations.WebView.WebViewScreen.route}/${Uri.encode("https://icarembti.streamlit.app/")}")
             }
 
@@ -28,6 +28,14 @@ class HomeViewModel(val navController: NavController) : ViewModel() {
 
             "Pharmacies" -> {
                 navController.navigate(Destinations.Lists.Pharmacies.route)
+            }
+
+            "ECG Scan" -> {
+                navController.navigate(Destinations.Chat.EcgScanner.route)
+            }
+
+            "Cognitive Imaging" -> {
+                navController.navigate(Destinations.Chat.CognitiveImaging.route)
             }
         }
     }

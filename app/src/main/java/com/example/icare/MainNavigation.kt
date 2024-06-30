@@ -13,7 +13,9 @@ import com.example.icare.view.main.MainView
 import com.example.icare.view.main.book.BookView
 import com.example.icare.view.main.bottomnavitems.home.ChatsView
 import com.example.icare.view.main.bottomnavitems.home.NotificationsView
+import com.example.icare.view.main.bottomnavitems.home.category.CognitiveImaging
 import com.example.icare.view.main.bottomnavitems.home.category.DoctorsView
+import com.example.icare.view.main.bottomnavitems.home.category.EcgScanner
 import com.example.icare.view.main.bottomnavitems.home.category.LabsView
 import com.example.icare.view.main.bottomnavitems.home.category.PharmaciesView
 import com.example.icare.view.main.bottomnavitems.home.category.WebViewScreen
@@ -50,6 +52,12 @@ fun MainNavigation(context: Context) {
         }
         composable(Destinations.Main.Offline.route) {
             OfflineView()
+        }
+        composable(Destinations.Chat.EcgScanner.route) {
+            EcgScanner(navController = navController)
+        }
+        composable(Destinations.Chat.CognitiveImaging.route) {
+            CognitiveImaging(navController = navController)
         }
         composable(Destinations.Main.MainScreen.route) {
             MainView(navController, preferencesHelper)

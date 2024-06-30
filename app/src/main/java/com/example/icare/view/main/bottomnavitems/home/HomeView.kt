@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -123,19 +125,23 @@ private fun IconButton(onClick: () -> Unit, imageVector: ImageVector, contentDes
 @Composable
 private fun Categories(homeViewModel: HomeViewModel) {
     val categories = listOf(
-        Category("Personal Test", R.drawable.personal_cat),
+        Category("Personality Test", R.drawable.personal_cat),
         Category("Chat Bot", R.drawable.chat_bot_cat),
+        Category("ECG Scan", R.drawable.electrocardiogram),
+        Category("Cognitive Imaging", R.drawable.xrays),
         Category("Labs", R.drawable.lab_equipment_cat),
-        Category("Pharmacies", R.drawable.pharmacy_cat)
+        Category("Pharmacies", R.drawable.pharmacy_cat),
     )
     Column {
         Text(text = "Category", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(16.dp))
-        LazyRow(
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(horizontal = Dimens.mediumPadding)
         ) {
-            items(categories) { category ->
+            itemsIndexed(categories) { index, category ->
                 CardCategory(category = category) {
                     homeViewModel.handleClickAction(category.name)
                 }
@@ -152,7 +158,7 @@ private fun CardCategory(category: Category, onClicked: () -> Unit) {
     val shadowColor = cardColor.copy(alpha = 0.1f)
     Box(
         modifier = Modifier
-            .size(width = 104.dp, height = 104.dp) // Slightly larger for shadow
+            .size(width = 114.dp, height = 114.dp) // Slightly larger for shadow
             .clip(RoundedCornerShape(12.dp))
     ) {
         // Shadow layer
@@ -167,7 +173,7 @@ private fun CardCategory(category: Category, onClicked: () -> Unit) {
         ) {}
         Card(
             modifier = Modifier
-                .size(width = 100.dp, height = 100.dp)
+                .size(width = 110.dp, height = 110.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .clickable { onClicked() },
             colors = CardDefaults.cardColors(containerColor = cardColor),
@@ -178,7 +184,7 @@ private fun CardCategory(category: Category, onClicked: () -> Unit) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
