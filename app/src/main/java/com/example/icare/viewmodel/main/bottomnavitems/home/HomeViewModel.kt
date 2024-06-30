@@ -11,7 +11,6 @@ class HomeViewModel(val navController: NavController) : ViewModel() {
         navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}/${user.title}")
     }
 
-
     fun handleClickAction(action: String) {
         when (action) {
             "Personality Test" -> {

@@ -116,7 +116,8 @@ private fun IconButton(onClick: () -> Unit, imageVector: ImageVector, contentDes
         Icon(
             imageVector = imageVector,
             contentDescription = contentDescription,
-            modifier = Modifier.size(24.dp), tint = MaterialTheme.colorScheme.onSurface
+            modifier = Modifier.size(24.dp),
+            tint = MaterialTheme.colorScheme.onSurface
         )
     }
 
