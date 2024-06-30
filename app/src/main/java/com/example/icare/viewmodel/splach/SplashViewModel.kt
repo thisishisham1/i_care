@@ -6,7 +6,9 @@ import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.tween
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.example.icare.MyApplication
 import com.example.icare.model.classes.Destinations
+import com.example.icare.model.local.UserDatabase
 import com.example.icare.model.sharedPreferences.PreferencesHelper
 import kotlinx.coroutines.delay
 
@@ -32,10 +34,12 @@ class SplashViewModel(private val preferencesHelper: PreferencesHelper) : ViewMo
         navigate(navController)
     }
 
-    private fun navigate(navController: NavController) {
+    private suspend fun navigate(navController: NavController) {
+        val userDao = UserDatabase.getDatabase(MyApplication.applicationContext()).userResponseDao()
+        val userCount = userDao.getUserCount()
         val destinations =
             if (this.preferencesHelper.getBooleanValue("onBoarding")) {
-                if (this.preferencesHelper.isUserLoggedIn()) {
+                if (userCount > 0) {
                     Destinations.Main.MainScreen.route
                 } else
                     Destinations.Auth.Login.route

@@ -75,9 +75,6 @@ class LoginViewModel(
                     )
                 )
                 if (response.isSuccess) {
-                    val userResponse = response.getOrNull()
-                    val userToken = userResponse?.patient_token
-                    preferencesHelper.saveUserLogin(userToken!!)
                     navController.navigate(Destinations.Main.MainScreen.route) {
                         popUpTo(0)
                     }

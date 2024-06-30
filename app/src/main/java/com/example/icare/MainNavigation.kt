@@ -40,7 +40,7 @@ fun MainNavigation(context: Context) {
         PreferencesHelper(context)
     }
     NavHost(
-        navController = navController, startDestination = Destinations.Main.MainScreen.route
+        navController = navController, startDestination = Destinations.Main.Splash.route
     ) {
         composable(Destinations.Main.Splash.route) {
             SplashView(
