@@ -4,6 +4,11 @@ Welcome to **iCare**! This healthcare application is developed in Kotlin and Jav
 
 ![Healthcare Meme]([https://i.imgflip.com/1ot1xo.jpg](https://i.pinimg.com/564x/5d/b3/9a/5db39a62302a7afc62f6f5e32d651b24.jpg))
 
+## 🏛️ Design Pattern
+
+This project follows the Model-View-ViewModel (MVVM) design pattern. The MVVM pattern allows separate the development of the graphical user interface from the business logic or back-end logic (the data model). The view model of MVVM is responsible for exposing the data objects from the model in such a way that those objects are easily managed and presented.
+
+
 ## 🌟 Features
 
 - **🏠 Home Screen**: The main entry point of the application displaying various service categories.
