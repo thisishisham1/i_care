@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -24,6 +23,7 @@ import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.BackArrow
 import com.example.icare.core.reusablecomponent.HeightSpacer
+import com.example.icare.core.reusablecomponent.PrimaryInputTextFiled
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
 import com.example.icare.viewmodel.registeration.forgotpassword.ForgotPasswordViewModel
@@ -70,15 +70,14 @@ fun ResetPasswordView(navController: NavHostController) {
 
 @Composable
 private fun InputFields(resetPasswordViewModel: ForgotPasswordViewModel) {
-    val context = LocalContext.current
     resetPasswordViewModel.passwordFields.forEach { (label, value) ->
         HeightSpacer()
-        /*PasswordInputField(
-            isError = resetPasswordViewModel.isError(label),
-            errorMessage = resetPasswordViewModel.getErrorMessage(context, label),
-            label = label,
+        PrimaryInputTextFiled(
+            isPassword = true,
+            value = value.value,
             onValueChange = { value.value = it },
-            value = value.value
-        )*/
+            label = label,
+            isError = resetPasswordViewModel.isError(label)
+        )
     }
 }

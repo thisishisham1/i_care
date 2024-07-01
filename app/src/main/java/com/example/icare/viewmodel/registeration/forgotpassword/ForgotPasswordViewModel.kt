@@ -34,12 +34,14 @@ class ForgotPasswordViewModel(val navController: NavController) : ViewModel() {
     fun handleSubmitButton() {
         resetErrorState()
         validateEmail()
+        navController.navigate(Destinations.Auth.Verify.route)
     }
 
     // Function to handle change password button click
     fun handleChangePasswordButton() {
         resetPasswordErrorState()
         validatePasswordFields()
+        navController.navigate(Destinations.Auth.DoneVerify.route)
     }
 
     // Function to handle email validation

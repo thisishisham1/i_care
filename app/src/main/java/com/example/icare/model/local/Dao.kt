@@ -12,7 +12,7 @@ interface UserResponseDao {
     suspend fun insertUser(userResponse: UserResponse)
 
     @Query("SELECT * FROM user_table LIMIT 1")
-    suspend fun getUser(): UserResponse?
+    suspend fun getUser(): UserResponse
 
     @Query("DELETE FROM user_table")
     suspend fun deleteUser()

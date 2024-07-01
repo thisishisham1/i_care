@@ -24,6 +24,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,7 +50,7 @@ fun ProfileScreen(navController: NavController, preferencesHelper: PreferencesHe
     val profileViewModel = remember {
         ProfileViewModel(navController, preferencesHelper)
     }
-
+    val user by profileViewModel.user.observeAsState()
     Scaffold(topBar = {
         CenterAlignedTopAppBar(
             title = {
@@ -67,12 +69,15 @@ fun ProfileScreen(navController: NavController, preferencesHelper: PreferencesHe
                 .padding(horizontal = Dimens.mediumPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(Dimens.largePadding))
-            ProfileImage()
-            Spacer(modifier = Modifier.height(Dimens.mediumPadding))
-            Info(profileViewModel.userInfo)
-            Spacer(modifier = Modifier.height(Dimens.largePadding))
-            Content(profileViewModel)
+            user?.let {
+                Spacer(modifier = Modifier.height(Dimens.largePadding))
+                ProfileImage(it.img)
+                Spacer(modifier = Modifier.height(Dimens.mediumPadding))
+                Info(it.name1, it.email)
+                Spacer(modifier = Modifier.height(Dimens.largePadding))
+                Content(profileViewModel)
+            }
+
         }
     }
 
@@ -83,29 +88,31 @@ fun ProfileScreen(navController: NavController, preferencesHelper: PreferencesHe
 }
 
 @Composable
-private fun Info(userProfile: UserProfile) {
+private fun Info(name: String, email: String) {
     Column(
         Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = userProfile.name, style = MaterialTheme.typography.headlineSmall)
+        Text(text = name, style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = userProfile.email,
+            text = email,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+
+
     }
 }
 
 @Composable
-private fun ProfileImage() {
+private fun ProfileImage(imgUrl: String) {
 
     Box(
         modifier = Modifier.size(180.dp)
     ) {
         Box {
             AsyncImage(
-                model = R.drawable.d,
+                model = imgUrl,
                 contentDescription = "Profile Image",
                 modifier = Modifier
                     .size(170.dp)
@@ -178,7 +185,8 @@ fun ProfileItem(icon: Int, text: String, onClick: () -> Unit) {
 
 @Composable
 private fun LogoutDialog(onClickLogout: () -> Unit, onClickCancel: () -> Unit) {
-    AlertDialog(onDismissRequest = { onClickCancel() },
+    AlertDialog(
+        onDismissRequest = { onClickCancel() },
         title = { Text(stringResource(id = R.string.profile_logout)) },
         text = { Text(stringResource(id = R.string.profile_dialog_agree)) },
         confirmButton = {

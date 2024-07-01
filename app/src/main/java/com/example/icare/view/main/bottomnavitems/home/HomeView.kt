@@ -30,6 +30,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,6 +73,7 @@ fun HomeScreen(navController: NavController) {
 
 @Composable
 private fun TopBar(homeViewModel: HomeViewModel) {
+    val user by homeViewModel.user.observeAsState()
     Row(
         Modifier
             .fillMaxWidth()
@@ -78,10 +81,13 @@ private fun TopBar(homeViewModel: HomeViewModel) {
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ProfileImage(imgUrl = "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?w=740&t=st=1719111511~exp=1719112111~hmac=abe1ed202993adc8d8a2e0b5202d353591681c7a255c729c955c93ec30101509")
-        Column {
-            Text(text = "Hisham Mohamed", style = MaterialTheme.typography.titleLarge)
+        user?.let {
+            ProfileImage(imgUrl = it.img)
+            Column {
+                Text(text = it.name1, style = MaterialTheme.typography.titleLarge)
+            }
         }
+
         Spacer(modifier = Modifier.weight(1f))
         IconButton(
             imageVector = Icons.Default.Notifications,
@@ -129,7 +135,7 @@ private fun Categories(homeViewModel: HomeViewModel) {
         Category("Personality Test", R.drawable.personal_cat),
         Category("Chat Bot", R.drawable.chat_bot_cat),
         Category("ECG Scan", R.drawable.electrocardiogram),
-        Category("Cognitive Imaging", R.drawable.xrays),
+        Category("Medical Imaging", R.drawable.xrays),
         Category("Labs", R.drawable.lab_equipment_cat),
         Category("Pharmacies", R.drawable.pharmacy_cat),
     )

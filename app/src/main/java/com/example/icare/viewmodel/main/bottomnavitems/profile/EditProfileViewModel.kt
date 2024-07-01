@@ -1,21 +1,18 @@
 package com.example.icare.viewmodel.main.bottomnavitems.profile
 
-import android.util.Patterns
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.navigation.NavController
+import com.example.icare.MyApplication
+import com.example.icare.model.classes.UserResponse
+import com.example.icare.model.local.UserDatabase
 
 class EditProfileViewModel(val navController: NavController) : ViewModel() {
-    val isError = mutableStateOf(false)
-    val name = mutableStateOf("Hisham Mohamed")
-    val email = mutableStateOf("Hishamohmad19@gmail.com")
-    fun handleBackArrow() = navController.navigateUp()
-
-    fun onEmailValueChange(value: String) {
-        email.value = value
-        isError.value = !isValidEmail(value)
+    val userDao = UserDatabase.getDatabase(MyApplication.applicationContext()).userResponseDao()
+    val user: LiveData<UserResponse> = liveData {
+        emit(userDao.getUser())
     }
 
-    private fun isValidEmail(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
+    fun handleBackArrow() = navController.navigateUp()
 }
