@@ -1,14 +1,27 @@
 package com.example.icare.viewmodel.main.bottomnavitems.home
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.navigation.NavController
+import com.example.icare.MyApplication
 import com.example.icare.model.classes.Destinations
 import com.example.icare.model.classes.User
+import com.example.icare.model.classes.UserResponse
+import com.example.icare.model.local.UserDatabase
 
-class HomeViewModel(val navController: NavController) : ViewModel() {
+class
+HomeViewModel(val navController: NavController) : ViewModel() {
     fun handleNavigationDetail(user: User) {
         navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}/${user.title}")
+    }
+
+    private val userDao =
+        UserDatabase.getDatabase(MyApplication.applicationContext()).userResponseDao()
+
+    val user: LiveData<UserResponse> = liveData {
+        emit(userDao.getUser())
     }
 
     fun handleClickAction(action: String) {
@@ -33,7 +46,7 @@ class HomeViewModel(val navController: NavController) : ViewModel() {
                 navController.navigate(Destinations.Chat.EcgScanner.route)
             }
 
-            "Cognitive Imaging" -> {
+            "Medical Imaging" -> {
                 navController.navigate(Destinations.Chat.CognitiveImaging.route)
             }
         }

@@ -1,22 +1,29 @@
 package com.example.icare.viewmodel.main.bottomnavitems.profile
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.icare.MyApplication
 import com.example.icare.model.classes.Destinations
+import com.example.icare.model.classes.UserResponse
+import com.example.icare.model.local.UserDatabase
 import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.repository.AuthRepository
-import com.example.icare.view.main.bottomnavitems.profile.UserProfile
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val navController: NavController, private val preferencesHelper: PreferencesHelper
 ) : ViewModel() {
     var isDialog = mutableStateOf(false)
-    val userInfo = UserProfile(name = "Hisham Mohamed", email = "Hishamohmad19@gmail.com")
 
-    val authRepository = AuthRepository()
+    private val authRepository = AuthRepository()
+    val userDao = UserDatabase.getDatabase(MyApplication.applicationContext()).userResponseDao()
+    val user: LiveData<UserResponse> = liveData {
+        emit(userDao.getUser())
+    }
 
     fun handleClickAction(action: String) {
         when (action) {

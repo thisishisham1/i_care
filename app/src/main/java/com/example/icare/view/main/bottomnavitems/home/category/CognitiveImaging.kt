@@ -35,7 +35,7 @@ fun CognitiveImaging(navController: NavController) {
         }
     Scaffold(topBar = {
         DefaultTopAppBar(
-            title = "Cognitive Imaging", navController = navController
+            title = "Medical Imaging", navController = navController
         )
     }, bottomBar = {
         BottomAppBar(containerColor = Color.Transparent, tonalElevation = 8.dp) {

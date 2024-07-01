@@ -27,6 +27,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +46,7 @@ import com.example.icare.core.theme.black
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.shapes
+import com.example.icare.model.classes.UserResponse
 import com.example.icare.viewmodel.main.bottomnavitems.profile.EditProfileViewModel
 
 @Composable
@@ -61,7 +64,7 @@ fun EditProfileView(navController: NavController) {
 }
 
 @Composable
-private fun ProfileImage() {
+private fun ProfileImage(imgUrl: String) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -70,22 +73,21 @@ private fun ProfileImage() {
     ) {
         Box {
             AsyncImage(
-                model = R.drawable.d,
+                model = imgUrl,
                 contentDescription = "Profile Image",
                 modifier = Modifier
                     .size(170.dp)
                     .clip(CircleShape)
             )
-            Image(
-                painter = painterResource(id = R.drawable.message_edit),
-                contentDescription = "", modifier = Modifier
+            Image(painter = painterResource(id = R.drawable.message_edit),
+                contentDescription = "",
+                modifier = Modifier
                     .padding(5.dp)
                     .size(30.dp)
                     .align(Alignment.BottomEnd)
                     .clickable {
                         // TODO: handle button edit image
-                    }
-            )
+                    })
         }
     }
 
@@ -108,46 +110,27 @@ private fun TopAppBar(editProfileViewModel: EditProfileViewModel) {
 }
 
 @Composable
-fun TextFiled(editProfileViewModel: EditProfileViewModel) {
+fun TextFiled(user: UserResponse) {
     val uiList = arrayOf(
         stringResource(id = R.string.name),
         stringResource(id = R.string.email),
+        "Phone"
     )
     Column(
-        Modifier
-            .fillMaxWidth(),
+        Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         uiList.forEachIndexed { _, filed ->
             when (filed) {
-                "Name" ->
-                    Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
-                        Text(text = filed, style = MaterialTheme.typography.titleLarge)
-                        TextField(
-                            shape = shapes.medium,
-                            value = editProfileViewModel.name.value,
-                            onValueChange = { editProfileViewModel.name.value = it },
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth(), colors = TextFieldDefaults.colors(
-                                focusedTextColor = black,
-                                unfocusedContainerColor = gray400.copy(alpha = 0.2f),
-                                focusedContainerColor = gray400.copy(alpha = 0.3f),
-                                unfocusedTextColor = gray500,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                focusedIndicatorColor = Color.Transparent
-                            )
-                        )
-                    }
-
-                else -> Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                "Name" -> Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     Text(text = filed, style = MaterialTheme.typography.titleLarge)
                     TextField(
-                        isError = editProfileViewModel.isError.value,
                         shape = shapes.medium,
-                        value = editProfileViewModel.email.value,
-                        onValueChange = editProfileViewModel::onEmailValueChange,
+                        value = user.name1,
+                        onValueChange = { },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth(), colors = TextFieldDefaults.colors(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
                             focusedTextColor = black,
                             unfocusedContainerColor = gray400.copy(alpha = 0.2f),
                             focusedContainerColor = gray400.copy(alpha = 0.3f),
@@ -156,20 +139,52 @@ fun TextFiled(editProfileViewModel: EditProfileViewModel) {
                             focusedIndicatorColor = Color.Transparent
                         )
                     )
-                    if (editProfileViewModel.isError.value) {
-                        Text(
-                            text = "Invalid email format",
-                            color = Color.Red,
-                            style = MaterialTheme.typography.titleSmall
-                        )
-                    }
-
                 }
 
+                "Phone" -> Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                    Text(text = filed, style = MaterialTheme.typography.titleLarge)
+                    TextField(
+                        shape = shapes.medium,
+                        value = user.phone,
+                        onValueChange = { },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = black,
+                            unfocusedContainerColor = gray400.copy(alpha = 0.2f),
+                            focusedContainerColor = gray400.copy(alpha = 0.3f),
+                            unfocusedTextColor = gray500,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent
+                        )
+                    )
+                }
+
+                else -> Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                    Text(text = filed, style = MaterialTheme.typography.titleLarge)
+                    TextField(
+                        shape = shapes.medium,
+                        value = user.email,
+                        onValueChange = { },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedTextColor = black,
+                            unfocusedContainerColor = gray400.copy(alpha = 0.2f),
+                            focusedContainerColor = gray400.copy(alpha = 0.3f),
+                            unfocusedTextColor = gray500,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent
+                        )
+                    )
+
+                }
             }
+
         }
     }
 }
+
 
 @Composable
 private fun ResetPassword() {
@@ -179,8 +194,7 @@ private fun ResetPassword() {
             .heightIn(50.dp)
             .clickable {
                 // TODO: Implement reset password functionality
-            },
-        verticalAlignment = Alignment.CenterVertically
+            }, verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = stringResource(id = R.string.reset_password),
@@ -199,13 +213,18 @@ private fun ResetPassword() {
 
 @Composable
 private fun Content(editProfileViewModel: EditProfileViewModel) {
+    val user by editProfileViewModel.user.observeAsState()
+
     Column(
         Modifier
             .padding(horizontal = Dimens.mediumPadding, vertical = Dimens.smallPadding)
             .fillMaxSize()
     ) {
-        ProfileImage()
-        TextFiled(editProfileViewModel = editProfileViewModel)
+        user?.let {
+            ProfileImage(it.img)
+            TextFiled(it)
+        }
+
         HeightSpacer(8.dp)
         ResetPassword()
     }
