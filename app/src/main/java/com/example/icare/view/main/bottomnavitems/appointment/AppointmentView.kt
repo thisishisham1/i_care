@@ -5,7 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.MaterialTheme
@@ -61,23 +61,19 @@ private fun RowTabs(onClickTab: (Int) -> Unit, selectedTab: Int) {
             Tab(
                 selected = selectedTab == index,
                 onClick = { onClickTab(index) },
-                selectedContentColor = neutralWhite,
-                unselectedContentColor = black,
                 modifier = Modifier
-                    .height(45.dp)
+                    .heightIn(45.dp)
                     .wrapContentWidth()
                     .padding(5.dp)
-                    .clip(
-                        shapes.medium
-                    )
+                    .clip(shapes.medium)
                     .border(
                         border = BorderStroke(
-                            color = borderColor,
-                            width = if (isSelected) 0.dp else 1.dp
-                        ),
-                        shape = shapes.medium
+                            color = borderColor, width = if (isSelected) 0.dp else 1.dp
+                        ), shape = shapes.medium
                     )
-                    .background(containerColor)
+                    .background(containerColor),
+                selectedContentColor = MaterialTheme.colorScheme.onPrimary,
+                unselectedContentColor = MaterialTheme.colorScheme.onSurface
             ) {
                 TabTitle(title = title)
             }

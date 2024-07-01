@@ -1,39 +1,40 @@
 package com.example.icare.view.main.bottomnavitems.appointment.tabs
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.icare.R
+import coil.compose.AsyncImage
 import com.example.icare.core.Dimens
-import com.example.icare.core.reusablecomponent.WidthSpacer
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.users.Doctor
-import com.example.icare.model.classes.users.listOfDoctor
+import com.example.icare.model.classes.listOfDoctor
 
 @Composable
 fun Canceled() {
+    val user = listOfDoctor[0]
     Column(
         Modifier
             .fillMaxSize()
@@ -41,76 +42,88 @@ fun Canceled() {
 
     ) {
         Date()
-        DoctorCard(doctor = listOfDoctor[0])
-    }
-}
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 2.dp)
+                .clip(shape = shapes.medium)
+                .clickable {
 
-@Composable
-private fun Date() {
-    Text(text = "May 22, 2023 - 10.00 AM", style = MaterialTheme.typography.headlineMedium)
-}
-
-@Composable
-private fun DoctorCard(doctor: Doctor) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(140.dp)
-            .clip(shape = shapes.small)
-            .padding(5.dp),
-        shadowElevation = 2.dp
-    ) {
-        Box(
-            Modifier
-                .fillMaxSize()
+                },
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Row(
                 Modifier
-                    .fillMaxSize()
-                    .padding(5.dp)
+                    .padding(16.dp), verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.d),
-                    contentDescription = "Doctor image"
+                AsyncImage(
+                    model = user.imageUrl,
+                    contentDescription = "Doctor image",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
                 )
+                Spacer(modifier = Modifier.width(16.dp))
                 Column(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(5.dp), verticalArrangement = Arrangement.spacedBy(2.dp)
+                    Modifier.weight(1f)
                 ) {
                     Text(
-                        text = "DR ${doctor.name}",
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center
+                        text = user.name,
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
-                    Text(text = doctor.filed, style = MaterialTheme.typography.titleSmall)
+                    if (true) {
+                        Text(
+                            text = user.specialty,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.LocationOn,
                             contentDescription = "location",
-                            Modifier.size(17.dp)
+                            Modifier.size(16.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
+                        Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = doctor.address,
-                            style = MaterialTheme.typography.titleSmall
+                            text = user.address,
+                            style = MaterialTheme.typography.bodySmall,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
+                    Spacer(modifier = Modifier.height(4.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.Star,
                             contentDescription = "Star",
-                            tint = Color(0xffFEB052), modifier = Modifier.size(17.dp)
+                            tint = Color(0xffFEB052),
+                            modifier = Modifier.size(16.dp)
                         )
                         Text(
-                            text = doctor.rating.toString(),
-                            style = MaterialTheme.typography.titleSmall
+                            text = user.rating.toString(),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
-                        WidthSpacer(2.dp)
-                        Text(text = "|")
-                        WidthSpacer(2.dp)
+                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "${doctor.countReviews} Reviews",
-                            style = MaterialTheme.typography.titleSmall
+                            text = "|",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "${user.countReview} Reviews",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -118,3 +131,10 @@ private fun DoctorCard(doctor: Doctor) {
         }
     }
 }
+
+
+@Composable
+private fun Date() {
+    Text(text = "May 22, 2023 - 10.00 AM", style = MaterialTheme.typography.headlineSmall)
+}
+

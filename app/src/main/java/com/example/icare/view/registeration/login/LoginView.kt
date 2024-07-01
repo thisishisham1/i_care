@@ -1,5 +1,6 @@
 package com.example.icare.view.registeration.login
 
+import PrimaryButton
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutLinearInEasing
@@ -8,19 +9,18 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -41,20 +41,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.PrimaryInputTextFiled
-import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.reusablecomponent.WidthSpacer
-import com.example.icare.core.theme.blue
 import com.example.icare.core.theme.green500
 import com.example.icare.core.theme.neutralWhite
 import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.view.registeration.component.ImageHeader
 import com.example.icare.view.registeration.component.TextHeader
 import com.example.icare.viewmodel.registeration.login.LoginViewModel
+
 
 private val imageRes = R.drawable.signin
 
@@ -84,6 +85,7 @@ fun LoginView(navController: NavController, preferencesHelper: PreferencesHelper
         Spacer(modifier = Modifier.height(Dimens.mediumPadding))
         SignInButton(loginViewModel = vm)
         GoogleButton()
+        Spacer(modifier = Modifier.height(Dimens.smallPadding))
         SignUpText(vm)
     }
 }
@@ -99,7 +101,7 @@ private fun InputFields(vm: LoginViewModel) {
     var isPasswordVisible by remember {
         mutableStateOf(true)
     }
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(Dimens.smallPadding)) {
         PrimaryInputTextFiled(isError = vm.loginUiState.value.isEmailError,
             value = emailValue.value,
             label = stringResource(id = R.string.email),
@@ -121,7 +123,7 @@ private fun InputFields(vm: LoginViewModel) {
                     painterResource(id = iconRes),
                     contentDescription = "",
                     Modifier
-                        .requiredSize(if (isPasswordVisible) 25.dp else 20.dp)
+                        .size(24.dp)
                         .clickable {
                             isPasswordVisible = !isPasswordVisible
                         },
@@ -130,33 +132,16 @@ private fun InputFields(vm: LoginViewModel) {
         )
 
     }
-
-
 }
 
 @Composable
 private fun SignInButton(loginViewModel: LoginViewModel) {
-    Button(
+    PrimaryButton(
+        text = "Login",
         onClick = { loginViewModel.onEvent(LoginUIEvent.LoginButtonClicked) },
-        shape = Shapes().medium,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = green500, contentColor = neutralWhite
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(65.dp),
-    ) {
-
-        if (loginViewModel.isLoginInProgress.value) {
-            ProgressIndicator(color = neutralWhite)
-        } else {
-            Text(
-                text = "Login", style = MaterialTheme.typography.titleLarge.copy(fontSize = 23.sp)
-            )
-
-        }
-
-    }
+        isEnabled = !loginViewModel.isLoginInProgress.value,
+        isLoading = loginViewModel.isLoginInProgress.value
+    )
 }
 
 @Composable
@@ -166,6 +151,7 @@ private fun GoogleButton(
     var clicked by remember {
         mutableStateOf(false)
     }
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(resId = R.raw.loading))
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -177,11 +163,14 @@ private fun GoogleButton(
     ) {
         Button(
             onClick = { clicked = !clicked },
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .height(56.dp),
             shape = Shapes().medium,
             colors = ButtonDefaults.buttonColors(
                 containerColor = neutralWhite
-            )
+            ),
+            contentPadding = PaddingValues(0.dp)
         ) {
             Row(
                 Modifier
@@ -195,17 +184,22 @@ private fun GoogleButton(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (!clicked) {
-                    Image(
+                    Icon(
                         painter = painterResource(id = R.drawable.google),
                         contentDescription = "google icon",
-                        modifier = Modifier.size(25.dp)
+                        modifier = Modifier.size(25.dp),
+                        tint = if (clicked) neutralWhite else androidx.compose.ui.graphics.Color.Unspecified
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
-                        text = text, style = MaterialTheme.typography.titleLarge, color = green500
+                        text = text,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 } else {
-                    ProgressIndicator()
+                    LottieAnimation(
+                        composition = composition, iterations = Int.MAX_VALUE
+                    )
                 }
 
             }
@@ -219,8 +213,8 @@ private fun ForgotPassword(loginViewModel: LoginViewModel) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
         Text(
             text = stringResource(id = R.string.forgot_password),
-            style = MaterialTheme.typography.titleSmall, color = blue,
-            modifier = Modifier.clickable { loginViewModel.handleForgotPasswordButton() },
+            style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.clickable { loginViewModel.onEvent(LoginUIEvent.ForgotPasswordClick) },
         )
     }
 
@@ -231,14 +225,14 @@ private fun SignUpText(loginViewModel: LoginViewModel) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Text(
             text = stringResource(id = R.string.dont_have_account),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.labelMedium
         )
         WidthSpacer()
         Text(text = stringResource(id = R.string.sign_up),
-            style = MaterialTheme.typography.titleSmall,
-            color = green500,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.clickable {
-                loginViewModel.handleSignUpButton()
+                loginViewModel.onEvent(LoginUIEvent.SignUpClick)
             })
     }
 }
@@ -255,7 +249,7 @@ fun ErrorMessage(isError: Boolean, errorMessage: String?, modifier: Modifier) {
             Text(
                 text = errorMessage ?: "",
                 color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.labelSmall
             )
         }
     }

@@ -4,27 +4,16 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.users.Doctor
-import com.example.icare.model.classes.users.Lab
-import com.example.icare.model.classes.users.Pharmacy
-import com.example.icare.model.classes.users.Users
+import com.example.icare.model.classes.User
 
 class HomeViewModel(val navController: NavController) : ViewModel() {
-    fun handleNavigationDetail(user: Users) {
-        when (user) {
-            is Doctor -> navController.navigate("${Destinations.Details.DoctorDetails.route}/${user.id}")
-            is Pharmacy -> navController.navigate("${Destinations.Details.PharmacyDetails.route}/${user.id}")
-            is Lab -> navController.navigate("${Destinations.Details.LabDetails.route}/${user.id}")
-        }
-    }
-
-    fun handleNavigateDetails(doctor: Doctor) {
-        navController.navigate("${Destinations.Details.DoctorDetails.route}/${doctor.id}")
+    fun handleNavigationDetail(user: User) {
+        navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}/${user.title}")
     }
 
     fun handleClickAction(action: String) {
         when (action) {
-            "Personal\ntest" -> {
+            "Personality Test" -> {
                 navController.navigate("${Destinations.WebView.WebViewScreen.route}/${Uri.encode("https://icarembti.streamlit.app/")}")
             }
 
@@ -39,13 +28,21 @@ class HomeViewModel(val navController: NavController) : ViewModel() {
             "Pharmacies" -> {
                 navController.navigate(Destinations.Lists.Pharmacies.route)
             }
+
+            "ECG Scan" -> {
+                navController.navigate(Destinations.Chat.EcgScanner.route)
+            }
+
+            "Cognitive Imaging" -> {
+                navController.navigate(Destinations.Chat.CognitiveImaging.route)
+            }
         }
     }
 
     fun handleClickSeeMore() = navController.navigate(Destinations.Lists.Doctors.route)
 
     fun handleNotificationClick() {
-        // TODO: handle notification Click
+        navController.navigate(Destinations.Profile.Notifications.route)
     }
 
     fun handleChatsClick() {

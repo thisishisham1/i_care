@@ -10,4 +10,5 @@ sealed class SignupUIEvent {
     data class PrivacyPolicyCheckBoxClicked(val status: Boolean) : SignupUIEvent()
 
     data object RegisterButtonClicked : SignupUIEvent()
+    data object LoginButtonClick : SignupUIEvent()
 }

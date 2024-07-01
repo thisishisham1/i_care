@@ -1,13 +1,10 @@
 package com.example.icare.view
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
@@ -16,13 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.icare.R
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TermsAndConditions(navController: NavController) {
     Scaffold(topBar = {
@@ -30,8 +27,8 @@ fun TermsAndConditions(navController: NavController) {
             title = stringResource(id = R.string.terms_conditions),
             navController = navController
         )
-    }) {
-        Content()
+    }) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) { Content() }
     }
 }
 
@@ -44,38 +41,49 @@ fun Content() {
         stringResource(id = R.string.governing_law_title) to stringResource(id = R.string.governing_law_content),
         stringResource(id = R.string.changes_title) to stringResource(id = R.string.changes_content)
     )
-    LazyColumn(Modifier.padding(top = 64.dp, start = 16.dp, end = 16.dp, bottom = 10.dp)) {
+    LazyColumn(
+        Modifier
+            .padding(16.dp)
+            .fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        item {
+            StatementText(
+                text = stringResource(id = R.string.initial_statement),
+                style = MaterialTheme.typography.headlineSmall
+            )
+        }
         itemsIndexed(listOfCondition) { index, list ->
-            if (index == 0) {
-                StatementText(text = stringResource(id = R.string.initial_statement))
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-            OneCondition(title = list.first, content = list.second)
-            Spacer(modifier = Modifier.height(8.dp))
-            if (index == listOfCondition.lastIndex) {
-                StatementText(text = stringResource(id = R.string.final_statement))
-            }
+            OneCondition(
+                title = list.first,
+                content = list.second,
+                titleStyle = MaterialTheme.typography.titleLarge,
+                contentStyle = MaterialTheme.typography.bodyMedium
+            )
+        }
+        item {
+            StatementText(
+                text = stringResource(id = R.string.final_statement),
+                style = MaterialTheme.typography.headlineSmall
+            )
+
         }
     }
 }
 
 @Composable
-fun StatementText(text: String) {
+fun StatementText(text: String, style: TextStyle) {
     Text(
         text = text,
-        style = MaterialTheme.typography.titleSmall
+        style = style, modifier = Modifier.padding(bottom = 8.dp)
     )
 }
 
 @Composable
-fun OneCondition(title: String, content: String) {
+fun OneCondition(title: String, content: String, titleStyle: TextStyle, contentStyle: TextStyle) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
     ) {
-        Text(text = title, style = MaterialTheme.typography.titleMedium)
-        Text(text = content, style = MaterialTheme.typography.bodyMedium)
+        Text(text = title, style = titleStyle)
+        Text(text = content, style = contentStyle)
     }
 }

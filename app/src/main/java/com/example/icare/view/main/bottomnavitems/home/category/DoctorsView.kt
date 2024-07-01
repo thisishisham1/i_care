@@ -12,8 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
-import com.example.icare.model.classes.users.listOfDoctor
-import com.example.icare.view.main.bottomnavitems.home.UserCard
+import com.example.icare.core.reusablecomponent.UserCard
+import com.example.icare.model.classes.listOfDoctor
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
@@ -36,7 +36,7 @@ private fun NearbyDoctors(homeViewModel: HomeViewModel) {
     Column(Modifier.fillMaxSize()) {
         LazyColumn() {
             items(listOfDoctor) { doctor ->
-                UserCard(doctor = doctor) {
+                UserCard(user = doctor) {
                     homeViewModel.handleNavigationDetail(doctor)
                 }
             }
