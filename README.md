@@ -2,7 +2,7 @@
 
 Welcome to **iCare**! This healthcare application is developed in Kotlin and Java using Android Studio Koala | 2024.1.1. It offers a suite of services, including a Personality Test, Chat Bot, ECG Scan, Medical Imaging, Labs, and Pharmacies, to enhance user health management.
 
-![Healthcare Meme]([https://i.imgflip.com/1ot1xo.jpg](https://i.pinimg.com/564x/5d/b3/9a/5db39a62302a7afc62f6f5e32d651b24.jpg))
+![Healthcare Meme](n.jpg))
 
 ## 🏛️ Design Pattern
 
