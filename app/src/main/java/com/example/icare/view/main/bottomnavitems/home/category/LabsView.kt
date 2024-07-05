@@ -23,17 +23,13 @@ import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
 import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.reusablecomponent.UserCard
-import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
 @Composable
-fun LabsView(navController: NavHostController) {
+fun LabsView(navController: NavHostController, vm: MainViewModel) {
     val homeViewModel = remember {
         HomeViewModel(navController)
-    }
-    val vm = remember {
-        MainViewModel(UsersRepository())
     }
     Scaffold(topBar = {
         DefaultTopAppBar(title = "Nearby Labs", navController = navController)
@@ -65,7 +61,7 @@ private fun Content(homeViewModel: HomeViewModel, vm: MainViewModel) {
                 labs?.let {
                     items(it) { lab ->
                         UserCard(user = lab) {
-
+                            homeViewModel.handleNavigationDetail(lab.id)
                         }
                     }
                 } ?: item { Text("No available labs") }

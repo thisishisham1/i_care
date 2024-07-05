@@ -13,10 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.icare.core.reusablecomponent.HeightSpacer
 import com.example.icare.core.reusablecomponent.UserCard
-import com.example.icare.model.classes.UsersJson
+import com.example.icare.model.classes.apiClass.UsersResponse
+import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 @Composable
-fun Doctors(onClickDoctor: (UsersJson) -> Unit, clinics: List<UsersJson>) {
+fun Doctors(homeViewModel: HomeViewModel, clinics: List<UsersResponse>) {
     Row(
         Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -31,6 +32,7 @@ fun Doctors(onClickDoctor: (UsersJson) -> Unit, clinics: List<UsersJson>) {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(5.dp)) {
         items(clinics) { doctor ->
             UserCard(user = doctor) {
+                homeViewModel.handleNavigationDetail(doctor.id)
             }
         }
     }

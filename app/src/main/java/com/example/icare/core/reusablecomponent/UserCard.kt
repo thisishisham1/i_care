@@ -29,10 +29,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.UsersJson
+import com.example.icare.model.classes.apiClass.UsersResponse
 
 @Composable
-fun UserCard(user: UsersJson, onClickUser: () -> Unit) {
+fun UserCard(user: UsersResponse, onClickUser: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

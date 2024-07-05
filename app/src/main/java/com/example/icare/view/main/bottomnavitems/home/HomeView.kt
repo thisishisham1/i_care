@@ -1,5 +1,6 @@
 package com.example.icare.view.main.bottomnavitems.home
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -251,7 +252,11 @@ private fun NearbyClinics(homeViewModel: HomeViewModel, mainViewModel: MainViewM
                 clinics?.let {
                     items(it) { clinic ->
                         UserCard(user = clinic) {
-                            homeViewModel.handleNavigationDetail(clinic)
+                            try {
+                                homeViewModel.handleNavigationDetail(clinic.id)
+                            } catch (e: Exception) {
+                                Log.e("NearbyClinics", "Error navigating to details: ${e.message}")
+                            }
                         }
                     }
                 } ?: item {

@@ -15,10 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.icare.core.reusablecomponent.HeightSpacer
 import com.example.icare.core.reusablecomponent.UserCard
-import com.example.icare.model.classes.UsersJson
+import com.example.icare.model.classes.apiClass.UsersResponse
+import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 @Composable
-fun Pharmacies(onClickPharmacy: (UsersJson) -> Unit, pharmacies: List<UsersJson>) {
+fun Pharmacies(homeViewModel: HomeViewModel, pharmacies: List<UsersResponse>) {
     Column(Modifier.fillMaxSize()) {
         Row(
             Modifier.fillMaxWidth(),
@@ -26,7 +27,7 @@ fun Pharmacies(onClickPharmacy: (UsersJson) -> Unit, pharmacies: List<UsersJson>
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "${pharmacies?.size ?: "null"} Founds",
+                text = "${pharmacies.size} Founds",
                 style = MaterialTheme.typography.headlineMedium
             )
         }
@@ -34,7 +35,9 @@ fun Pharmacies(onClickPharmacy: (UsersJson) -> Unit, pharmacies: List<UsersJson>
 
         LazyColumn(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             items(pharmacies) { pharmacy ->
-                UserCard(user = pharmacy) { }
+                UserCard(user = pharmacy) {
+                    homeViewModel.handleNavigationDetail(userId = pharmacy.id)
+                }
             }
         }
 

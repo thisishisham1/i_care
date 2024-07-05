@@ -27,7 +27,6 @@ sealed class Destinations(val route: String) {
         object Conversation : Chat("conversation")
         object ChatBot : Chat("ChatBot")
         object EcgScanner : Chat("Ecg Scanner")
-        object CognitiveImaging : Chat("Cognitive Imaging")
     }
 
     sealed class Profile(route: String) : Destinations(route) {

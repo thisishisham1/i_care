@@ -2,12 +2,14 @@ package com.example.icare.repository
 
 import android.util.Log
 import com.example.icare.MyApplication
-import com.example.icare.model.classes.AuthError
-import com.example.icare.model.classes.ChatBotRequest
-import com.example.icare.model.classes.LoginRequest
-import com.example.icare.model.classes.RegisterRequest
-import com.example.icare.model.classes.UserResponse
-import com.example.icare.model.classes.UsersJson
+import com.example.icare.model.classes.apiClass.AuthError
+import com.example.icare.model.classes.apiClass.ChatBotRequest
+import com.example.icare.model.classes.apiClass.LoginRequest
+import com.example.icare.model.classes.apiClass.RegisterRequest
+import com.example.icare.model.classes.apiClass.ReservationRequest
+import com.example.icare.model.classes.apiClass.ReservationResponse
+import com.example.icare.model.classes.apiClass.UserResponse
+import com.example.icare.model.classes.apiClass.UsersResponse
 import com.example.icare.model.local.UserDatabase
 import com.example.icare.model.network.apiService.RetrofitInstance
 import com.google.gson.Gson
@@ -76,7 +78,7 @@ class ChatBotRepository {
 class UsersRepository {
     private val apiService = RetrofitInstance.apiService
 
-    suspend fun getClinics(): Result<List<UsersJson>> {
+    suspend fun getClinics(): Result<List<UsersResponse>> {
         return try {
             val response = apiService.getClinic()
             Result.success(response)
@@ -86,7 +88,7 @@ class UsersRepository {
         }
     }
 
-    suspend fun getPharmacies(): Result<List<UsersJson>> {
+    suspend fun getPharmacies(): Result<List<UsersResponse>> {
         return try {
             val response = apiService.getPharmacies()
             Log.d("UserRepository", "succeed : ${response.size}")
@@ -97,12 +99,26 @@ class UsersRepository {
         }
     }
 
-    suspend fun getLabs(): Result<List<UsersJson>> {
+    suspend fun getLabs(): Result<List<UsersResponse>> {
         return try {
             val response = apiService.getLabs()
             Result.success(response)
         } catch (e: HttpException) {
             Log.e("UsersRepository", "Error fetching labs: ${e.message}")
+            Result.failure(e)
+        }
+    }
+
+    suspend fun insertReservation(request: ReservationRequest): Result<ReservationResponse> {
+        return try {
+            val response = apiService.insertReservation(request)
+            Log.d("UsersRepository", "$response")
+            Result.success(response)
+        } catch (e: HttpException) {
+            Log.e("UsersRepository", "HTTP error inserting reservation: ${e.message}")
+            Result.failure(e)
+        } catch (e: Exception) {
+            Log.e("UsersRepository", "Unknown error inserting reservation: ${e.message}")
             Result.failure(e)
         }
     }

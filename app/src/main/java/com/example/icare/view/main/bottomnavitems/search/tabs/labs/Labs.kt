@@ -15,11 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.icare.core.reusablecomponent.HeightSpacer
 import com.example.icare.core.reusablecomponent.UserCard
-import com.example.icare.model.classes.UsersJson
+import com.example.icare.model.classes.apiClass.UsersResponse
+import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
 @Composable
-fun Labs(onClickLab: (UsersJson) -> Unit, labs: List<UsersJson>) {
+fun Labs(homeViewModel: HomeViewModel, labs: List<UsersResponse>) {
 
     Column(Modifier.fillMaxSize()) {
         Row(
@@ -38,6 +39,7 @@ fun Labs(onClickLab: (UsersJson) -> Unit, labs: List<UsersJson>) {
                 UserCard(
                     user = lab
                 ) {
+                    homeViewModel.handleNavigationDetail(lab.id)
                 }
             }
         }

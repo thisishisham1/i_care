@@ -1,6 +1,7 @@
 package com.example.icare.view.main.details
 
 import PrimaryButton
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +26,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,36 +42,67 @@ import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
 import com.example.icare.core.reusablecomponent.HeightSpacer
+import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.UsersJson
-import com.example.icare.repository.UsersRepository
+import com.example.icare.model.classes.apiClass.UsersResponse
 import com.example.icare.viewmodel.main.details.DetailsViewModel
 
 @Composable
-fun UserDetailsView(userId: Int, navController: NavController, user: UsersJson?) {
+fun UserDetailsView(userId: Int, navController: NavController, mainViewModel: MainViewModel) {
     val detailsViewModel = remember {
-        DetailsViewModel(navController, mainViewModel = MainViewModel(UsersRepository()))
+        DetailsViewModel(navController, mainViewModel = mainViewModel)
     }
+    LaunchedEffect(key1 = userId) {
+        detailsViewModel.fetchUserDetails(userId)
+    }
+    val userDetails by detailsViewModel.user.collectAsState()
+    val isLoading by detailsViewModel.isLoading.collectAsState()
+    Log.d("UserDetailsView", "Composed with userId: $userId") // Log when composable is launched
+    Log.d("UserDetailsView", "Initial isLoading state: $isLoading")
+
     Scaffold(topBar = {
-        DefaultTopAppBar(title = "${user?.category} Details", navController = navController)
+        DefaultTopAppBar(title = "${userDetails?.category} Details", navController = navController)
     }) { innerPadding ->
-        user?.let {
-            Box(modifier = Modifier.padding(innerPadding)) {
-                Content(user = it, onClickBookButton = {
-                    user.let { userDetails ->
-                        detailsViewModel.handleBookButtonClick(userDetails)
-                    }
-                })
+        if (isLoading) {
+            Log.d("UserDetailsView", "Loading user details...")
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                contentAlignment = Alignment.Center
+            ) {
+                ProgressIndicator()
+            }
+        } else {
+            userDetails?.let { safeUser ->
+                Log.d("UserDetailsView", "User details loaded: $safeUser")
+                Box(modifier = Modifier.padding(innerPadding)) {
+                    Content(user = safeUser, onClickBookButton = {
+                        try {
+                            detailsViewModel.handleBookButtonClick(safeUser)
+                        } catch (e: Exception) {
+                            Log.e(
+                                "UserDetailsView",
+                                "Error handling book button click: ${e.message}"
+                            )
+                        }
+                    })
+                }
+            } ?: run {
+                Log.d(
+                    "UserDetailsView",
+                    "User details not found for userId: $userId"
+                ) // Log if user is null
+                Text("User details not found.")
             }
         }
-
     }
 }
 
 @Composable
-private fun Content(user: UsersJson, onClickBookButton: () -> Unit) {
+private fun Content(user: UsersResponse, onClickBookButton: () -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
@@ -86,7 +121,7 @@ private fun Content(user: UsersJson, onClickBookButton: () -> Unit) {
 }
 
 @Composable
-private fun UserDetailsCard(user: UsersJson) {
+private fun UserDetailsCard(user: UsersResponse) {
     Card(
         modifier = Modifier.fillMaxWidth(), elevation = CardDefaults.cardElevation(
             defaultElevation = 0.dp
@@ -100,7 +135,7 @@ private fun UserDetailsCard(user: UsersJson) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = user.img,
+                model = user.img ?: user.effectiveImg,
                 contentDescription = "${user.img} profile",
                 modifier = Modifier
                     .size(120.dp)
@@ -146,7 +181,7 @@ private fun UserDetailsCard(user: UsersJson) {
 }
 
 @Composable
-private fun Experience(user: UsersJson) {
+private fun Experience(user: UsersResponse) {
     val listOfExperience = arrayOf(
         "experience" to R.drawable.medal, "Rating" to R.drawable.star
     )
@@ -186,7 +221,7 @@ private fun Experience(user: UsersJson) {
 }
 
 @Composable
-private fun AboutMe(user: UsersJson) {
+private fun AboutMe(user: UsersResponse) {
     Text(
         text = "About me",
         style = MaterialTheme.typography.headlineSmall,
@@ -202,7 +237,7 @@ private fun AboutMe(user: UsersJson) {
 }
 
 @Composable
-private fun WorkingHours(user: UsersJson) {
+private fun WorkingHours(user: UsersResponse) {
     Text(
         text = "Working Time",
         style = MaterialTheme.typography.headlineSmall,

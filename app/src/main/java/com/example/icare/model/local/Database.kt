@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.icare.model.classes.UserResponse
+import com.example.icare.model.classes.apiClass.UserResponse
 
 @Database(entities = [UserResponse::class], version = 2)
 abstract class UserDatabase : RoomDatabase() {

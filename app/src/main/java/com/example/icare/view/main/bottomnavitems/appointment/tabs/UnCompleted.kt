@@ -40,7 +40,7 @@ import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.blur
-import com.example.icare.model.classes.UsersJson
+import com.example.icare.model.classes.apiClass.UsersResponse
 import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.bottomnavitems.appointment.AppointmentViewModel
 
@@ -72,7 +72,7 @@ private fun Date() {
 }
 
 @Composable
-fun UserCardWithButtons(user: UsersJson) {
+fun UserCardWithButtons(user: UsersResponse) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

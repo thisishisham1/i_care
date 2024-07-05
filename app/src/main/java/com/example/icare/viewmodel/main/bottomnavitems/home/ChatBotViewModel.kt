@@ -3,8 +3,8 @@ package com.example.icare.viewmodel.main.bottomnavitems.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.icare.model.classes.ChatBotRequest
 import com.example.icare.model.classes.Message
+import com.example.icare.model.classes.apiClass.ChatBotRequest
 import com.example.icare.repository.ChatBotRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

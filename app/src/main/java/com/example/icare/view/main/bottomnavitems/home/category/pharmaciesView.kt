@@ -22,12 +22,11 @@ import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
 import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.reusablecomponent.UserCard
-import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
 @Composable
-fun PharmaciesView(navController: NavController) {
+fun PharmaciesView(navController: NavController, vm: MainViewModel) {
     val homeViewModel = remember {
         HomeViewModel(navController)
     }
@@ -35,16 +34,13 @@ fun PharmaciesView(navController: NavController) {
         DefaultTopAppBar(title = "Nearby Pharmacies", navController = navController)
     }) {
         Box(modifier = Modifier.padding(it)) {
-            Content(homeViewModel = homeViewModel)
+            Content(homeViewModel = homeViewModel, vm)
         }
     }
 }
 
 @Composable
-private fun Content(homeViewModel: HomeViewModel) {
-    val vm = remember {
-        MainViewModel(UsersRepository())
-    }
+private fun Content(homeViewModel: HomeViewModel, vm: MainViewModel) {
     LaunchedEffect(Unit) {
         vm.fetchPharmacies()
     }
@@ -63,7 +59,9 @@ private fun Content(homeViewModel: HomeViewModel) {
             pharmacy?.let {
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     items(it) { pharmacy ->
-                        UserCard(user = pharmacy) { }
+                        UserCard(user = pharmacy) {
+                            homeViewModel.handleNavigationDetail(pharmacy.id)
+                        }
                     }
                 }
             } ?: "No pharmacy available"

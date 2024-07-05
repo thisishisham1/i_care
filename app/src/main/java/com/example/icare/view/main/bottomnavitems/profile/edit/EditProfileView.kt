@@ -46,7 +46,7 @@ import com.example.icare.core.theme.black
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.gray500
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.UserResponse
+import com.example.icare.model.classes.apiClass.UserResponse
 import com.example.icare.viewmodel.main.bottomnavitems.profile.EditProfileViewModel
 
 @Composable

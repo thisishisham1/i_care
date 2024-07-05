@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.icare.MainViewModel
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.UsersJson
-import com.example.icare.model.classes.doesMatchQuery
+import com.example.icare.model.classes.apiClass.UsersResponse
+import com.example.icare.model.classes.apiClass.doesMatchQuery
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +25,7 @@ class SearchViewModel(val navController: NavController, private val mainViewMode
     val searchText = _searchText.asStateFlow()
 
 
-    private val _dataList = MutableStateFlow<List<UsersJson>>(emptyList())
+    private val _dataList = MutableStateFlow<List<UsersResponse>>(emptyList())
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
@@ -38,11 +38,12 @@ class SearchViewModel(val navController: NavController, private val mainViewMode
     private fun fetchData() {
         viewModelScope.launch {
             _isLoading.value = true
-            _dataList.value = when (_indexTab.value) {
+            val data = when (_indexTab.value) {
                 0 -> mainViewModel.clinics.value ?: emptyList()
                 1 -> mainViewModel.pharmacies.value ?: emptyList()
                 else -> mainViewModel.labs.value ?: emptyList()
             }
+            _dataList.value = data
             _isLoading.value = false
         }
     }
@@ -50,7 +51,8 @@ class SearchViewModel(val navController: NavController, private val mainViewMode
     fun onSearchTextChange(text: String) {
         _searchText.value = text
         Log.d("SearchViewModel", "Search text changed: $text")
-        filterData()
+
+        fetchData()
     }
 
     fun onTabChange(newIndex: Int) {
@@ -59,31 +61,18 @@ class SearchViewModel(val navController: NavController, private val mainViewMode
         fetchData()
     }
 
-    fun handleClickItem(user: UsersJson) {
+    fun handleClickItem(user: UsersResponse) {
         navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}/${user.first_name}")
     }
 
-    private fun filterData() {
-        viewModelScope.launch {
-            val filtered = _searchText.value.let { text ->
-                if (text.isBlank()) {
-                    _dataList.value
-                } else {
-                    _dataList.value.filter { it.doesMatchQuery(text) }
-                }
+    val filteredList: StateFlow<List<UsersResponse>> =
+        _searchText.combine(_dataList) { text, list ->
+            if (text.isBlank()) {
+                list
+            } else {
+                list.filter { it.doesMatchQuery(text) }
             }
-            _dataList.value = filtered
-            Log.d("SearchViewModel", "Data filtered: ${_dataList.value.size} items match the query")
-        }
-    }
-
-    val filteredList: StateFlow<List<UsersJson>> = _searchText.combine(_dataList) { text, list ->
-        if (text.isBlank()) {
-            list
-        } else {
-            list.filter { it.doesMatchQuery(text) }
-        }
-    }.stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(5000), initialValue = emptyList()
-    )
+        }.stateIn(
+            viewModelScope, SharingStarted.WhileSubscribed(5000), initialValue = emptyList()
+        )
 }

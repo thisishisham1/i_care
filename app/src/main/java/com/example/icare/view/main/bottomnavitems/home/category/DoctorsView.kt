@@ -1,5 +1,6 @@
 package com.example.icare.view.main.bottomnavitems.home.category
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,12 +20,11 @@ import com.example.icare.MainViewModel
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
 import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.reusablecomponent.UserCard
-import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
 @Composable
-fun DoctorsView(navController: NavController) {
+fun DoctorsView(navController: NavController, vm: MainViewModel) {
     val homeViewModel = remember {
         HomeViewModel(navController = navController)
     }
@@ -32,16 +32,13 @@ fun DoctorsView(navController: NavController) {
         DefaultTopAppBar(title = "Nearby Doctors", navController = navController)
     }) {
         Box(Modifier.padding(it)) {
-            NearbyDoctors(homeViewModel = homeViewModel)
+            NearbyDoctors(homeViewModel = homeViewModel, vm)
         }
     }
 }
 
 @Composable
-private fun NearbyDoctors(homeViewModel: HomeViewModel) {
-    val vm = remember {
-        MainViewModel(UsersRepository())
-    }
+private fun NearbyDoctors(homeViewModel: HomeViewModel, vm: MainViewModel) {
     LaunchedEffect(Unit) {
         vm.fetchClinics()
     }
@@ -57,6 +54,11 @@ private fun NearbyDoctors(homeViewModel: HomeViewModel) {
                 clinics?.let {
                     items(it) { clinic ->
                         UserCard(user = clinic) {
+                            try {
+                                homeViewModel.handleNavigationDetail(clinic.id)
+                            } catch (e: Exception) {
+                                Log.e("NearbyClinics", "Error navigating to details: ${e.message}")
+                            }
                         }
                     }
                 }

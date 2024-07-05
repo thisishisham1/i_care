@@ -4,23 +4,22 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.icare.MyApplication
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.UserResponse
-import com.example.icare.model.classes.UsersJson
+import com.example.icare.model.classes.apiClass.UserResponse
 import com.example.icare.model.local.UserDatabase
+import kotlinx.coroutines.launch
 
 class
 HomeViewModel(val navController: NavController) : ViewModel() {
 
 
-    fun handleNavigationDetail(user: UsersJson) {
-        navController.currentBackStackEntry?.savedStateHandle?.set(
-            key = "user",
-            value = user
-        )
-        navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}")
+    fun handleNavigationDetail(userId: Int) {
+        viewModelScope.launch {
+            navController.navigate("${Destinations.Details.UserDetails.route}/${userId}")
+        }
     }
 
     private val userDao =
@@ -53,7 +52,7 @@ HomeViewModel(val navController: NavController) : ViewModel() {
             }
 
             "Medical Imaging" -> {
-                navController.navigate(Destinations.Chat.CognitiveImaging.route)
+                navController.navigate("${Destinations.WebView.WebViewScreen.route}/${Uri.encode("http://icarescan2.streamlit.app")}")
             }
         }
     }

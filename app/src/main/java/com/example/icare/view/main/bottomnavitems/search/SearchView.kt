@@ -48,21 +48,21 @@ import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.UsersJson
-import com.example.icare.repository.UsersRepository
+import com.example.icare.model.classes.apiClass.UsersResponse
 import com.example.icare.view.main.bottomnavitems.search.tabs.Doctors.Doctors
 import com.example.icare.view.main.bottomnavitems.search.tabs.labs.Labs
 import com.example.icare.view.main.bottomnavitems.search.tabs.pharmacy.Pharmacies
+import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 import com.example.icare.viewmodel.main.bottomnavitems.search.SearchViewModel
 
 
 @Composable
-fun SearchScreen(navController: NavController) {
-    val vm = remember {
-        MainViewModel(UsersRepository())
-    }
+fun SearchScreen(navController: NavController, vm: MainViewModel) {
     val searchViewModel = remember {
         SearchViewModel(navController, vm)
+    }
+    val homeViewModel = remember {
+        HomeViewModel(navController)
     }
     val indexTab by searchViewModel.indexTab.collectAsState()
     Scaffold(topBar = {
@@ -76,7 +76,12 @@ fun SearchScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
             RowTabs(selectedTab = indexTab, onClickTab = searchViewModel::onTabChange)
             Spacer(modifier = Modifier.height(16.dp))
-            DisplayScreen(indexTab = indexTab, searchViewModel = searchViewModel, vm)
+            DisplayScreen(
+                indexTab = indexTab,
+                searchViewModel = searchViewModel,
+                mainViewModel = vm,
+                homeViewModel = homeViewModel
+            )
         }
     }
 
@@ -183,11 +188,10 @@ private fun DefaultTab(index: Int, selectedTab: Int, title: String, onClickTab: 
 private fun DisplayScreen(
     indexTab: Int,
     searchViewModel: SearchViewModel,
-    mainViewModel: MainViewModel
+    mainViewModel: MainViewModel, homeViewModel: HomeViewModel
 ) {
     val isLoading by searchViewModel.isLoading.collectAsState()
     val filteredList by searchViewModel.filteredList.collectAsState()
-
 
     LaunchedEffect(Unit) {
         Log.d("DisplayScreen", "Fetching initial data for clinics, pharmacies, and labs")
@@ -221,18 +225,17 @@ private fun DisplayScreen(
         when (indexTab) {
 
             0 -> Doctors(
-                clinics = filteredList.filterIsInstance<UsersJson>(),
-                onClickDoctor = { },
+                clinics = filteredList.filterIsInstance<UsersResponse>(),
+                homeViewModel = homeViewModel
             )
 
             1 -> Pharmacies(
-                pharmacies = filteredList.filterIsInstance<UsersJson>(),
-                onClickPharmacy = { }
+                pharmacies = filteredList.filterIsInstance<UsersResponse>(),
+                homeViewModel = homeViewModel
             )
 
             else -> Labs(
-                labs = filteredList.filterIsInstance<UsersJson>(),
-                onClickLab = {}
+                labs = filteredList.filterIsInstance<UsersResponse>(), homeViewModel = homeViewModel
             )
         }
 

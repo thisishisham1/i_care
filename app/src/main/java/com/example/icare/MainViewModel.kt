@@ -4,19 +4,24 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.icare.model.classes.UsersJson
+import com.example.icare.model.classes.apiClass.UsersResponse
 import com.example.icare.repository.UsersRepository
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val usersRepository: UsersRepository) : ViewModel() {
-    val pharmacies: MutableLiveData<List<UsersJson>> = MutableLiveData()
-    val labs: MutableLiveData<List<UsersJson>> = MutableLiveData()
-    val clinics: MutableLiveData<List<UsersJson>> = MutableLiveData()
+    val pharmacies: MutableLiveData<List<UsersResponse>> = MutableLiveData()
+    val labs: MutableLiveData<List<UsersResponse>> = MutableLiveData()
+    val clinics: MutableLiveData<List<UsersResponse>> = MutableLiveData()
 
     val isClinicLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isPharmacyLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLabsLoading: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    init {
+        fetchClinics()
+        fetchLabs()
+        fetchPharmacies()
+    }
 
     fun fetchClinics() {
         viewModelScope.launch {

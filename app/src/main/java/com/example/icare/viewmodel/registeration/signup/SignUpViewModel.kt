@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.icare.model.classes.AuthError
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.RegisterRequest
+import com.example.icare.model.classes.apiClass.AuthError
+import com.example.icare.model.classes.apiClass.RegisterRequest
 import com.example.icare.repository.AuthRepository
 import com.example.icare.view.registeration.signup.SignUpUiState
 import com.example.icare.view.registeration.signup.SignupUIEvent
