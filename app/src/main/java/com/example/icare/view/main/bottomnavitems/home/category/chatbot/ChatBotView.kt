@@ -29,7 +29,6 @@ fun ChatBotView(navController: NavController) {
         DefaultTopAppBar(title = "Chat Bot", navController = navController)
     }, bottomBar = {
         DefaultMessageInput(
-            onAttachmentClicked = chatBotViewModel::onAttachmentClicked,
             onSend = chatBotViewModel::onSendClicked,
             onValueChange = chatBotViewModel::onUserInputChanged
         )

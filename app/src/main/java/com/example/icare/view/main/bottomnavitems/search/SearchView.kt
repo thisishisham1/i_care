@@ -1,5 +1,6 @@
 package com.example.icare.view.main.bottomnavitems.search
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,6 +30,7 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -40,14 +42,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.icare.MainViewModel
 import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.Doctor
-import com.example.icare.model.classes.Lab
-import com.example.icare.model.classes.Pharmacy
+import com.example.icare.model.classes.UsersJson
+import com.example.icare.repository.UsersRepository
 import com.example.icare.view.main.bottomnavitems.search.tabs.Doctors.Doctors
 import com.example.icare.view.main.bottomnavitems.search.tabs.labs.Labs
 import com.example.icare.view.main.bottomnavitems.search.tabs.pharmacy.Pharmacies
@@ -56,8 +58,11 @@ import com.example.icare.viewmodel.main.bottomnavitems.search.SearchViewModel
 
 @Composable
 fun SearchScreen(navController: NavController) {
+    val vm = remember {
+        MainViewModel(UsersRepository())
+    }
     val searchViewModel = remember {
-        SearchViewModel(navController)
+        SearchViewModel(navController, vm)
     }
     val indexTab by searchViewModel.indexTab.collectAsState()
     Scaffold(topBar = {
@@ -71,7 +76,7 @@ fun SearchScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
             RowTabs(selectedTab = indexTab, onClickTab = searchViewModel::onTabChange)
             Spacer(modifier = Modifier.height(16.dp))
-            DisplayScreen(indexTab = indexTab, searchViewModel = searchViewModel)
+            DisplayScreen(indexTab = indexTab, searchViewModel = searchViewModel, vm)
         }
     }
 
@@ -175,10 +180,24 @@ private fun DefaultTab(index: Int, selectedTab: Int, title: String, onClickTab: 
 }
 
 @Composable
-private fun DisplayScreen(indexTab: Int, searchViewModel: SearchViewModel) {
-    val filteredList by searchViewModel.filteredList.collectAsState()
+private fun DisplayScreen(
+    indexTab: Int,
+    searchViewModel: SearchViewModel,
+    mainViewModel: MainViewModel
+) {
     val isLoading by searchViewModel.isLoading.collectAsState()
+    val filteredList by searchViewModel.filteredList.collectAsState()
+
+
+    LaunchedEffect(Unit) {
+        Log.d("DisplayScreen", "Fetching initial data for clinics, pharmacies, and labs")
+        mainViewModel.fetchClinics()
+        mainViewModel.fetchPharmacies()
+        mainViewModel.fetchLabs()
+    }
+
     if (isLoading) {
+        Log.d("DisplayScreen", "Loading data...")
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -197,25 +216,29 @@ private fun DisplayScreen(indexTab: Int, searchViewModel: SearchViewModel) {
             }
         }
     } else {
+        Log.d("DisplayScreen", "Data loaded. Displaying results for tab $indexTab")
+
         when (indexTab) {
+
             0 -> Doctors(
-                doctors = filteredList.filterIsInstance<Doctor>(),
-                onClickDoctor = searchViewModel::handleClickItem,
+                clinics = filteredList.filterIsInstance<UsersJson>(),
+                onClickDoctor = { },
             )
 
             1 -> Pharmacies(
-                pharmacies = filteredList.filterIsInstance<Pharmacy>(),
-                onClickPharmacy = searchViewModel::handleClickItem
+                pharmacies = filteredList.filterIsInstance<UsersJson>(),
+                onClickPharmacy = { }
             )
 
             else -> Labs(
-                labs = filteredList.filterIsInstance<Lab>(),
-                onClickLab = searchViewModel::handleClickItem
+                labs = filteredList.filterIsInstance<UsersJson>(),
+                onClickLab = {}
             )
         }
 
     }
 }
+
 
 @Composable
 private fun TabContent(title: String) {

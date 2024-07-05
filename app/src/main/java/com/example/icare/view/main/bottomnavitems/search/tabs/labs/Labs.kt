@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.icare.core.reusablecomponent.HeightSpacer
 import com.example.icare.core.reusablecomponent.UserCard
-import com.example.icare.model.classes.Lab
+import com.example.icare.model.classes.UsersJson
 
 
 @Composable
-fun Labs(onClickLab: (Lab) -> Unit, labs: List<Lab>) {
+fun Labs(onClickLab: (UsersJson) -> Unit, labs: List<UsersJson>) {
 
     Column(Modifier.fillMaxSize()) {
         Row(
@@ -28,7 +28,7 @@ fun Labs(onClickLab: (Lab) -> Unit, labs: List<Lab>) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "${labs.size} Founds",
+                text = "${labs?.size ?: "null"} Founds",
                 style = MaterialTheme.typography.headlineMedium
             )
         }
@@ -38,9 +38,10 @@ fun Labs(onClickLab: (Lab) -> Unit, labs: List<Lab>) {
                 UserCard(
                     user = lab
                 ) {
-                    onClickLab(lab)
                 }
             }
         }
+
     }
+
 }

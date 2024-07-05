@@ -7,14 +7,20 @@ import androidx.lifecycle.liveData
 import androidx.navigation.NavController
 import com.example.icare.MyApplication
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.User
 import com.example.icare.model.classes.UserResponse
+import com.example.icare.model.classes.UsersJson
 import com.example.icare.model.local.UserDatabase
 
 class
 HomeViewModel(val navController: NavController) : ViewModel() {
-    fun handleNavigationDetail(user: User) {
-        navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}/${user.title}")
+
+
+    fun handleNavigationDetail(user: UsersJson) {
+        navController.currentBackStackEntry?.savedStateHandle?.set(
+            key = "user",
+            value = user
+        )
+        navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}")
     }
 
     private val userDao =

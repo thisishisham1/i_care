@@ -25,8 +25,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.icare.MainViewModel
 import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
@@ -42,35 +41,23 @@ import com.example.icare.core.reusablecomponent.HeightSpacer
 import com.example.icare.core.theme.gray400
 import com.example.icare.core.theme.gray600
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.Doctor
-import com.example.icare.model.classes.User
+import com.example.icare.model.classes.UsersJson
+import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.details.DetailsViewModel
 
 @Composable
-fun UserDetailsView(userId: Int, userType: String, navController: NavController) {
+fun UserDetailsView(userId: Int, navController: NavController, user: UsersJson?) {
     val detailsViewModel = remember {
-        DetailsViewModel(navController)
-    }
-    val user by remember {
-        mutableStateOf(
-            when (userType) {
-                "Doctor" -> detailsViewModel.getDoctorDetails(userId)
-                "Lab" -> detailsViewModel.getLabDetails(userId)
-                "Pharmacy" -> detailsViewModel.getPharmacyDetails(userId)
-                else -> null
-            }
-        )
+        DetailsViewModel(navController, mainViewModel = MainViewModel(UsersRepository()))
     }
     Scaffold(topBar = {
-        DefaultTopAppBar(title = "$userType Details", navController = navController)
+        DefaultTopAppBar(title = "${user?.category} Details", navController = navController)
     }) { innerPadding ->
         user?.let {
             Box(modifier = Modifier.padding(innerPadding)) {
                 Content(user = it, onClickBookButton = {
-                    when (userType) {
-                        "Doctor" -> detailsViewModel.handleDoctorBookButtonClick()
-                        "Lab" -> detailsViewModel.handleLabBookButtonClick()
-                        "Pharmacy" -> detailsViewModel.handlePharmacyBookButtonClick()
+                    user.let { userDetails ->
+                        detailsViewModel.handleBookButtonClick(userDetails)
                     }
                 })
             }
@@ -80,7 +67,7 @@ fun UserDetailsView(userId: Int, userType: String, navController: NavController)
 }
 
 @Composable
-private fun Content(user: User, onClickBookButton: () -> Unit) {
+private fun Content(user: UsersJson, onClickBookButton: () -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
@@ -89,9 +76,9 @@ private fun Content(user: User, onClickBookButton: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         UserDetailsCard(user = user)
-        Experience()
-        AboutMe()
-        WorkingHours()
+        Experience(user)
+        AboutMe(user)
+        WorkingHours(user)
         Spacer(modifier = Modifier.weight(1f))
         PrimaryButton(text = "Book Appointment", onClick = { onClickBookButton() })
         Spacer(modifier = Modifier.height(16.dp)) // Spacing after button
@@ -99,7 +86,7 @@ private fun Content(user: User, onClickBookButton: () -> Unit) {
 }
 
 @Composable
-private fun UserDetailsCard(user: User) {
+private fun UserDetailsCard(user: UsersJson) {
     Card(
         modifier = Modifier.fillMaxWidth(), elevation = CardDefaults.cardElevation(
             defaultElevation = 0.dp
@@ -113,8 +100,8 @@ private fun UserDetailsCard(user: User) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = user.imageUrl,
-                contentDescription = "${user.title} profile",
+                model = user.img,
+                contentDescription = "${user.img} profile",
                 modifier = Modifier
                     .size(120.dp)
                     .clip(RoundedCornerShape(12.dp))
@@ -126,17 +113,18 @@ private fun UserDetailsCard(user: User) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = user.name,
+                    text = "${user.first_name} ${user.last_name}",
                     style = MaterialTheme.typography.headlineMedium,
                 )
                 HeightSpacer(8.dp)
-                if (user is Doctor) {
+                user.specialty?.let {
                     Text(
-                        text = user.specialty,
+                        text = it,
                         style = MaterialTheme.typography.titleMedium,
                     )
-                    HeightSpacer(8.dp)
                 }
+                HeightSpacer(8.dp)
+
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.LocationOn,
@@ -145,9 +133,11 @@ private fun UserDetailsCard(user: User) {
                         tint = MaterialTheme.colorScheme.primary
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = user.address, style = MaterialTheme.typography.titleSmall
-                    )
+                    user.address?.let {
+                        Text(
+                            text = it, style = MaterialTheme.typography.titleSmall
+                        )
+                    }
                 }
             }
         }
@@ -156,17 +146,14 @@ private fun UserDetailsCard(user: User) {
 }
 
 @Composable
-private fun Experience() {
+private fun Experience(user: UsersJson) {
     val listOfExperience = arrayOf(
         "experience" to R.drawable.medal, "Rating" to R.drawable.star
     )
-    val valuesOfExperience = arrayOf(10, 4.5)
     Row {
         listOfExperience.forEachIndexed { index, pair ->
             Column(
-                Modifier
-                    .weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
+                Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Box(
                     Modifier
@@ -182,7 +169,7 @@ private fun Experience() {
                     )
                 }
                 Text(
-                    text = "${valuesOfExperience[index]}",
+                    text = if (pair.first == "experience") user.experience.toString() else 2.5.toString(),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -199,28 +186,32 @@ private fun Experience() {
 }
 
 @Composable
-private fun AboutMe() {
+private fun AboutMe(user: UsersJson) {
     Text(
         text = "About me",
         style = MaterialTheme.typography.headlineSmall,
     )
-    Text(
-        text = "Dr. David Patel, a dedicated cardiologist, brings a wealth of experience to Golden Gate Cardiology Center in Golden Gate, CA. view more",
-        style = MaterialTheme.typography.bodyMedium,
-        color = gray600,
-    )
+    user.description?.let {
+        Text(
+            text = it,
+            style = MaterialTheme.typography.bodyMedium,
+            color = gray600,
+        )
+    }
 
 }
 
 @Composable
-private fun WorkingHours() {
+private fun WorkingHours(user: UsersJson) {
     Text(
         text = "Working Time",
         style = MaterialTheme.typography.headlineSmall,
     )
-    Text(
-        text = "Monday-Friday, 08.00 AM-18.00 PM",
-        style = MaterialTheme.typography.bodyMedium,
-        color = gray600,
-    )
+    user.work_time?.let {
+        Text(
+            text = it,
+            style = MaterialTheme.typography.bodyMedium,
+            color = gray600,
+        )
+    }
 }

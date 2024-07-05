@@ -30,6 +30,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -42,17 +43,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.icare.MainViewModel
 import com.example.icare.R
 import com.example.icare.core.Dimens
+import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.reusablecomponent.UserCard
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.green500
-import com.example.icare.model.classes.listOfDoctor
+import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
 @Composable
 fun HomeScreen(navController: NavController) {
+    val mainViewModel = remember {
+        MainViewModel(UsersRepository())
+    }
     val homeViewModel = remember { HomeViewModel(navController) }
     Scaffold(topBar = { TopBar(homeViewModel = homeViewModel) }) { innerPadding ->
         Column(
@@ -66,7 +72,7 @@ fun HomeScreen(navController: NavController) {
                 ), verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Categories(homeViewModel)
-            NearbyDoctors(homeViewModel)
+            NearbyClinics(homeViewModel, mainViewModel)
         }
     }
 }
@@ -148,7 +154,7 @@ private fun Categories(homeViewModel: HomeViewModel) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(horizontal = Dimens.mediumPadding)
         ) {
-            itemsIndexed(categories) { index, category ->
+            itemsIndexed(categories) { _, category ->
                 CardCategory(category = category) {
                     homeViewModel.handleClickAction(category.name)
                 }
@@ -213,7 +219,12 @@ private fun CardCategory(category: Category, onClicked: () -> Unit) {
 }
 
 @Composable
-private fun NearbyDoctors(homeViewModel: HomeViewModel) {
+private fun NearbyClinics(homeViewModel: HomeViewModel, mainViewModel: MainViewModel) {
+    LaunchedEffect(Unit) {
+        mainViewModel.fetchClinics()
+    }
+    val clinics by mainViewModel.clinics.observeAsState()
+    val isLoading by mainViewModel.isClinicLoading.observeAsState()
     Column {
         Row(
             Modifier
@@ -222,7 +233,7 @@ private fun NearbyDoctors(homeViewModel: HomeViewModel) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "NearBy Doctors", style = MaterialTheme.typography.headlineMedium)
+            Text(text = "Nearby Clinics", style = MaterialTheme.typography.headlineMedium)
             Text(text = "See More",
                 style = MaterialTheme.typography.titleSmall,
                 color = green500,
@@ -231,10 +242,20 @@ private fun NearbyDoctors(homeViewModel: HomeViewModel) {
                 })
         }
         Spacer(modifier = Modifier.height(8.dp))
-        LazyColumn(contentPadding = PaddingValues(bottom = 16.dp)) {
-            items(listOfDoctor) { doctor ->
-                UserCard(user = doctor) {
-                    homeViewModel.handleNavigationDetail(doctor)
+        if (isLoading == true) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                ProgressIndicator()
+            }
+        } else {
+            LazyColumn(contentPadding = PaddingValues(bottom = 16.dp)) {
+                clinics?.let {
+                    items(it) { clinic ->
+                        UserCard(user = clinic) {
+                            homeViewModel.handleNavigationDetail(clinic)
+                        }
+                    }
+                } ?: item {
+                    Text("No clinics available")
                 }
             }
         }

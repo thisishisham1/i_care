@@ -19,8 +19,7 @@ class SplashViewModel(private val preferencesHelper: PreferencesHelper) : ViewMo
 
     suspend fun animateScale(scale: Animatable<Float, AnimationVector1D>) {
         scale.animateTo(
-            targetValue = 1f,
-            animationSpec = tween(durationMillis = _animationDuration, easing = {
+            targetValue = 1f, animationSpec = tween(durationMillis = _animationDuration, easing = {
                 OvershootInterpolator(2f).getInterpolation(it)
 
             })
@@ -37,13 +36,11 @@ class SplashViewModel(private val preferencesHelper: PreferencesHelper) : ViewMo
     private suspend fun navigate(navController: NavController) {
         val userDao = UserDatabase.getDatabase(MyApplication.applicationContext()).userResponseDao()
         val userCount = userDao.getUserCount()
-        val destinations =
-            if (this.preferencesHelper.getBooleanValue("onBoarding")) {
-                if (userCount > 0) {
-                    Destinations.Main.MainScreen.route
-                } else
-                    Destinations.Auth.Login.route
-            } else Destinations.Main.OnBoarding.route
+        val destinations = if (this.preferencesHelper.getBooleanValue("onBoarding")) {
+            if (userCount > 0) {
+                Destinations.Main.MainScreen.route
+            } else Destinations.Auth.Login.route
+        } else Destinations.Main.OnBoarding.route
         navController.navigate(destinations) {
             popUpTo(0)
         }

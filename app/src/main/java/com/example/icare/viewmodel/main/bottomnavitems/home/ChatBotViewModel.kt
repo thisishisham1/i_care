@@ -33,10 +33,6 @@ class ChatBotViewModel : ViewModel() {
         _userInput.value = newInput
     }
 
-    fun onAttachmentClicked() {
-        // TODO: handle attachment button
-    }
-
     fun onSendClicked(inputMessage: String) {
         if (_userInput.value.isBlank()) return
         val userMessage = Message("Me", "Bot", inputMessage, System.currentTimeMillis())

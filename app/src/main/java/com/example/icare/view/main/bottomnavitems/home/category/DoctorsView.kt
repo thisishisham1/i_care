@@ -8,12 +8,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.icare.MainViewModel
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
+import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.reusablecomponent.UserCard
-import com.example.icare.model.classes.listOfDoctor
+import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
@@ -33,11 +39,26 @@ fun DoctorsView(navController: NavController) {
 
 @Composable
 private fun NearbyDoctors(homeViewModel: HomeViewModel) {
+    val vm = remember {
+        MainViewModel(UsersRepository())
+    }
+    LaunchedEffect(Unit) {
+        vm.fetchClinics()
+    }
+    val clinics by vm.clinics.observeAsState()
+    val isLoading by vm.isClinicLoading.observeAsState()
     Column(Modifier.fillMaxSize()) {
-        LazyColumn() {
-            items(listOfDoctor) { doctor ->
-                UserCard(user = doctor) {
-                    homeViewModel.handleNavigationDetail(doctor)
+        if (isLoading == true) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                ProgressIndicator()
+            }
+        } else {
+            LazyColumn() {
+                clinics?.let {
+                    items(it) { clinic ->
+                        UserCard(user = clinic) {
+                        }
+                    }
                 }
             }
         }

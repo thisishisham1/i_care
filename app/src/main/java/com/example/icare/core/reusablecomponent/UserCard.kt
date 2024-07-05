@@ -29,11 +29,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.icare.core.theme.shapes
-import com.example.icare.model.classes.Doctor
-import com.example.icare.model.classes.User
+import com.example.icare.model.classes.UsersJson
 
 @Composable
-fun UserCard(user: User, onClickUser: () -> Unit) {
+fun UserCard(user: UsersJson, onClickUser: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,7 +50,7 @@ fun UserCard(user: User, onClickUser: () -> Unit) {
                 .padding(16.dp), verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = user.imageUrl,
+                model = user.img ?: user.effectiveImg,
                 contentDescription = "Doctor image",
                 modifier = Modifier
                     .size(100.dp)
@@ -63,15 +62,15 @@ fun UserCard(user: User, onClickUser: () -> Unit) {
                 Modifier.weight(1f)
             ) {
                 Text(
-                    text = user.name,
+                    text = "${user.first_name} ${user.last_name}",
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                if (user is Doctor) {
+                user.specialty?.let {
                     Text(
-                        text = user.specialty,
+                        text = it,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -85,8 +84,16 @@ fun UserCard(user: User, onClickUser: () -> Unit) {
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = user.address,
+                    user.address?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodySmall,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    } ?: Text(
+                        text = "no address yet",
                         style = MaterialTheme.typography.bodySmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -102,7 +109,7 @@ fun UserCard(user: User, onClickUser: () -> Unit) {
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
-                        text = user.rating.toString(),
+                        text = 2.5.toString(),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -114,7 +121,7 @@ fun UserCard(user: User, onClickUser: () -> Unit) {
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "${user.countReview} Reviews",
+                        text = "${500} Reviews",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

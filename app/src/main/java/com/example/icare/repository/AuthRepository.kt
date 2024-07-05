@@ -1,11 +1,13 @@
 package com.example.icare.repository
 
+import android.util.Log
 import com.example.icare.MyApplication
 import com.example.icare.model.classes.AuthError
 import com.example.icare.model.classes.ChatBotRequest
 import com.example.icare.model.classes.LoginRequest
 import com.example.icare.model.classes.RegisterRequest
 import com.example.icare.model.classes.UserResponse
+import com.example.icare.model.classes.UsersJson
 import com.example.icare.model.local.UserDatabase
 import com.example.icare.model.network.apiService.RetrofitInstance
 import com.google.gson.Gson
@@ -71,3 +73,38 @@ class ChatBotRepository {
     }
 }
 
+class UsersRepository {
+    private val apiService = RetrofitInstance.apiService
+
+    suspend fun getClinics(): Result<List<UsersJson>> {
+        return try {
+            val response = apiService.getClinic()
+            Result.success(response)
+        } catch (e: HttpException) {
+            Log.e("", "Error fetching clinics: ${e.message}")
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getPharmacies(): Result<List<UsersJson>> {
+        return try {
+            val response = apiService.getPharmacies()
+            Log.d("UserRepository", "succeed : ${response.size}")
+            Result.success(response)
+        } catch (e: HttpException) {
+            Log.e("UsersRepository", "Error fetching pharmacy: ${e.message}")
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getLabs(): Result<List<UsersJson>> {
+        return try {
+            val response = apiService.getLabs()
+            Result.success(response)
+        } catch (e: HttpException) {
+            Log.e("UsersRepository", "Error fetching labs: ${e.message}")
+            Result.failure(e)
+        }
+    }
+
+}

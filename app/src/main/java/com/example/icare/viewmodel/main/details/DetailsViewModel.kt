@@ -2,15 +2,32 @@ package com.example.icare.viewmodel.main.details
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.example.icare.MainViewModel
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.listOfDoctor
-import com.example.icare.model.classes.listOfLabs
-import com.example.icare.model.classes.listOfPharmacy
+import com.example.icare.model.classes.UsersJson
 
-class DetailsViewModel(val navController: NavController) : ViewModel() {
-    fun getDoctorDetails(doctorId: Int) = listOfDoctor.first { it.id == doctorId }
-    fun getPharmacyDetails(pharmacyId: Int) = listOfPharmacy.first { it.id == pharmacyId }
-    fun getLabDetails(labId: Int) = listOfLabs.first { it.id == labId }
+class DetailsViewModel(val navController: NavController, private val mainViewModel: MainViewModel) :
+    ViewModel() {
+    fun handleBookButtonClick(user: UsersJson) {
+        // Handle booking logic for all user types based on user.category
+        when (user.category) {
+            "Doctor" -> { /* Doctor booking logic */
+            }
+
+            "Lab" -> { /* Lab booking logic */
+            }
+
+            "Pharmacy" -> { /* Pharmacy booking logic */
+            }
+        }
+    }
+
+    fun getDoctorDetails(doctorId: Int) = mainViewModel.clinics.value?.first { it.id == doctorId }
+
+    fun getPharmacyDetails(pharmacyId: Int) =
+        mainViewModel.pharmacies.value?.first { it.id == pharmacyId }
+
+    fun getLabDetails(labId: Int) = mainViewModel.labs.value?.first { it.id == labId }
 
     fun handleBackArrow() {
         navController.navigateUp()
