@@ -32,7 +32,9 @@ HomeViewModel(val navController: NavController) : ViewModel() {
     fun handleClickAction(action: String) {
         when (action) {
             "Personality Test" -> {
-                navController.navigate("${Destinations.WebView.WebViewScreen.route}/${Uri.encode("https://icarembti.streamlit.app/")}")
+                val url = Uri.encode("https://icarembti.streamlit.app/")
+                val title = Uri.encode("Personality Test")
+                navController.navigate("${Destinations.WebView.WebViewScreen.route}/$url/$title")
             }
 
             "Chat Bot" -> {
@@ -52,7 +54,9 @@ HomeViewModel(val navController: NavController) : ViewModel() {
             }
 
             "Medical Imaging" -> {
-                navController.navigate("${Destinations.WebView.WebViewScreen.route}/${Uri.encode("http://icarescan2.streamlit.app")}")
+                val url = Uri.encode("http://icarescan2.streamlit.app")
+                val title = Uri.encode("Medical Imaging")
+                navController.navigate("${Destinations.WebView.WebViewScreen.route}/$url/$title")
             }
         }
     }
@@ -64,6 +68,6 @@ HomeViewModel(val navController: NavController) : ViewModel() {
     }
 
     fun handleChatsClick() {
-        // TODO: handle chat Click
+        navController.navigate(Destinations.Lists.Chats.route)
     }
 }

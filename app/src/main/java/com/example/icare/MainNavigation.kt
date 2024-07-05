@@ -39,7 +39,7 @@ fun MainNavigation(context: Context) {
     val preferencesHelper = remember { PreferencesHelper(context) }
     val mainViewModel = remember { MainViewModel(UsersRepository()) }
 
-    NavHost(navController = navController, startDestination = Destinations.Main.MainScreen.route) {
+    NavHost(navController = navController, startDestination = Destinations.Main.Splash.route) {
         // Authentication screens
         composable(Destinations.Auth.Login.route) {
             LoginView(navController, preferencesHelper)
@@ -106,7 +106,7 @@ fun MainNavigation(context: Context) {
 
         // Lists screens
         composable(Destinations.Lists.Chats.route) {
-            ChatsView()
+            ChatsView(navController)
         }
         composable(Destinations.Lists.Doctors.route) {
             DoctorsView(navController, mainViewModel)
@@ -118,11 +118,13 @@ fun MainNavigation(context: Context) {
             LabsView(navController, mainViewModel)
         }
 
-        // Web View screen
-        composable("${Destinations.WebView.WebViewScreen.route}/{url}") { backStackEntry ->
+        composable("${Destinations.WebView.WebViewScreen.route}/{url}/{title}") { backStackEntry ->
             val url = backStackEntry.arguments?.getString("url")
+            val title = backStackEntry.arguments?.getString("title")
+                ?: "Default Title" // Provide a default title if none is provided
+
             if (url != null) {
-                WebViewScreen(url, navController)
+                WebViewScreen(url, title, navController)
             }
         }
     }
