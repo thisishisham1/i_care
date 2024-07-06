@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.icare.MyApplication
 import com.example.icare.model.classes.apiClass.AuthError
 import com.example.icare.model.classes.apiClass.ChatBotRequest
+import com.example.icare.model.classes.apiClass.ClinicReservation
 import com.example.icare.model.classes.apiClass.LoginRequest
 import com.example.icare.model.classes.apiClass.RegisterRequest
 import com.example.icare.model.classes.apiClass.ReservationRequest
@@ -60,7 +61,9 @@ class AuthRepository {
     }
 
     suspend fun logout() {
-        UserDatabase.getDatabase(MyApplication.applicationContext()).userResponseDao().deleteUser()
+        val userDao = UserDatabase.getDatabase(MyApplication.applicationContext()).userResponseDao()
+        userDao.deleteUser()
+        userDao.clearReservation()
     }
 
 
@@ -119,6 +122,21 @@ class UsersRepository {
             Result.failure(e)
         } catch (e: Exception) {
             Log.e("UsersRepository", "Unknown error inserting reservation: ${e.message}")
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getClinicReservation(patientId: Int): Result<List<ClinicReservation>> {
+        return try {
+            val reservations = apiService.getClinicReservations(patientId)
+            reservations.forEach { reservation ->
+                UserDatabase.getDatabase(MyApplication.applicationContext()).userResponseDao()
+                    .insertReservation(reservation)
+            }
+            Log.d("GetClinicReservation", reservations.size.toString())
+            Result.success(reservations)
+        } catch (e: Exception) {
+            Log.e("GetClinicReservation", e.message.toString())
             Result.failure(e)
         }
     }

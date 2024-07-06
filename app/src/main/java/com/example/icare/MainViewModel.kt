@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.icare.model.classes.apiClass.UsersResponse
+import com.example.icare.model.local.UserDatabase
 import com.example.icare.repository.UsersRepository
 import kotlinx.coroutines.launch
 
@@ -66,5 +67,21 @@ class MainViewModel(private val usersRepository: UsersRepository) : ViewModel() 
 
         }
 
+    }
+
+    val userDao = UserDatabase.getDatabase(MyApplication.applicationContext()).userResponseDao()
+    fun fetchReservation() {
+        viewModelScope.launch {
+            val result = usersRepository.getClinicReservation(userDao.getUser().id)
+            result.onSuccess { reservationsList ->
+
+                Log.d(
+                    "MainViewModel",
+                    "Fetched reservations: $reservationsList"
+                ) // Log fetched reservations
+            }.onFailure {
+                Log.d("MainViewModel", "Error fetching Reservation:${it.message}")
+            }
+        }
     }
 }

@@ -5,10 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.icare.MainViewModel
 import com.example.icare.model.classes.Destinations
 import com.example.icare.model.classes.apiClass.AuthError
 import com.example.icare.model.classes.apiClass.RegisterRequest
 import com.example.icare.repository.AuthRepository
+import com.example.icare.repository.UsersRepository
 import com.example.icare.view.registeration.signup.SignUpUiState
 import com.example.icare.view.registeration.signup.SignupUIEvent
 import kotlinx.coroutines.launch
@@ -89,6 +91,8 @@ class SignUpViewModel(private val navController: NavController) : ViewModel() {
                 if (response.isSuccess) {
                     navController.navigate(Destinations.Main.MainScreen.route) {
                         popUpTo(0)
+                        val userRepo = UsersRepository()
+                        MainViewModel(userRepo).fetchReservation()
                     }
                 } else {
                     val registrationError = response.exceptionOrNull() as? AuthError

@@ -56,6 +56,19 @@ data class ReservationResponse(
     val id: Int
 )
 
+@Entity(tableName = "reservation_users", primaryKeys = ["patient_id", "clinic_id"])
+data class ClinicReservation(
+    val id: Int,
+    val clinic_id: Int,
+    val patient_id: Int,
+    val name: String,
+    val phone: String,
+    val created_at: String,
+    val updated_at: String,
+    val state: String,
+    val img: String
+)
+
 fun UsersResponse.doesMatchQuery(query: String): Boolean {
     val normalizedQuery = query.trim().lowercase()
     // Simplified and more efficient query matching
