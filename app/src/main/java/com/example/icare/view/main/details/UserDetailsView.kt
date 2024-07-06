@@ -50,10 +50,11 @@ import com.example.icare.model.classes.apiClass.UsersResponse
 import com.example.icare.viewmodel.main.details.DetailsViewModel
 
 @Composable
-fun UserDetailsView(userId: Int, navController: NavController, mainViewModel: MainViewModel) {
+fun UserDetailsView(userId: Int, navController: NavController, vm: MainViewModel) {
     val detailsViewModel = remember {
-        DetailsViewModel(navController, mainViewModel = mainViewModel)
+        DetailsViewModel(navController, mainViewModel = vm)
     }
+
     LaunchedEffect(key1 = userId) {
         detailsViewModel.fetchUserDetails(userId)
     }

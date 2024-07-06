@@ -20,11 +20,14 @@ import com.example.icare.MainViewModel
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
 import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.reusablecomponent.UserCard
+import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
 @Composable
-fun DoctorsView(navController: NavController, vm: MainViewModel) {
+fun DoctorsView(navController: NavController) {
+    val vm = remember { MainViewModel(UsersRepository()) }
+
     val homeViewModel = remember {
         HomeViewModel(navController = navController)
     }

@@ -22,11 +22,12 @@ import com.example.icare.core.Dimens
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
 import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.reusablecomponent.UserCard
+import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
 @Composable
-fun PharmaciesView(navController: NavController, vm: MainViewModel) {
+fun PharmaciesView(navController: NavController) {
     val homeViewModel = remember {
         HomeViewModel(navController)
     }
@@ -34,13 +35,14 @@ fun PharmaciesView(navController: NavController, vm: MainViewModel) {
         DefaultTopAppBar(title = "Nearby Pharmacies", navController = navController)
     }) {
         Box(modifier = Modifier.padding(it)) {
-            Content(homeViewModel = homeViewModel, vm)
+            Content(homeViewModel = homeViewModel)
         }
     }
 }
 
 @Composable
-private fun Content(homeViewModel: HomeViewModel, vm: MainViewModel) {
+private fun Content(homeViewModel: HomeViewModel) {
+    val vm = remember { MainViewModel(UsersRepository()) }
     LaunchedEffect(Unit) {
         vm.fetchPharmacies()
     }

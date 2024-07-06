@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 class
 HomeViewModel(val navController: NavController) : ViewModel() {
 
-
     fun handleNavigationDetail(userId: Int) {
         viewModelScope.launch {
             navController.navigate("${Destinations.Details.UserDetails.route}/${userId}")
@@ -50,7 +49,11 @@ HomeViewModel(val navController: NavController) : ViewModel() {
             }
 
             "ECG Scan" -> {
-                navController.navigate(Destinations.Chat.EcgScanner.route)
+
+                val url = Uri.encode("https://icareecgscan.streamlit.app/")
+                val title = Uri.encode("ECG Scan")
+                navController.navigate("${Destinations.WebView.WebViewScreen.route}/$url/$title")
+
             }
 
             "Medical Imaging" -> {

@@ -17,13 +17,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
+import com.example.icare.core.reusablecomponent.ProgressIndicator
 
 @Composable
 fun WebViewScreen(url: String, title: String, navController: NavController) {
+    var isLoading = remember { mutableStateOf(true) }
     Scaffold(
         topBar = {
             DefaultTopAppBar(title = title, navController = navController)
@@ -36,14 +40,20 @@ fun WebViewScreen(url: String, title: String, navController: NavController) {
             ) {
                 WebViewComposable(
                     url = url,
+                    title = title, isLoading = {
+                        isLoading.value = false
+                    }
                 )
+                if (isLoading.value) {
+                    ProgressIndicator()
+                }
             }
         })
 }
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebViewComposable(url: String) {
+fun WebViewComposable(url: String, title: String, isLoading: () -> Unit) {
     var uploadMessage: ValueCallback<Array<Uri>>? = null
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
@@ -63,17 +73,18 @@ fun WebViewComposable(url: String) {
                 settings.allowFileAccess = true // Allow file access for image uploads
                 settings.allowContentAccess = true
                 webChromeClient = object : WebChromeClient() {
+
                     override fun onShowFileChooser(
                         webView: WebView?,
                         filePathCallback: ValueCallback<Array<Uri>>?,
                         fileChooserParams: FileChooserParams?
                     ): Boolean {
                         uploadMessage = filePathCallback
-                        launcher.launch("image/*")
+                        launcher.launch(if (title == "Medical Imaging") "image/*" else "text/csv")
                         return true
                     }
                 }
-                webViewClient = MyWebViewClient()
+                webViewClient = MyWebViewClient(onLoading = { isLoading() })
                 loadUrl(url)
             }
         }
@@ -84,9 +95,10 @@ fun WebViewComposable(url: String) {
  * Custom WebViewClient class.
  * This class is used to handle various events in the WebView, such as when a page finishes loading or when an error occurs.
  */
-class MyWebViewClient : WebViewClient() {
+class MyWebViewClient(private val onLoading: () -> Unit) : WebViewClient() {
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
+        onLoading()
     }
 
     override fun onReceivedError(

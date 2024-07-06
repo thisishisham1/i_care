@@ -70,7 +70,7 @@ fun MainNavigation(context: Context) {
             OfflineView()
         }
         composable(Destinations.Main.MainScreen.route) {
-            MainView(navController, preferencesHelper, mainViewModel)
+            MainView(navController, preferencesHelper)
         }
         composable(Destinations.Main.TermsAndConditions.route) {
             TermsAndConditions(navController)
@@ -109,13 +109,13 @@ fun MainNavigation(context: Context) {
             ChatsView(navController)
         }
         composable(Destinations.Lists.Doctors.route) {
-            DoctorsView(navController, mainViewModel)
+            DoctorsView(navController)
         }
         composable(Destinations.Lists.Pharmacies.route) {
-            PharmaciesView(navController, mainViewModel)
+            PharmaciesView(navController)
         }
         composable(Destinations.Lists.Labs.route) {
-            LabsView(navController, mainViewModel)
+            LabsView(navController)
         }
 
         composable("${Destinations.WebView.WebViewScreen.route}/{url}/{title}") { backStackEntry ->

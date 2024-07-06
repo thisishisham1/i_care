@@ -51,15 +51,11 @@ import com.example.icare.core.reusablecomponent.ProgressIndicator
 import com.example.icare.core.reusablecomponent.UserCard
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.green500
-import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.bottomnavitems.home.HomeViewModel
 
 
 @Composable
-fun HomeScreen(navController: NavController) {
-    val mainViewModel = remember {
-        MainViewModel(UsersRepository())
-    }
+fun HomeScreen(navController: NavController, vm: MainViewModel) {
     val homeViewModel = remember { HomeViewModel(navController) }
     Scaffold(topBar = { TopBar(homeViewModel = homeViewModel) }) { innerPadding ->
         Column(
@@ -73,7 +69,7 @@ fun HomeScreen(navController: NavController) {
                 ), verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Categories(homeViewModel)
-            NearbyClinics(homeViewModel, mainViewModel)
+            NearbyClinics(homeViewModel, vm)
         }
     }
 }
