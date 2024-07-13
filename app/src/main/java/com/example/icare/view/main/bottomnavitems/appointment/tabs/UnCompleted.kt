@@ -23,6 +23,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,24 +35,34 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.icare.MainViewModel
 import com.example.icare.R
 import com.example.icare.core.Dimens
 import com.example.icare.core.theme.black
 import com.example.icare.core.theme.blur
-import com.example.icare.model.classes.Doctor
-import com.example.icare.model.classes.User
-import com.example.icare.model.classes.listOfDoctor
+import com.example.icare.model.classes.apiClass.UsersResponse
+import com.example.icare.repository.UsersRepository
 import com.example.icare.viewmodel.main.bottomnavitems.appointment.AppointmentViewModel
 
 @Composable
 fun UnCompleted(appointmentVieModel: AppointmentViewModel) {
+    val vm = MainViewModel(UsersRepository())
+    LaunchedEffect(Unit) {
+        vm.fetchClinics()
+    }
+    val clinics by vm.clinics.observeAsState()
+    val isLoading by vm.isClinicLoading.observeAsState()
+
     Column(
         Modifier
             .fillMaxSize()
             .padding(horizontal = Dimens.mediumPadding, vertical = Dimens.smallPadding)
     ) {
         Date()
-        UserCardWithButtons(user = listOfDoctor[0])
+        clinics?.let {
+            UserCardWithButtons(user = it[0])
+
+        }
     }
 }
 
@@ -59,7 +72,7 @@ private fun Date() {
 }
 
 @Composable
-fun UserCardWithButtons(user: User) {
+fun UserCardWithButtons(user: UsersResponse) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -76,8 +89,8 @@ fun UserCardWithButtons(user: User) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 AsyncImage(
-                    model = user.imageUrl,
-                    contentDescription = "${user.title} image",
+                    model = user.img,
+                    contentDescription = "${user.img} image",
                     modifier = Modifier
                         .size(80.dp)
                         .clip(RoundedCornerShape(8.dp)),
@@ -86,20 +99,22 @@ fun UserCardWithButtons(user: User) {
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(Modifier.weight(1f)) {
                     Text(
-                        text = "Dr. ${user.name}",
+                        text = "${user.first_name} ${user.last_name}",
                         style = MaterialTheme.typography.titleMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                    if (user is Doctor) {
-                        Spacer(modifier = Modifier.height(4.dp))
+
+                    Spacer(modifier = Modifier.height(4.dp))
+                    user.specialty?.let {
                         Text(
-                            text = user.specialty,
+                            text = it,
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
+
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
@@ -109,13 +124,15 @@ fun UserCardWithButtons(user: User) {
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = user.address,
-                            style = MaterialTheme.typography.bodySmall,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        user.address?.let {
+                            Text(
+                                text = it,
+                                style = MaterialTheme.typography.bodySmall,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -126,7 +143,7 @@ fun UserCardWithButtons(user: User) {
                             modifier = Modifier.size(16.dp)
                         )
                         Text(
-                            text = user.rating.toString(),
+                            text = 2.5.toString(),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -138,7 +155,7 @@ fun UserCardWithButtons(user: User) {
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "${user.countReview} Reviews",
+                            text = "${500} Reviews",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

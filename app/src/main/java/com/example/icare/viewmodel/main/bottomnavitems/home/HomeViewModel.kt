@@ -4,17 +4,21 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.icare.MyApplication
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.User
-import com.example.icare.model.classes.UserResponse
+import com.example.icare.model.classes.apiClass.UserResponse
 import com.example.icare.model.local.UserDatabase
+import kotlinx.coroutines.launch
 
 class
 HomeViewModel(val navController: NavController) : ViewModel() {
-    fun handleNavigationDetail(user: User) {
-        navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}/${user.title}")
+
+    fun handleNavigationDetail(userId: Int) {
+        viewModelScope.launch {
+            navController.navigate("${Destinations.Details.UserDetails.route}/${userId}")
+        }
     }
 
     private val userDao =
@@ -27,7 +31,9 @@ HomeViewModel(val navController: NavController) : ViewModel() {
     fun handleClickAction(action: String) {
         when (action) {
             "Personality Test" -> {
-                navController.navigate("${Destinations.WebView.WebViewScreen.route}/${Uri.encode("https://icarembti.streamlit.app/")}")
+                val url = Uri.encode("https://icarembti.streamlit.app/")
+                val title = Uri.encode("Personality Test")
+                navController.navigate("${Destinations.WebView.WebViewScreen.route}/$url/$title")
             }
 
             "Chat Bot" -> {
@@ -43,11 +49,17 @@ HomeViewModel(val navController: NavController) : ViewModel() {
             }
 
             "ECG Scan" -> {
-                navController.navigate(Destinations.Chat.EcgScanner.route)
+
+                val url = Uri.encode("https://icareecgscan.streamlit.app/")
+                val title = Uri.encode("ECG Scan")
+                navController.navigate("${Destinations.WebView.WebViewScreen.route}/$url/$title")
+
             }
 
             "Medical Imaging" -> {
-                navController.navigate(Destinations.Chat.CognitiveImaging.route)
+                val url = Uri.encode("http://icarescan2.streamlit.app")
+                val title = Uri.encode("Medical Imaging")
+                navController.navigate("${Destinations.WebView.WebViewScreen.route}/$url/$title")
             }
         }
     }
@@ -59,6 +71,6 @@ HomeViewModel(val navController: NavController) : ViewModel() {
     }
 
     fun handleChatsClick() {
-        // TODO: handle chat Click
+        navController.navigate(Destinations.Lists.Chats.route)
     }
 }

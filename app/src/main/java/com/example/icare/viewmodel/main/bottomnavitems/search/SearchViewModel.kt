@@ -1,15 +1,13 @@
 package com.example.icare.viewmodel.main.bottomnavitems.search
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.icare.MainViewModel
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.User
-import com.example.icare.model.classes.Users
-import com.example.icare.model.classes.listOfDoctor
-import com.example.icare.model.classes.listOfLabs
-import com.example.icare.model.classes.listOfPharmacy
-import kotlinx.coroutines.delay
+import com.example.icare.model.classes.apiClass.UsersResponse
+import com.example.icare.model.classes.apiClass.doesMatchQuery
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -18,57 +16,63 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class SearchViewModel(val navController: NavController) : ViewModel() {
+class SearchViewModel(val navController: NavController, private val mainViewModel: MainViewModel) :
+    ViewModel() {
     private val _indexTab = MutableStateFlow(0)
     val indexTab = _indexTab.asStateFlow()
 
-    // state the text typed by the user
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
 
 
-    private val _dataList = MutableStateFlow<List<Users>>(emptyList())
+    private val _dataList = MutableStateFlow<List<UsersResponse>>(emptyList())
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
     init {
+        Log.d("SearchViewModel", "Initializing and fetching initial data")
+        mainViewModel.fetchClinics()
         fetchData()
     }
 
     private fun fetchData() {
         viewModelScope.launch {
             _isLoading.value = true
-            delay(1000)
-            _dataList.value = when (_indexTab.value) {
-                0 -> listOfDoctor
-                1 -> listOfPharmacy
-                else -> listOfLabs
+            val data = when (_indexTab.value) {
+                0 -> mainViewModel.clinics.value ?: emptyList()
+                1 -> mainViewModel.pharmacies.value ?: emptyList()
+                else -> mainViewModel.labs.value ?: emptyList()
             }
+            _dataList.value = data
             _isLoading.value = false
         }
     }
 
     fun onSearchTextChange(text: String) {
         _searchText.value = text
+        Log.d("SearchViewModel", "Search text changed: $text")
+
         fetchData()
     }
 
     fun onTabChange(newIndex: Int) {
         _indexTab.value = newIndex
+        Log.d("SearchViewModel", "Tab changed to: $newIndex")
         fetchData()
     }
 
-    fun handleClickItem(user: User) {
-        navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}/${user.title}")
+    fun handleClickItem(user: UsersResponse) {
+        navController.navigate("${Destinations.Details.UserDetails.route}/${user.id}/${user.first_name}")
     }
 
-    val filteredList: StateFlow<List<Users>> = _searchText.combine(_dataList) { text, list ->
-        if (text.isBlank()) {
-            list
-        } else {
-            list.filter { it.doseMatchQuery(text) }
-        }
-    }.stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(5000), initialValue = emptyList<Users>()
-    )
+    val filteredList: StateFlow<List<UsersResponse>> =
+        _searchText.combine(_dataList) { text, list ->
+            if (text.isBlank()) {
+                list
+            } else {
+                list.filter { it.doesMatchQuery(text) }
+            }
+        }.stateIn(
+            viewModelScope, SharingStarted.WhileSubscribed(5000), initialValue = emptyList()
+        )
 }

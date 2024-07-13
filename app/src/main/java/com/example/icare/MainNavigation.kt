@@ -8,12 +8,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.icare.model.classes.Destinations
 import com.example.icare.model.sharedPreferences.PreferencesHelper
+import com.example.icare.repository.UsersRepository
 import com.example.icare.view.TermsAndConditions
 import com.example.icare.view.main.MainView
 import com.example.icare.view.main.book.BookView
 import com.example.icare.view.main.bottomnavitems.home.ChatsView
 import com.example.icare.view.main.bottomnavitems.home.NotificationsView
-import com.example.icare.view.main.bottomnavitems.home.category.CognitiveImaging
 import com.example.icare.view.main.bottomnavitems.home.category.DoctorsView
 import com.example.icare.view.main.bottomnavitems.home.category.EcgScanner
 import com.example.icare.view.main.bottomnavitems.home.category.LabsView
@@ -36,37 +36,16 @@ import com.example.icare.view.splash.SplashView
 @Composable
 fun MainNavigation(context: Context) {
     val navController = rememberNavController()
-    val preferencesHelper = remember {
-        PreferencesHelper(context)
-    }
-    NavHost(
-        navController = navController, startDestination = Destinations.Main.Splash.route
-    ) {
-        composable(Destinations.Main.Splash.route) {
-            SplashView(
-                navController = navController, preferencesHelper = preferencesHelper
-            )
-        }
-        composable(Destinations.Main.OnBoarding.route) {
-            OnBoardingView(navController)
-        }
-        composable(Destinations.Main.Offline.route) {
-            OfflineView()
-        }
-        composable(Destinations.Chat.EcgScanner.route) {
-            EcgScanner(navController = navController)
-        }
-        composable(Destinations.Chat.CognitiveImaging.route) {
-            CognitiveImaging(navController = navController)
-        }
-        composable(Destinations.Main.MainScreen.route) {
-            MainView(navController, preferencesHelper)
-        }
-        composable(Destinations.Auth.SignUp.route) {
-            SignUpView(navController = navController)
-        }
+    val preferencesHelper = remember { PreferencesHelper(context) }
+    val mainViewModel = remember { MainViewModel(UsersRepository()) }
+
+    NavHost(navController = navController, startDestination = Destinations.Main.Splash.route) {
+        // Authentication screens
         composable(Destinations.Auth.Login.route) {
             LoginView(navController, preferencesHelper)
+        }
+        composable(Destinations.Auth.SignUp.route) {
+            SignUpView(navController)
         }
         composable(Destinations.Auth.ForgotPassword.route) {
             ForgotPasswordView(navController)
@@ -80,42 +59,72 @@ fun MainNavigation(context: Context) {
         composable(Destinations.Auth.ResetPassword.route) {
             ResetPasswordView(navController)
         }
-        composable("${Destinations.Details.UserDetails.route}/{userId}/{userType}") { navBackStackEntry ->
-            val userId = navBackStackEntry.arguments?.getString("userId")?.toIntOrNull() ?: 0
-            val userType = navBackStackEntry.arguments?.getString("userType") ?: ""
-            UserDetailsView(userId = userId, userType = userType, navController = navController)
+        // Main screens
+        composable(Destinations.Main.Splash.route) {
+            SplashView(navController, preferencesHelper)
         }
-
+        composable(Destinations.Main.OnBoarding.route) {
+            OnBoardingView(navController)
+        }
+        composable(Destinations.Main.Offline.route) {
+            OfflineView()
+        }
+        composable(Destinations.Main.MainScreen.route) {
+            MainView(navController, preferencesHelper)
+        }
+        composable(Destinations.Main.TermsAndConditions.route) {
+            TermsAndConditions(navController)
+        }
+        // Details screen
+        composable("${Destinations.Details.UserDetails.route}/{userId}") { navBackStackEntry ->
+            val userId = navBackStackEntry.arguments?.getString("userId")?.toIntOrNull() ?: 0
+            UserDetailsView(userId, navController, mainViewModel)
+        }
+        // Appointment screen
         composable(Destinations.Appointment.BookAppointment.route) {
             BookView(navController)
         }
-        composable(Destinations.Chat.Conversation.route) { ChatView(navController) }
-        composable(Destinations.Chat.ChatBot.route) { ChatBotView(navController) }
+
+        // Chat screens
+        composable(Destinations.Chat.Conversation.route) {
+            ChatView(navController)
+        }
+        composable(Destinations.Chat.ChatBot.route) {
+            ChatBotView(navController)
+        }
+        composable(Destinations.Chat.EcgScanner.route) {
+            EcgScanner(navController)
+        }
+
+        // Profile screens
         composable(Destinations.Profile.EditProfile.route) {
             EditProfileView(navController)
         }
         composable(Destinations.Profile.Notifications.route) {
             NotificationsView(navController)
         }
+
+        // Lists screens
         composable(Destinations.Lists.Chats.route) {
-            ChatsView()
+            ChatsView(navController)
         }
         composable(Destinations.Lists.Doctors.route) {
-            DoctorsView(navController = navController)
+            DoctorsView(navController)
         }
         composable(Destinations.Lists.Pharmacies.route) {
-            PharmaciesView(navController = navController)
+            PharmaciesView(navController)
         }
         composable(Destinations.Lists.Labs.route) {
             LabsView(navController)
         }
-        composable(Destinations.Main.TermsAndConditions.route) {
-            TermsAndConditions(navController)
-        }
-        composable("${Destinations.WebView.WebViewScreen.route}/{url}") { backStackEntry ->
+
+        composable("${Destinations.WebView.WebViewScreen.route}/{url}/{title}") { backStackEntry ->
             val url = backStackEntry.arguments?.getString("url")
+            val title = backStackEntry.arguments?.getString("title")
+                ?: "Default Title" // Provide a default title if none is provided
+
             if (url != null) {
-                WebViewScreen(url, navController)
+                WebViewScreen(url, title, navController)
             }
         }
     }

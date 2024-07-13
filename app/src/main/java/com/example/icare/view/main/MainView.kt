@@ -7,11 +7,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.icare.MainViewModel
 import com.example.icare.model.sharedPreferences.PreferencesHelper
+import com.example.icare.repository.UsersRepository
 import com.example.icare.view.main.bottomnavitems.appointment.AppointmentScreen
 import com.example.icare.view.main.bottomnavitems.home.HomeScreen
 import com.example.icare.view.main.bottomnavitems.profile.ProfileScreen
@@ -24,7 +27,10 @@ private val destinations = listOf(
 )
 
 @Composable
-fun MainView(navController: NavController, preferencesHelper: PreferencesHelper) {
+fun MainView(
+    navController: NavController,
+    preferencesHelper: PreferencesHelper,
+) {
     var selectedIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
@@ -42,7 +48,11 @@ fun MainView(navController: NavController, preferencesHelper: PreferencesHelper)
                 .fillMaxSize()
                 .padding(it)
         ) {
-            Content(navController = navController, selectedIndex = selectedIndex, preferencesHelper)
+            Content(
+                navController = navController,
+                selectedIndex = selectedIndex,
+                preferencesHelper
+            )
         }
     }
 }
@@ -53,9 +63,10 @@ private fun Content(
     selectedIndex: Int,
     preferencesHelper: PreferencesHelper
 ) {
+    val vm = remember { MainViewModel(UsersRepository()) }
     when (selectedIndex) {
-        0 -> HomeScreen(navController = navController)
-        1 -> SearchScreen(navController = navController)
+        0 -> HomeScreen(navController = navController, vm)
+        1 -> SearchScreen(navController = navController, vm)
         2 -> AppointmentScreen()
         3 -> ProfileScreen(navController = navController, preferencesHelper)
         else -> {}

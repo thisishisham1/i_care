@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.icare.MyApplication
 import com.example.icare.model.classes.Destinations
-import com.example.icare.model.classes.UserResponse
+import com.example.icare.model.classes.apiClass.UserResponse
 import com.example.icare.model.local.UserDatabase
 import com.example.icare.model.sharedPreferences.PreferencesHelper
 import com.example.icare.repository.AuthRepository

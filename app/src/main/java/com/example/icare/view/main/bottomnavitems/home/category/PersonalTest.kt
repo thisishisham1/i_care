@@ -1,27 +1,36 @@
 package com.example.icare.view.main.bottomnavitems.home.category
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.util.Log
 import android.view.ViewGroup
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.icare.core.reusablecomponent.DefaultTopAppBar
+import com.example.icare.core.reusablecomponent.ProgressIndicator
 
 @Composable
-fun WebViewScreen(url: String, navController: NavController) {
+fun WebViewScreen(url: String, title: String, navController: NavController) {
+    var isLoading = remember { mutableStateOf(true) }
     Scaffold(
         topBar = {
-            DefaultTopAppBar(title = "Personality Test", navController = navController)
+            DefaultTopAppBar(title = title, navController = navController)
         },
         content = { paddingValues ->
             Column(
@@ -31,41 +40,51 @@ fun WebViewScreen(url: String, navController: NavController) {
             ) {
                 WebViewComposable(
                     url = url,
+                    title = title, isLoading = {
+                        isLoading.value = false
+                    }
                 )
+                if (isLoading.value) {
+                    ProgressIndicator()
+                }
             }
         })
 }
 
-/**
- * This Composable function creates a WebView and loads a given URL.
- * The WebView is created using the AndroidView function, which allows you to create an Android view and use it in your Composable.
- *
- * @param url The URL to load in the WebView.
- * @param modifier The Modifier to apply to the AndroidView.
- */
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebViewComposable(url: String) {
+fun WebViewComposable(url: String, title: String, isLoading: () -> Unit) {
+    var uploadMessage: ValueCallback<Array<Uri>>? = null
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+            uploadMessage?.onReceiveValue(uris.toTypedArray())
+            uploadMessage = null
+        }
+
     AndroidView(
-        // Factory to create the WebView
-        factory = {
-            WebView(it).apply {
-                // Set layout parameters
+        factory = { context ->
+            WebView(context).apply {
                 layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
-                // Enable JavaScript
                 settings.javaScriptEnabled = true
-                // Enable DOM storage
                 settings.domStorageEnabled = true
-                // Allow file access
-                settings.allowFileAccess = false
-                // Allow content access
+                settings.allowFileAccess = true // Allow file access for image uploads
                 settings.allowContentAccess = true
-                // Set WebViewClient
-                webViewClient = MyWebViewClient()
-                // Load the URL
+                webChromeClient = object : WebChromeClient() {
+
+                    override fun onShowFileChooser(
+                        webView: WebView?,
+                        filePathCallback: ValueCallback<Array<Uri>>?,
+                        fileChooserParams: FileChooserParams?
+                    ): Boolean {
+                        uploadMessage = filePathCallback
+                        launcher.launch(if (title == "Medical Imaging") "image/*" else "text/csv")
+                        return true
+                    }
+                }
+                webViewClient = MyWebViewClient(onLoading = { isLoading() })
                 loadUrl(url)
             }
         }
@@ -76,29 +95,26 @@ fun WebViewComposable(url: String) {
  * Custom WebViewClient class.
  * This class is used to handle various events in the WebView, such as when a page finishes loading or when an error occurs.
  */
-class MyWebViewClient : WebViewClient() {
-    /**
-     * Called when a page finishes loading.
-     * @param view The WebView that is loading the page.
-     * @param url The URL of the page.
-     */
+class MyWebViewClient(private val onLoading: () -> Unit) : WebViewClient() {
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
+        onLoading()
     }
 
-    /**
-     * Called when an error occurs while loading a page.
-     * @param view The WebView that is loading the page.
-     * @param request The WebResourceRequest that triggered the error.
-     * @param error The WebResourceError describing the error.
-     */
     override fun onReceivedError(
         view: WebView?,
         request: WebResourceRequest?,
         error: WebResourceError?
     ) {
         super.onReceivedError(view, request, error)
-        // Log the error
         Log.e("WebViewError", "Error: ${error?.description}")
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+        if (url != null) {
+            view?.loadUrl(url)
+        }
+        return true // Handle the URL loading within the WebView, not in an external browser.
     }
 }

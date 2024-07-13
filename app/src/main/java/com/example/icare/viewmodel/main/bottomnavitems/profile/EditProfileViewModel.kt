@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.navigation.NavController
 import com.example.icare.MyApplication
-import com.example.icare.model.classes.UserResponse
+import com.example.icare.model.classes.apiClass.UserResponse
 import com.example.icare.model.local.UserDatabase
 
 class EditProfileViewModel(val navController: NavController) : ViewModel() {

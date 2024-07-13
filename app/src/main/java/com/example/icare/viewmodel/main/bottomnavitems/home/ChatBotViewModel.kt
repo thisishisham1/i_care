@@ -3,8 +3,8 @@ package com.example.icare.viewmodel.main.bottomnavitems.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.icare.model.classes.ChatBotRequest
 import com.example.icare.model.classes.Message
+import com.example.icare.model.classes.apiClass.ChatBotRequest
 import com.example.icare.repository.ChatBotRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,10 +31,6 @@ class ChatBotViewModel : ViewModel() {
 
     fun onUserInputChanged(newInput: String) {
         _userInput.value = newInput
-    }
-
-    fun onAttachmentClicked() {
-        // TODO: handle attachment button
     }
 
     fun onSendClicked(inputMessage: String) {

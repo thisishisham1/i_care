@@ -42,8 +42,9 @@ import com.example.icare.core.theme.shapes
 @Composable
 fun DefaultMessageInput(
     isHaveCameraButton: Boolean = false,
+    isHaveAttachment: Boolean = false,
     onCameraClicked: () -> Unit = {},
-    onAttachmentClicked: () -> Unit,
+    onAttachmentClicked: () -> Unit = {},
     onSend: (String) -> Unit,
     onValueChange: (String) -> Unit
 ) {
@@ -59,6 +60,7 @@ fun DefaultMessageInput(
         verticalAlignment = Alignment.CenterVertically
     ) {
         MessageTextFiled(inputMessage = inputMessage,
+            isHaveAttachment = isHaveAttachment,
             onSend = { onSend(inputMessage.value) }, // Pass the message to onSend
             onValueChange = { onValueChange(inputMessage.value) },
             onAttachmentClicked = { onAttachmentClicked() },
@@ -80,6 +82,7 @@ fun DefaultMessageInput(
 @Composable
 private fun MessageTextFiled(
     isHaveCameraButton: Boolean = false,
+    isHaveAttachment: Boolean = false,
     inputMessage: MutableState<String>,
     onSend: (String) -> Unit,
     onAttachmentClicked: () -> Unit,
@@ -109,8 +112,10 @@ private fun MessageTextFiled(
                         }
                     }
                 }
-                AttachmentButton {
-                    onAttachmentClicked()
+                if (isHaveAttachment) {
+                    AttachmentButton {
+                        onAttachmentClicked()
+                    }
                 }
 
             }
