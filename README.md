@@ -60,7 +60,7 @@ iCare utilizes several modern libraries and frameworks:
 
 1. **Clone the Repository**:
    ```bash
-   git clone <GitHub_Repository_URL>
+   git clone [<GitHub_Repository_URL>](https://github.com/thisishisham1/i_care.git)
 2. Open the project in Android Studio Koala | 2024.1.1
 3. Build and run the project on an emulator or real device
 
